@@ -238,10 +238,6 @@
       /* ---- sidebar toggle (hamburger) ---- */
       .sidebar-toggle {
         display: none;
-        position: fixed;
-        top: 18px;
-        left: 16px;
-        z-index: 1100;
         background: var(--white);
         border: none;
         border-radius: var(--radius-sm);
@@ -252,6 +248,10 @@
         box-shadow: var(--shadow-sm);
         transition: var(--transition);
         border: 1px solid var(--border-light);
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
       }
       .sidebar-toggle:hover {
         box-shadow: var(--shadow-md);
@@ -1043,8 +1043,6 @@
         }
         .sidebar-toggle {
           display: flex;
-          align-items: center;
-          justify-content: center;
         }
         .sidebar-overlay.active {
           display: block;
@@ -1054,7 +1052,6 @@
         }
         .top-nav {
           padding: 0 20px;
-          padding-left: 72px;
         }
         .top-nav .nav-center {
           display: none;
@@ -1081,35 +1078,104 @@
       }
 
       @media (max-width: 767px) {
+        /* ---- Mobile Header Alignment Fix ---- */
         .top-nav {
           padding: 0 14px;
-          padding-left: 60px;
           height: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
         }
-        .top-nav .nav-left .nav-logo .logo-text {
-          font-size: 0.8rem;
+
+        .top-nav .nav-left {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex: 1 1 auto;
+          min-width: 0;
+        }
+
+        .sidebar-toggle {
+          display: flex;
+          position: relative;
+          top: auto;
+          left: auto;
+          padding: 8px 10px;
+          font-size: 1.15rem;
+          flex-shrink: 0;
+          height: 40px;
+          width: 40px;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--border-light);
+          background: var(--white);
+          border-radius: var(--radius-sm);
+          color: var(--primary);
+          box-shadow: var(--shadow-sm);
+          line-height: 1;
+          margin: 0;
+        }
+        .sidebar-toggle:hover {
+          box-shadow: var(--shadow-md);
+          transform: none;
+        }
+        .sidebar-toggle:active {
+          transform: scale(0.95);
+        }
+
+        .top-nav .nav-left .nav-logo {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-shrink: 0;
         }
         .top-nav .nav-left .nav-logo .logo-icon {
           width: 30px;
           height: 30px;
           font-size: 13px;
+          border-radius: 8px;
+          flex-shrink: 0;
         }
-        .top-nav .nav-right .profile-wrap .profile-name {
-          display: none;
+        .top-nav .nav-left .nav-logo .logo-text {
+          font-size: 0.8rem;
+          white-space: nowrap;
         }
+
         .top-nav .nav-right {
-          gap: 12px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-shrink: 0;
         }
         .top-nav .nav-right .notification-btn {
           font-size: 1.1rem;
+          padding: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .top-nav .nav-right .notification-btn .badge {
+          width: 16px;
+          height: 16px;
+          font-size: 8px;
+          top: -4px;
+          right: -4px;
+          border-width: 1.5px;
+        }
+        .top-nav .nav-right .profile-wrap {
+          padding: 2px 6px 2px 2px;
+          gap: 6px;
+          display: flex;
+          align-items: center;
         }
         .top-nav .nav-right .profile-wrap .avatar {
           width: 34px;
           height: 34px;
-          font-size: 0.85rem;
+          font-size: 0.8rem;
+          flex-shrink: 0;
         }
-        .top-nav .nav-right .profile-wrap {
-          padding: 2px;
+        .top-nav .nav-right .profile-wrap .profile-name {
+          display: none;
         }
         .top-nav .nav-right .profile-wrap .chevron {
           display: none;
@@ -1254,16 +1320,35 @@
         .quick-action span {
           font-size: 0.7rem;
         }
+
         .top-nav {
-          padding-left: 52px;
+          padding-left: 10px;
+          padding-right: 10px;
           height: 58px;
         }
         .sidebar-toggle {
-          top: 14px;
-          left: 10px;
-          padding: 6px 10px;
-          font-size: 1.1rem;
+          padding: 6px 8px;
+          font-size: 1rem;
+          height: 34px;
+          width: 34px;
         }
+        .top-nav .nav-left .nav-logo .logo-icon {
+          width: 26px;
+          height: 26px;
+          font-size: 11px;
+        }
+        .top-nav .nav-left .nav-logo .logo-text {
+          font-size: 0.7rem;
+        }
+        .top-nav .nav-right .notification-btn {
+          font-size: 0.95rem;
+        }
+        .top-nav .nav-right .profile-wrap .avatar {
+          width: 30px;
+          height: 30px;
+          font-size: 0.7rem;
+        }
+
         .welcome-card .welcome-text h2 {
           font-size: 1rem;
         }
@@ -1418,8 +1503,9 @@
         <nav class="sidebar-menu">
           <div class="menu-label">Main Menu</div>
 
+          <!-- All sidebar items are navigable with proper hrefs -->
           <a
-            href="./studentdashboard.html"
+            href="studentdashboard.html"
             class="menu-item active"
             data-page="dashboard"
             aria-current="page"
@@ -1427,27 +1513,48 @@
             <i class="fas fa-th-large" aria-hidden="true"></i>
             Dashboard
           </a>
-          <a href="./MyResult.html" class="menu-item" data-page="results">
+          <a href="MyResult.html" class="menu-item" data-page="results">
             <i class="fas fa-file-alt" aria-hidden="true"></i>
             My Results
           </a>
-          <a href="./studentsettings.html" class="menu-item" data-page="settings">
-            <i class="fas fa-cog" aria-hidden="true"></i>
-            Settings
+          <a href="studentcourses.html" class="menu-item" data-page="courses">
+            <i class="fas fa-book" aria-hidden="true"></i>
+            Courses
           </a>
-          <a href="./studentprofile.html" class="menu-item" data-page="profile">
+          <a href="studentprofile.html" class="menu-item" data-page="profile">
             <i class="fas fa-user-circle" aria-hidden="true"></i>
             Profile
           </a>
+          <a href="studentsettings.html" class="menu-item" data-page="settings">
+            <i class="fas fa-cog" aria-hidden="true"></i>
+            Settings
+          </a>
+          <a
+            href="studentnotifications.html"
+            class="menu-item"
+            data-page="notifications"
+          >
+            <i class="fas fa-bell" aria-hidden="true"></i>
+            Notifications
+          </a>
+          <a href="studentpayments.html" class="menu-item" data-page="payments">
+            <i class="fas fa-credit-card" aria-hidden="true"></i>
+            Payments
+          </a>
+          <a href="studentsupport.html" class="menu-item" data-page="support">
+            <i class="fas fa-headset" aria-hidden="true"></i>
+            Support
+          </a>
 
-          <button
+          <a
+            href="studentlogout.html"
             class="menu-item logout-item"
             id="sidebarLogout"
             aria-label="Logout"
           >
             <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
             Logout
-          </button>
+          </a>
         </nav>
       </aside>
 
@@ -1489,15 +1596,16 @@
           </div>
 
           <div class="nav-right">
-            <!-- Notification bell -->
-            <button
+            <!-- Notification bell → navigates to Notifications page -->
+            <a
+              href="studentnotifications.html"
               class="notification-btn"
               id="notifBtn"
               aria-label="View notifications"
             >
               <i class="fas fa-bell" aria-hidden="true"></i>
               <span class="badge" id="notifBadge">3</span>
-            </button>
+            </a>
 
             <!-- Profile -->
             <div
@@ -1518,20 +1626,29 @@
 
             <!-- Profile dropdown -->
             <div class="profile-dropdown" id="profileDropdown" role="menu">
-              <button class="dropdown-item" role="menuitem">
+              <a
+                href="studentprofile.html"
+                class="dropdown-item"
+                role="menuitem"
+              >
                 <i class="fas fa-user" aria-hidden="true"></i> My Profile
-              </button>
-              <button class="dropdown-item" role="menuitem">
+              </a>
+              <a
+                href="studentsettings.html"
+                class="dropdown-item"
+                role="menuitem"
+              >
                 <i class="fas fa-cog" aria-hidden="true"></i> Settings
-              </button>
+              </a>
               <div class="dropdown-divider"></div>
-              <button
+              <a
+                href="studentlogout.html"
                 class="dropdown-item danger"
                 role="menuitem"
                 id="dropdownLogout"
               >
                 <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout
-              </button>
+              </a>
             </div>
           </div>
         </header>
@@ -1729,17 +1846,29 @@
             </aside>
           </div>
 
-          <!-- ---- Quick Actions ---- -->
+          <!-- ---- Quick Actions (all navigable) ---- -->
           <div
             class="quick-actions-grid"
             role="group"
             aria-label="Quick actions"
           >
-            <a href="./MyResult.html" class="quick-action" aria-label="View full results">
+            <a
+              href="MyResult.html"
+              class="quick-action"
+              aria-label="View full results"
+            >
               <i class="fas fa-list-ul" aria-hidden="true"></i>
               <span>View Full Results</span>
             </a>
-            <a href="#" class="quick-action" aria-label="Print result">
+            <a
+              href="#"
+              class="quick-action"
+              aria-label="Print result"
+              onclick="
+                window.print();
+                return false;
+              "
+            >
               <i class="fas fa-print" aria-hidden="true"></i>
               <span>Print Result</span>
             </a>
@@ -1747,11 +1876,19 @@
               href="#"
               class="quick-action"
               aria-label="Download result as PDF"
+              onclick="
+                alert('📄 Downloading your result as PDF...');
+                return false;
+              "
             >
               <i class="fas fa-file-pdf" aria-hidden="true"></i>
               <span>Download PDF</span>
             </a>
-            <a href="./studentprofile.html" class="quick-action" aria-label="View profile">
+            <a
+              href="studentprofile.html"
+              class="quick-action"
+              aria-label="View profile"
+            >
               <i class="fas fa-id-card" aria-hidden="true"></i>
               <span>View Profile</span>
             </a>
@@ -1937,23 +2074,28 @@
         });
 
         // ---- Notification bell ----
-        notifBtn.addEventListener("click", function () {
-          const badge = document.getElementById("notifBadge");
-          alert(
-            "📬 Notifications\n\n• First Semester Results Published\n• Registration Notice – Second Semester\n• Academic Calendar Updated",
-          );
-          // dismiss badge on click (demo)
-          badge.style.display = "none";
-        });
+        // Notification bell is now a link, but we keep the badge dismissal
+        if (notifBtn) {
+          notifBtn.addEventListener("click", function (e) {
+            // Let the link navigation happen, but also dismiss badge for UX
+            const badge = document.getElementById("notifBadge");
+            if (badge) {
+              badge.style.display = "none";
+            }
+            // Allow the navigation to proceed
+          });
+        }
 
         // ---- Sidebar menu items ----
+        // Sidebar items are now proper <a> tags with hrefs.
+        // We keep the active state management for when users click them.
         const menuItems = document.querySelectorAll(
           ".sidebar-menu .menu-item:not(.logout-item)",
         );
         menuItems.forEach(function (item) {
           item.addEventListener("click", function (e) {
-            e.preventDefault();
-            // remove active from all
+            // Let the link navigation work, but update active state
+            // Remove active from all
             menuItems.forEach(function (mi) {
               mi.classList.remove("active");
             });
@@ -1979,28 +2121,32 @@
         });
 
         // ---- Logout handlers ----
-        function handleLogout() {
-          if (confirm("Are you sure you want to log out?")) {
-            alert("You have been logged out. Redirecting to login page...");
-            // In production: window.location.href = '/login';
-            // Demo: reload to simulate
-            // window.location.reload();
-          }
+        // Both sidebar logout and dropdown logout now navigate to studentlogout.html
+        // The handlers are kept for any additional logic, but the links handle navigation.
+        function handleLogout(e) {
+          // Allow navigation to proceed
+          // Any additional logout logic can go here
+          console.log("Logging out...");
         }
 
-        sidebarLogout.addEventListener("click", handleLogout);
-        dropdownLogout.addEventListener("click", function (e) {
-          e.stopPropagation();
-          toggleProfile(false);
-          handleLogout();
-        });
+        if (sidebarLogout) {
+          sidebarLogout.addEventListener("click", handleLogout);
+        }
+        if (dropdownLogout) {
+          dropdownLogout.addEventListener("click", function (e) {
+            e.stopPropagation();
+            toggleProfile(false);
+            handleLogout(e);
+            // Let the link navigation proceed
+          });
+        }
 
         // ---- Quick action ripple effect ----
         const quickActions = document.querySelectorAll(".quick-action");
         quickActions.forEach(function (el) {
           el.addEventListener("click", function (e) {
-            e.preventDefault();
-            // ripple
+            // Don't prevent default for links - let them navigate
+            // But still add ripple effect for visual feedback
             const rect = this.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
@@ -2023,10 +2169,6 @@
             setTimeout(() => {
               ripple.remove();
             }, 600);
-
-            // action feedback
-            const label = this.querySelector("span")?.textContent || "Action";
-            alert("🔹 " + label + "\n(Feature coming soon)");
           });
         });
 
@@ -2127,8 +2269,24 @@
           toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
         }
 
+        // ---- Highlight active page based on current URL ----
+        const currentPath =
+          window.location.pathname.split("/").pop() || "studentdashboard.html";
+        const sidebarLinks = document.querySelectorAll(
+          ".sidebar-menu .menu-item[href]",
+        );
+        sidebarLinks.forEach(function (link) {
+          const linkPath = link.getAttribute("href").split("/").pop();
+          if (linkPath === currentPath) {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        });
+
         console.log("🎓 IMSU Student Dashboard loaded successfully.");
         console.log("👤 Welcome, John Doe!");
+        console.log("📍 Current page:", currentPath);
       })();
     </script>
   </body>
