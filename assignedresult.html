@@ -80,6 +80,7 @@
         overflow-x: hidden;
         width: 100%;
         max-width: 100%;
+        padding-top: var(--nav-height);
       }
 
       /* ============================================================
@@ -292,14 +293,17 @@
         overflow-x: hidden;
         width: 100%;
         max-width: 100%;
+        padding-top: 0;
       }
 
       /* ============================================================
-               TOP NAVIGATION – Fixed
+               TOP NAVIGATION – Fixed (FIXED POSITIONING)
                ============================================================ */
       .top-nav {
-        position: sticky;
+        position: fixed;
         top: 0;
+        left: var(--sidebar-width);
+        right: 0;
         z-index: 500;
         height: var(--nav-height);
         background: rgba(255, 255, 255, 0.78);
@@ -312,8 +316,19 @@
         padding: 0 36px;
         flex-shrink: 0;
         box-shadow: 0 1px 20px rgba(0, 0, 0, 0.02);
-        width: 100%;
+        width: calc(100% - var(--sidebar-width));
         max-width: 100%;
+        transition:
+          left 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      /* On mobile, the sidebar collapses, so navbar spans full width */
+      @media (max-width: 1023px) {
+        .top-nav {
+          left: 0;
+          width: 100%;
+        }
       }
 
       .top-nav .nav-left {
@@ -1287,6 +1302,10 @@
           margin-left: 0;
         }
         .top-nav {
+          left: 0;
+          width: 100%;
+        }
+        .top-nav {
           padding: 0 20px;
         }
         .top-nav .nav-center {
@@ -1343,6 +1362,8 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
+          left: 0;
+          width: 100%;
         }
 
         .top-nav .nav-left {
