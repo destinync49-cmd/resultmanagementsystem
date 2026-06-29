@@ -1422,13 +1422,14 @@ JAVASCRIPT – Validation, Toggle, Loading, Ripple
             loginBtn.querySelector(".btn-text").textContent = "✓ Signed In";
             loginBtn.disabled = false;
 
-            // reset after 2.5s (demo only)
+            // reset after 2.5s (demo only) and then redirect to dashboard
             setTimeout(function () {
               loginBtn.classList.remove("success");
               loginBtn.querySelector(".btn-text").textContent = "Sign In";
+              // Redirect to student dashboard after successful login
+              window.location.href = "studentdashboard.html";
             }, 2500);
 
-            // (In production, you would redirect or handle token here)
             console.log("Login successful for:", matricInput.value.trim());
           }, 1800);
         });

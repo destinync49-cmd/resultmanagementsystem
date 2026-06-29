@@ -1,966 +1,838 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IMSU Student Portal | Logout Confirmation</title>
 
     <!-- Font Awesome 6 (Free) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
 
     <style>
-        /* ============================================================
+      /* ============================================================
                CSS VARIABLES – IMSU Brand Colors (same as login/dashboard)
                ============================================================ */
-        :root {
-            --primary: #006B3F;
-            --primary-dark: #004D2E;
-            --primary-light: #E8F5EE;
-            --primary-gradient: linear-gradient(145deg, #006B3F 0%, #004D2E 100%);
-            --gold: #D4AF37;
-            --gold-light: #E8D48B;
-            --gold-glow: rgba(212, 175, 55, 0.25);
-            --white: #FFFFFF;
-            --light-bg: #F5F7F8;
-            --dark-text: #1E293B;
-            --gray-text: #64748B;
-            --border-light: rgba(0, 107, 63, 0.12);
-            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 12px 48px rgba(0, 0, 0, 0.10);
-            --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.14);
-            --radius-sm: 10px;
-            --radius-md: 18px;
-            --radius-lg: 28px;
-            --transition: 0.30s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --font-sans: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-        }
+      :root {
+        --primary: #006b3f;
+        --primary-dark: #004d2e;
+        --primary-light: #e8f5ee;
+        --primary-gradient: linear-gradient(145deg, #006b3f 0%, #004d2e 100%);
+        --gold: #d4af37;
+        --gold-light: #e8d48b;
+        --gold-glow: rgba(212, 175, 55, 0.25);
+        --white: #ffffff;
+        --light-bg: #f5f7f8;
+        --dark-text: #1e293b;
+        --gray-text: #64748b;
+        --border-light: rgba(0, 107, 63, 0.12);
+        --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.06);
+        --shadow-md: 0 12px 48px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.14);
+        --radius-sm: 10px;
+        --radius-md: 18px;
+        --radius-lg: 28px;
+        --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        --font-sans:
+          "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont,
+          "Helvetica Neue", sans-serif;
+      }
 
-        /* ============================================================
+      /* ============================================================
                RESET & BASE
                ============================================================ */
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
+      html {
+        font-size: 16px;
+        scroll-behavior: smooth;
+      }
 
-        body {
-            font-family: var(--font-sans);
-            background: var(--light-bg);
-            color: var(--dark-text);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            overflow: hidden;
-            position: relative;
-        }
+      body {
+        font-family: var(--font-sans);
+        background: var(--light-bg);
+        color: var(--dark-text);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow: hidden;
+        position: relative;
+      }
 
-        /* ============================================================
+      /* ============================================================
                BACKGROUND – Premium Gradient + Abstract Shapes
                (matches login page style)
                ============================================================ */
-        .page-bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background: var(--primary-gradient);
-            overflow: hidden;
-        }
+      .page-bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background: var(--primary-gradient);
+        overflow: hidden;
+      }
 
-        /* ---- glowing circles ---- */
-        .page-bg .glow {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0.20;
-            filter: blur(60px);
-        }
-        .page-bg .glow--1 {
-            width: 500px;
-            height: 500px;
-            background: var(--gold);
-            top: -150px;
-            right: -100px;
-            animation: floatBg 12s ease-in-out infinite alternate;
-        }
-        .page-bg .glow--2 {
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.08);
-            bottom: -120px;
-            left: -80px;
-            animation: floatBg 14s ease-in-out infinite alternate-reverse;
-        }
-        .page-bg .glow--3 {
-            width: 200px;
-            height: 200px;
-            background: var(--gold-light);
-            top: 40%;
-            left: 60%;
-            opacity: 0.10;
-            animation: floatBg 10s ease-in-out infinite alternate;
-        }
+      /* ---- glowing circles ---- */
+      .page-bg .glow {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0.2;
+        filter: blur(60px);
+      }
+      .page-bg .glow--1 {
+        width: 500px;
+        height: 500px;
+        background: var(--gold);
+        top: -150px;
+        right: -100px;
+        animation: floatBg 12s ease-in-out infinite alternate;
+      }
+      .page-bg .glow--2 {
+        width: 400px;
+        height: 400px;
+        background: rgba(255, 255, 255, 0.08);
+        bottom: -120px;
+        left: -80px;
+        animation: floatBg 14s ease-in-out infinite alternate-reverse;
+      }
+      .page-bg .glow--3 {
+        width: 200px;
+        height: 200px;
+        background: var(--gold-light);
+        top: 40%;
+        left: 60%;
+        opacity: 0.1;
+        animation: floatBg 10s ease-in-out infinite alternate;
+      }
 
-        /* ---- abstract academic shapes (subtle) ---- */
-        .page-bg .shape {
-            position: absolute;
-            pointer-events: none;
-            opacity: 0.04;
-            color: var(--white);
-            font-size: 12rem;
-            transform: rotate(-12deg);
-        }
-        .page-bg .shape--cap {
-            bottom: 20px;
-            right: 40px;
-            font-size: 16rem;
-            opacity: 0.03;
-        }
-        .page-bg .shape--book {
-            top: 80px;
-            left: 40px;
-            font-size: 10rem;
-            opacity: 0.03;
-            transform: rotate(16deg);
-        }
+      /* ---- abstract academic shapes (subtle) ---- */
+      .page-bg .shape {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0.04;
+        color: var(--white);
+        font-size: 12rem;
+        transform: rotate(-12deg);
+      }
+      .page-bg .shape--cap {
+        bottom: 20px;
+        right: 40px;
+        font-size: 16rem;
+        opacity: 0.03;
+      }
+      .page-bg .shape--book {
+        top: 80px;
+        left: 40px;
+        font-size: 10rem;
+        opacity: 0.03;
+        transform: rotate(16deg);
+      }
 
-        /* ---- subtle grid pattern ---- */
-        .page-bg .grid-pattern {
-            position: absolute;
-            inset: 0;
-            background-image:
-                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-            background-size: 36px 36px;
-            pointer-events: none;
-        }
+      /* ---- subtle grid pattern ---- */
+      .page-bg .grid-pattern {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle at 20% 30%,
+          rgba(255, 255, 255, 0.04) 1px,
+          transparent 1px
+        );
+        background-size: 36px 36px;
+        pointer-events: none;
+      }
 
-        /* ============================================================
+      /* ============================================================
                LOGOUT CONFIRMATION CARD – Glassmorphism
                ============================================================ */
-        .logout-card {
-            position: relative;
-            z-index: 2;
-            max-width: 520px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.72);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: var(--radius-lg);
-            padding: 48px 44px 40px 44px;
-            border: 1px solid rgba(255, 255, 255, 0.50);
-            box-shadow: var(--shadow-lg);
-            animation: cardEntrance 0.8s ease 0.2s both;
-            text-align: center;
-            transition: box-shadow 0.4s ease;
-        }
-        .logout-card:hover {
-            box-shadow: 0 28px 72px rgba(0, 0, 0, 0.12);
-        }
+      .logout-card {
+        position: relative;
+        z-index: 2;
+        max-width: 520px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: var(--radius-lg);
+        padding: 48px 44px 40px 44px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: var(--shadow-lg);
+        animation: cardEntrance 0.8s ease 0.2s both;
+        text-align: center;
+        transition: box-shadow 0.4s ease;
+      }
+      .logout-card:hover {
+        box-shadow: 0 28px 72px rgba(0, 0, 0, 0.12);
+      }
 
-        /* ---- Logout Icon ---- */
-        .logout-icon-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+      /* ---- Logout Icon ---- */
+      .logout-icon-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
 
-        .logout-icon-circle {
-            width: 88px;
-            height: 88px;
-            border-radius: 50%;
-            background: var(--primary-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 32px rgba(0, 107, 63, 0.25);
-            animation: iconPulse 2.8s ease-in-out infinite;
-            transition: var(--transition);
-        }
-        .logout-icon-circle:hover {
-            transform: scale(1.04);
-            box-shadow: 0 12px 44px rgba(0, 107, 63, 0.35);
-        }
+      .logout-icon-circle {
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        background: var(--primary-gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 32px rgba(0, 107, 63, 0.25);
+        animation: iconPulse 2.8s ease-in-out infinite;
+        transition: var(--transition);
+      }
+      .logout-icon-circle:hover {
+        transform: scale(1.04);
+        box-shadow: 0 12px 44px rgba(0, 107, 63, 0.35);
+      }
 
-        .logout-icon-circle i {
-            font-size: 2.8rem;
-            color: var(--white);
-        }
+      .logout-icon-circle i {
+        font-size: 2.8rem;
+        color: var(--white);
+      }
 
-        /* ---- Heading ---- */
-        .logout-card h2 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--dark-text);
-            letter-spacing: -0.3px;
-            margin-bottom: 10px;
-        }
+      /* ---- Heading ---- */
+      .logout-card h2 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--dark-text);
+        letter-spacing: -0.3px;
+        margin-bottom: 10px;
+      }
 
-        /* ---- Description ---- */
-        .logout-card .description {
-            font-size: 0.95rem;
-            color: var(--gray-text);
-            max-width: 400px;
-            margin: 0 auto 24px auto;
-            line-height: 1.7;
-        }
+      /* ---- Description ---- */
+      .logout-card .description {
+        font-size: 0.95rem;
+        color: var(--gray-text);
+        max-width: 400px;
+        margin: 0 auto 24px auto;
+        line-height: 1.7;
+      }
 
-        /* ---- Student Info (reassurance) ---- */
-        .student-info {
-            background: rgba(0, 107, 63, 0.04);
-            border-radius: var(--radius-sm);
-            padding: 16px 20px;
-            margin-bottom: 28px;
-            border: 1px solid rgba(0, 107, 63, 0.06);
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .student-info .info-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.9rem;
-            color: var(--dark-text);
-        }
-        .student-info .info-row .label {
-            color: var(--gray-text);
-            font-weight: 500;
-        }
-        .student-info .info-row .value {
-            font-weight: 600;
-        }
-        .student-info .info-row .value .highlight {
-            color: var(--primary);
-        }
+      /* ---- Student Info (reassurance) ---- */
+      .student-info {
+        background: rgba(0, 107, 63, 0.04);
+        border-radius: var(--radius-sm);
+        padding: 16px 20px;
+        margin-bottom: 28px;
+        border: 1px solid rgba(0, 107, 63, 0.06);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .student-info .info-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.9rem;
+        color: var(--dark-text);
+      }
+      .student-info .info-row .label {
+        color: var(--gray-text);
+        font-weight: 500;
+      }
+      .student-info .info-row .value {
+        font-weight: 600;
+      }
+      .student-info .info-row .value .highlight {
+        color: var(--primary);
+      }
 
-        /* ---- Buttons ---- */
-        .button-group {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
+      /* ---- Buttons ---- */
+      .button-group {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 14px 36px;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            font-family: var(--font-sans);
-            font-size: 1rem;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            min-width: 160px;
-            flex: 1 1 auto;
-        }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 14px 36px;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-family: var(--font-sans);
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        min-width: 160px;
+        flex: 1 1 auto;
+      }
 
-        /* ---- Primary: Yes, Log Me Out ---- */
-        .btn-primary {
-            background: var(--primary-gradient);
-            color: var(--white);
-            box-shadow: 0 4px 20px rgba(0, 107, 63, 0.25);
-        }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 32px rgba(0, 107, 63, 0.35);
-        }
-        .btn-primary:active {
-            transform: scale(0.97);
-        }
-        .btn-primary .spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 2.5px solid rgba(255, 255, 255, 0.20);
-            border-top-color: var(--white);
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            flex-shrink: 0;
-        }
-        .btn-primary.loading .spinner {
-            display: block;
-        }
-        .btn-primary.loading .btn-text {
-            opacity: 0.7;
-        }
-        .btn-primary.loading {
-            pointer-events: none;
-        }
+      /* ---- Primary: Yes, Log Me Out ---- */
+      .btn-primary {
+        background: var(--primary-gradient);
+        color: var(--white);
+        box-shadow: 0 4px 20px rgba(0, 107, 63, 0.25);
+      }
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 32px rgba(0, 107, 63, 0.35);
+      }
+      .btn-primary:active {
+        transform: scale(0.97);
+      }
+      .btn-primary .spinner {
+        display: none;
+        width: 20px;
+        height: 20px;
+        border: 2.5px solid rgba(255, 255, 255, 0.2);
+        border-top-color: var(--white);
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        flex-shrink: 0;
+      }
+      .btn-primary.loading .spinner {
+        display: block;
+      }
+      .btn-primary.loading .btn-text {
+        opacity: 0.7;
+      }
+      .btn-primary.loading {
+        pointer-events: none;
+      }
 
-        /* ---- Secondary: Cancel ---- */
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.70);
-            color: var(--dark-text);
-            border: 1.5px solid var(--border-light);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-        }
-        .btn-secondary:hover {
-            transform: translateY(-3px);
-            border-color: var(--primary);
-            box-shadow: var(--shadow-md);
-            background: rgba(255, 255, 255, 0.90);
-        }
-        .btn-secondary:active {
-            transform: scale(0.97);
-        }
+      /* ---- Secondary: Cancel ---- */
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--dark-text);
+        border: 1.5px solid var(--border-light);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+      }
+      .btn-secondary:hover {
+        transform: translateY(-3px);
+        border-color: var(--primary);
+        box-shadow: var(--shadow-md);
+        background: rgba(255, 255, 255, 0.9);
+      }
+      .btn-secondary:active {
+        transform: scale(0.97);
+      }
 
-        /* ---- Ripple effect ---- */
-        .btn .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.30);
-            transform: scale(0);
-            animation: rippleAnim 0.6s ease-out forwards;
-            pointer-events: none;
-        }
-        .btn-secondary .ripple {
-            background: rgba(0, 107, 63, 0.10);
-        }
+      /* ---- Ripple effect ---- */
+      .btn .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(0);
+        animation: rippleAnim 0.6s ease-out forwards;
+        pointer-events: none;
+      }
+      .btn-secondary .ripple {
+        background: rgba(0, 107, 63, 0.1);
+      }
 
-        /* ---- Security Note ---- */
-        .security-note {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: 0.78rem;
-            color: var(--gray-text);
-            padding-top: 16px;
-            border-top: 1px solid var(--border-light);
-            margin-top: 4px;
-        }
-        .security-note i {
-            color: var(--gold);
-            font-size: 1rem;
-        }
+      /* ---- Security Note ---- */
+      .security-note {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 0.78rem;
+        color: var(--gray-text);
+        padding-top: 16px;
+        border-top: 1px solid var(--border-light);
+        margin-top: 4px;
+      }
+      .security-note i {
+        color: var(--gold);
+        font-size: 1rem;
+      }
 
-        /* ============================================================
+      /* ============================================================
                ANIMATIONS
                ============================================================ */
 
-        @keyframes cardEntrance {
-            0% {
-                opacity: 0;
-                transform: translateY(40px) scale(0.96);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+      @keyframes cardEntrance {
+        0% {
+          opacity: 0;
+          transform: translateY(40px) scale(0.96);
         }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
 
-        @keyframes floatBg {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                transform: translate(24px, -24px) scale(1.06);
-            }
+      @keyframes floatBg {
+        0% {
+          transform: translate(0, 0) scale(1);
         }
+        100% {
+          transform: translate(24px, -24px) scale(1.06);
+        }
+      }
 
-        @keyframes iconPulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 8px 32px rgba(0, 107, 63, 0.25);
-            }
-            50% {
-                transform: scale(1.04);
-                box-shadow: 0 12px 48px rgba(0, 107, 63, 0.35);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 8px 32px rgba(0, 107, 63, 0.25);
-            }
+      @keyframes iconPulse {
+        0% {
+          transform: scale(1);
+          box-shadow: 0 8px 32px rgba(0, 107, 63, 0.25);
         }
+        50% {
+          transform: scale(1.04);
+          box-shadow: 0 12px 48px rgba(0, 107, 63, 0.35);
+        }
+        100% {
+          transform: scale(1);
+          box-shadow: 0 8px 32px rgba(0, 107, 63, 0.25);
+        }
+      }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
 
-        @keyframes rippleAnim {
-            0% {
-                transform: scale(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(4);
-                opacity: 0;
-            }
+      @keyframes rippleAnim {
+        0% {
+          transform: scale(0);
+          opacity: 1;
         }
+        100% {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
 
-        /* ---- subtle fade for the card content ---- */
-        .logout-card>* {
-            animation: fadeUp 0.7s ease 0.3s both;
-        }
-        .logout-card .button-group {
-            animation: fadeUp 0.7s ease 0.4s both;
-        }
-        .logout-card .security-note {
-            animation: fadeUp 0.7s ease 0.5s both;
-        }
+      /* ---- subtle fade for the card content ---- */
+      .logout-card > * {
+        animation: fadeUp 0.7s ease 0.3s both;
+      }
+      .logout-card .button-group {
+        animation: fadeUp 0.7s ease 0.4s both;
+      }
+      .logout-card .security-note {
+        animation: fadeUp 0.7s ease 0.5s both;
+      }
 
-        @keyframes fadeUp {
-            0% {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+      @keyframes fadeUp {
+        0% {
+          opacity: 0;
+          transform: translateY(12px);
         }
-
-        /* ---- focus-visible ---- */
-        a:focus-visible,
-        button:focus-visible {
-            outline: 2px solid var(--primary);
-            outline-offset: 2px;
+        100% {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
 
-        /* ============================================================
+      /* ---- focus-visible ---- */
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      /* ============================================================
                RESPONSIVENESS
                ============================================================ */
 
-        /* ---- Tablet ---- */
-        @media (max-width: 768px) {
-            .logout-card {
-                padding: 36px 30px 32px 30px;
-                max-width: 460px;
-                border-radius: var(--radius-md);
-            }
-
-            .logout-icon-circle {
-                width: 76px;
-                height: 76px;
-            }
-            .logout-icon-circle i {
-                font-size: 2.2rem;
-            }
-
-            .logout-card h2 {
-                font-size: 1.4rem;
-            }
-            .logout-card .description {
-                font-size: 0.9rem;
-            }
-
-            .btn {
-                padding: 12px 28px;
-                font-size: 0.95rem;
-                min-width: 140px;
-            }
-            .student-info .info-row {
-                font-size: 0.85rem;
-            }
-            .security-note {
-                font-size: 0.72rem;
-                flex-wrap: wrap;
-                text-align: center;
-            }
+      /* ---- Tablet ---- */
+      @media (max-width: 768px) {
+        .logout-card {
+          padding: 36px 30px 32px 30px;
+          max-width: 460px;
+          border-radius: var(--radius-md);
         }
 
-        /* ---- Mobile ---- */
-        @media (max-width: 480px) {
-            body {
-                padding: 16px;
-                align-items: center;
-            }
-
-            .logout-card {
-                padding: 28px 20px 24px 20px;
-                max-width: 100%;
-                border-radius: var(--radius-sm);
-            }
-
-            .logout-icon-circle {
-                width: 64px;
-                height: 64px;
-            }
-            .logout-icon-circle i {
-                font-size: 1.8rem;
-            }
-
-            .logout-card h2 {
-                font-size: 1.2rem;
-            }
-            .logout-card .description {
-                font-size: 0.85rem;
-                margin-bottom: 18px;
-            }
-
-            .student-info {
-                padding: 12px 14px;
-                margin-bottom: 20px;
-            }
-            .student-info .info-row {
-                font-size: 0.8rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .button-group {
-                flex-direction: column;
-                gap: 12px;
-                width: 100%;
-            }
-
-            .btn {
-                width: 100%;
-                padding: 14px 20px;
-                font-size: 0.95rem;
-                min-width: unset;
-                flex: 1 1 auto;
-            }
-
-            .security-note {
-                font-size: 0.7rem;
-                padding-top: 14px;
-                flex-wrap: wrap;
-                text-align: center;
-                gap: 6px;
-            }
-
-            .page-bg .glow--1 {
-                width: 280px;
-                height: 280px;
-                top: -80px;
-                right: -60px;
-            }
-            .page-bg .glow--2 {
-                width: 220px;
-                height: 220px;
-                bottom: -60px;
-                left: -40px;
-            }
-            .page-bg .glow--3 {
-                width: 140px;
-                height: 140px;
-                top: 30%;
-                left: 50%;
-            }
-            .page-bg .shape--cap {
-                font-size: 10rem;
-                bottom: 10px;
-                right: 10px;
-            }
-            .page-bg .shape--book {
-                font-size: 7rem;
-                top: 40px;
-                left: 10px;
-            }
+        .logout-icon-circle {
+          width: 76px;
+          height: 76px;
+        }
+        .logout-icon-circle i {
+          font-size: 2.2rem;
         }
 
-        /* ---- very small screens ---- */
-        @media (max-width: 360px) {
-            .logout-card {
-                padding: 20px 14px 18px 14px;
-            }
-            .logout-card h2 {
-                font-size: 1.05rem;
-            }
-            .logout-card .description {
-                font-size: 0.8rem;
-            }
-            .btn {
-                font-size: 0.85rem;
-                padding: 12px 16px;
-            }
-            .student-info .info-row {
-                font-size: 0.7rem;
-            }
-            .logout-icon-circle {
-                width: 56px;
-                height: 56px;
-            }
-            .logout-icon-circle i {
-                font-size: 1.5rem;
-            }
+        .logout-card h2 {
+          font-size: 1.4rem;
+        }
+        .logout-card .description {
+          font-size: 0.9rem;
         }
 
-        /* ---- scrollbar (polish) ---- */
-        ::-webkit-scrollbar {
-            width: 4px;
+        .btn {
+          padding: 12px 28px;
+          font-size: 0.95rem;
+          min-width: 140px;
         }
-        ::-webkit-scrollbar-track {
-            background: var(--light-bg);
+        .student-info .info-row {
+          font-size: 0.85rem;
         }
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 6px;
+        .security-note {
+          font-size: 0.72rem;
+          flex-wrap: wrap;
+          text-align: center;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
+      }
+
+      /* ---- Mobile ---- */
+      @media (max-width: 480px) {
+        body {
+          padding: 16px;
+          align-items: center;
         }
+
+        .logout-card {
+          padding: 28px 20px 24px 20px;
+          max-width: 100%;
+          border-radius: var(--radius-sm);
+        }
+
+        .logout-icon-circle {
+          width: 64px;
+          height: 64px;
+        }
+        .logout-icon-circle i {
+          font-size: 1.8rem;
+        }
+
+        .logout-card h2 {
+          font-size: 1.2rem;
+        }
+        .logout-card .description {
+          font-size: 0.85rem;
+          margin-bottom: 18px;
+        }
+
+        .student-info {
+          padding: 12px 14px;
+          margin-bottom: 20px;
+        }
+        .student-info .info-row {
+          font-size: 0.8rem;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .button-group {
+          flex-direction: column;
+          gap: 12px;
+          width: 100%;
+        }
+
+        .btn {
+          width: 100%;
+          padding: 14px 20px;
+          font-size: 0.95rem;
+          min-width: unset;
+          flex: 1 1 auto;
+        }
+
+        .security-note {
+          font-size: 0.7rem;
+          padding-top: 14px;
+          flex-wrap: wrap;
+          text-align: center;
+          gap: 6px;
+        }
+
+        .page-bg .glow--1 {
+          width: 280px;
+          height: 280px;
+          top: -80px;
+          right: -60px;
+        }
+        .page-bg .glow--2 {
+          width: 220px;
+          height: 220px;
+          bottom: -60px;
+          left: -40px;
+        }
+        .page-bg .glow--3 {
+          width: 140px;
+          height: 140px;
+          top: 30%;
+          left: 50%;
+        }
+        .page-bg .shape--cap {
+          font-size: 10rem;
+          bottom: 10px;
+          right: 10px;
+        }
+        .page-bg .shape--book {
+          font-size: 7rem;
+          top: 40px;
+          left: 10px;
+        }
+      }
+
+      /* ---- very small screens ---- */
+      @media (max-width: 360px) {
+        .logout-card {
+          padding: 20px 14px 18px 14px;
+        }
+        .logout-card h2 {
+          font-size: 1.05rem;
+        }
+        .logout-card .description {
+          font-size: 0.8rem;
+        }
+        .btn {
+          font-size: 0.85rem;
+          padding: 12px 16px;
+        }
+        .student-info .info-row {
+          font-size: 0.7rem;
+        }
+        .logout-icon-circle {
+          width: 56px;
+          height: 56px;
+        }
+        .logout-icon-circle i {
+          font-size: 1.5rem;
+        }
+      }
+
+      /* ---- scrollbar (polish) ---- */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--light-bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 6px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!-- ============================================================
     BACKGROUND – Premium IMSU Gradient + Abstract Shapes
     ============================================================ -->
     <div class="page-bg" aria-hidden="true">
-        <!-- glowing circles -->
-        <div class="glow glow--1"></div>
-        <div class="glow glow--2"></div>
-        <div class="glow glow--3"></div>
+      <!-- glowing circles -->
+      <div class="glow glow--1"></div>
+      <div class="glow glow--2"></div>
+      <div class="glow glow--3"></div>
 
-        <!-- abstract academic shapes -->
-        <div class="shape shape--cap"><i class="fas fa-graduation-cap"></i></div>
-        <div class="shape shape--book"><i class="fas fa-book-open"></i></div>
+      <!-- abstract academic shapes -->
+      <div class="shape shape--cap"><i class="fas fa-graduation-cap"></i></div>
+      <div class="shape shape--book"><i class="fas fa-book-open"></i></div>
 
-        <!-- subtle grid pattern -->
-        <div class="grid-pattern"></div>
+      <!-- subtle grid pattern -->
+      <div class="grid-pattern"></div>
     </div>
 
     <!-- ============================================================
     LOGOUT CONFIRMATION CARD
     ============================================================ -->
     <main class="logout-card" role="main" aria-labelledby="logout-heading">
-
-        <!-- ---- Logout Icon ---- -->
-        <div class="logout-icon-wrapper">
-            <div class="logout-icon-circle" aria-hidden="true">
-                <i class="fas fa-sign-out-alt"></i>
-            </div>
+      <!-- ---- Logout Icon ---- -->
+      <div class="logout-icon-wrapper">
+        <div class="logout-icon-circle" aria-hidden="true">
+          <i class="fas fa-sign-out-alt"></i>
         </div>
+      </div>
 
-        <!-- ---- Heading ---- -->
-        <h2 id="logout-heading">Are you sure you want to log out?</h2>
+      <!-- ---- Heading ---- -->
+      <h2 id="logout-heading">Are you sure you want to log out?</h2>
 
-        <!-- ---- Description ---- -->
-        <p class="description">
-            You are about to end your current session. You can log in again at any time using your student credentials.
-        </p>
+      <!-- ---- Description ---- -->
+      <p class="description">
+        You are about to end your current session. You can log in again at any
+        time using your student credentials.
+      </p>
 
-        <!-- ---- Student Information (reassurance) ---- -->
-        <div class="student-info" aria-label="Student account information">
-            <div class="info-row">
-                <span class="label">Student:</span>
-                <span class="value"><span class="highlight">John</span> Doe</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Matric No:</span>
-                <span class="value"><span class="highlight">IMS-2021-1234</span></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Department:</span>
-                <span class="value"><span class="highlight">Computer Science</span></span>
-            </div>
+      <!-- ---- Student Information (reassurance) ---- -->
+      <div class="student-info" aria-label="Student account information">
+        <div class="info-row">
+          <span class="label">Student:</span>
+          <span class="value"><span class="highlight">John</span> Doe</span>
         </div>
-
-        <!-- ---- Buttons ---- -->
-        <div class="button-group">
-            <!-- Primary: Yes, Log Me Out -->
-            <button class="btn btn-primary" id="logoutBtn" aria-label="Confirm logout and sign out">
-                <span class="spinner" aria-hidden="true"></span>
-                <span class="btn-text"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Yes, Log Me Out</span>
-            </button>
-
-            <!-- Secondary: Cancel -->
-            <button class="btn btn-secondary" id="cancelBtn" aria-label="Cancel logout and return to dashboard">
-                <i class="fas fa-times" aria-hidden="true"></i> Cancel
-            </button>
+        <div class="info-row">
+          <span class="label">Matric No:</span>
+          <span class="value"
+            ><span class="highlight">IMS-2021-1234</span></span
+          >
         </div>
-
-        <!-- ---- Security Note ---- -->
-        <div class="security-note">
-            <i class="fas fa-shield-alt" aria-hidden="true"></i>
-            <span>Always log out when using a shared or public computer to keep your academic records secure.</span>
+        <div class="info-row">
+          <span class="label">Department:</span>
+          <span class="value"
+            ><span class="highlight">Computer Science</span></span
+          >
         </div>
+      </div>
 
+      <!-- ---- Buttons ---- -->
+      <div class="button-group">
+        <!-- Primary: Yes, Log Me Out -->
+        <button
+          class="btn btn-primary"
+          id="logoutBtn"
+          aria-label="Confirm logout and sign out"
+        >
+          <span class="spinner" aria-hidden="true"></span>
+          <span class="btn-text"
+            ><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Yes, Log Me
+            Out</span
+          >
+        </button>
+
+        <!-- Secondary: Cancel -->
+        <button
+          class="btn btn-secondary"
+          id="cancelBtn"
+          aria-label="Cancel logout and return to dashboard"
+        >
+          <i class="fas fa-times" aria-hidden="true"></i> Cancel
+        </button>
+      </div>
+
+      <!-- ---- Security Note ---- -->
+      <div class="security-note">
+        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+        <span
+          >Always log out when using a shared or public computer to keep your
+          academic records secure.</span
+        >
+      </div>
     </main>
 
     <!-- ============================================================
-    JAVASCRIPT – Logout flow + ripple + loading
+    JAVASCRIPT – Logout flow + ripple + loading + proper navigation
     ============================================================ -->
     <script>
-        (function() {
-            'use strict';
+      (function () {
+        "use strict";
 
-            // ---- DOM refs ----
-            const logoutBtn = document.getElementById('logoutBtn');
-            const cancelBtn = document.getElementById('cancelBtn');
+        // ---- DOM refs ----
+        const logoutBtn = document.getElementById("logoutBtn");
+        const cancelBtn = document.getElementById("cancelBtn");
 
-            // ============================================================
-            // RIPPLE EFFECT
-            // ============================================================
-            function createRipple(e, btn) {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+        // ============================================================
+        // RIPPLE EFFECT
+        // ============================================================
+        function createRipple(e, btn) {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
 
-                const ripple = document.createElement('span');
-                ripple.className = 'ripple';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
+          const ripple = document.createElement("span");
+          ripple.className = "ripple";
+          ripple.style.left = x + "px";
+          ripple.style.top = y + "px";
 
-                btn.appendChild(ripple);
+          btn.appendChild(ripple);
 
-                // remove after animation
-                setTimeout(function() {
-                    ripple.remove();
-                }, 700);
-            }
+          // remove after animation
+          setTimeout(function () {
+            ripple.remove();
+          }, 700);
+        }
 
-            // attach ripple to both buttons
-            logoutBtn.addEventListener('click', function(e) {
-                createRipple(e, this);
-            });
+        // attach ripple to both buttons
+        logoutBtn.addEventListener("click", function (e) {
+          createRipple(e, this);
+        });
 
-            cancelBtn.addEventListener('click', function(e) {
-                createRipple(e, this);
-            });
+        cancelBtn.addEventListener("click", function (e) {
+          createRipple(e, this);
+        });
 
-            // ============================================================
-            // LOGOUT FLOW – with loading state + redirect
-            // ============================================================
-            logoutBtn.addEventListener('click', function(e) {
-                // prevent multiple clicks
-                if (this.classList.contains('loading')) return;
+        // ============================================================
+        // LOGOUT FLOW – with loading state + redirect to login
+        // ============================================================
+        logoutBtn.addEventListener("click", function (e) {
+          // prevent multiple clicks
+          if (this.classList.contains("loading")) return;
 
-                // add loading state
-                this.classList.add('loading');
+          // add loading state
+          this.classList.add("loading");
 
-                // disable button visually (pointer-events already set in CSS)
-                this.disabled = true;
+          // disable button visually (pointer-events already set in CSS)
+          this.disabled = true;
 
-                // update button text (optional, but we keep the spinner visible)
-                const btnText = this.querySelector('.btn-text');
-                btnText.innerHTML = '<i class="fas fa-spinner" aria-hidden="true" style="display:none;"></i> Logging out…';
+          // update button text (optional, but we keep the spinner visible)
+          const btnText = this.querySelector(".btn-text");
+          btnText.innerHTML =
+            '<i class="fas fa-spinner" aria-hidden="true" style="display:none;"></i> Logging out…';
 
-                // Simulate a brief delay before redirect (for the loading animation to show)
-                setTimeout(function() {
-                    // Redirect to the login page
-                    // In a real app, this would be: window.location.href = '/login';
-                    // We'll simulate with a smooth transition and an alert for demo.
-                    // For production, uncomment the line below and remove the alert.
-                    // window.location.href = 'login.html'; 
+          // Clear any stored session data (if using localStorage)
+          // This matches the "Remember Me" functionality from login page
+          localStorage.removeItem("imsu_remember");
+          localStorage.removeItem("imsu_matric");
+          // Also clear any other potential session keys
+          localStorage.removeItem("imsu_lecturer_remember");
+          localStorage.removeItem("imsu_lecturer_staffId");
 
-                    // ---- DEMO: show success and redirect after a moment ----
-                    // (Remove this block in production and use window.location.href)
-                    alert('✅ You have been logged out successfully!\n\nRedirecting to the Student Login page…');
+          // Simulate a brief delay before redirect (for the loading animation to show)
+          setTimeout(function () {
+            // Redirect to the login page using proper navigation
+            // In production, this would be: window.location.href = 'login.html';
+            // Since we are in a demo environment, we'll use a clean redirect.
+            // We also need to handle the case where the user might be in a subfolder.
+            // Use a relative path that works from any directory level.
+            window.location.href = "login.html";
+          }, 1200); // wait 1.2s to show loading state
+        });
 
-                    // Simulate redirect to login page (demo)
-                    // In production, use: window.location.href = '/login';
-                    // For this demo, we'll just reset the button state and show a message.
-                    // But we want to simulate a real logout experience.
+        // ============================================================
+        // CANCEL – Return to Dashboard
+        // ============================================================
+        cancelBtn.addEventListener("click", function (e) {
+          // In production: window.location.href = '/dashboard';
+          // For demo, we'll use a relative path.
+          window.location.href = "studentdashboard.html";
+        });
 
-                    // Since we are in a demo environment and don't have a login page,
-                    // we'll reload the page to show the initial state, but we'll also
-                    // display a toast-like message.
-                    // Actually, let's just redirect to the current page with a query param
-                    // to simulate a logout. But best: just show a message and reset.
+        // ============================================================
+        // KEYBOARD SUPPORT – Enter on buttons
+        // ============================================================
+        logoutBtn.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            this.click();
+          }
+        });
 
-                    // For a better demo, we'll redirect to a "login" state by reloading
-                    // and showing a message. But we don't want to lose the context.
-                    // We'll just reset the button and show a message.
+        cancelBtn.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            this.click();
+          }
+        });
 
-                    // However, the requirement says: "Clicking this button should redirect
-                    // the student back to the Student Login page."
-                    // So we'll simulate that by showing a message and then reloading.
+        // ============================================================
+        // PREVENT ACCIDENTAL LOGOUT – double-click protection
+        // ============================================================
+        // Already handled via loading state
 
-                    // Let's do a clean redirect simulation: change the body content.
-                    // But that's overkill. We'll use a simple approach:
-
-                    // Show a temporary overlay or just redirect.
-                    // Since we don't have a login page in this single-file demo,
-                    // we'll show a "redirecting" message and then reload.
-
-                    const card = document.querySelector('.logout-card');
-                    // Create a redirect message inside the card
-                    const redirectMsg = document.createElement('div');
-                    redirectMsg.style.marginTop = '20px';
-                    redirectMsg.style.padding = '16px';
-                    redirectMsg.style.background = 'rgba(22, 163, 74, 0.10)';
-                    redirectMsg.style.borderRadius = 'var(--radius-sm)';
-                    redirectMsg.style.border = '1px solid rgba(22, 163, 74, 0.20)';
-                    redirectMsg.style.color = '#16A34A';
-                    redirectMsg.style.fontWeight = '600';
-                    redirectMsg.innerHTML =
-                        '<i class="fas fa-check-circle" aria-hidden="true"></i> Logged out successfully! Redirecting…';
-                    card.appendChild(redirectMsg);
-
-                    // Reset button after a moment (but we're redirecting)
-                    // Actually, for the demo we'll just redirect to the login page
-                    // which we don't have, so we'll reload to the same page
-                    // with a "logged out" message.
-
-                    // In production, use: window.location.href = '/login';
-                    // For this demo, we'll reload after 1.5s
-                    setTimeout(function() {
-                        // Simulate redirect to login page by going to the root
-                        // Since we're in a single file, we'll just reload with a query param
-                        // to simulate a logout state.
-                        // But a better approach: just reload the page.
-                        // However, that would show the same page again.
-                        // We'll just show a message and reset.
-                        // Actually, let's just redirect to a blank page with a message.
-                        // But we want to keep it simple: we'll show a "login" prompt.
-                        // For the purpose of this demo, we'll reload and show an alert.
-
-                        // Since the requirement is to redirect to the login page,
-                        // and we don't have one, we'll simulate it by showing a
-                        // "You have been logged out" message and then reloading.
-
-                        // We'll just reload the page to show the logout card again
-                        // but with a different message. Actually, we'll just keep it as is.
-                        // The user will see the card again.
-
-                        // For a better demo, we'll redirect to a page that shows
-                        // "You have been logged out" but we don't have that.
-                        // So we'll just reload and the user will see the logout card again.
-
-                        // The simplest: just reload the page.
-                        // But we want to show a "logged out" state.
-                        // We'll change the heading and description temporarily.
-
-                        // Let's just do the alert and then reload.
-                        // But we already showed an alert. So we'll just reload.
-
-                        // I'll just reload the page to simulate a fresh state.
-                        // But we already showed the alert. So we'll just let the user
-                        // see the logout card again.
-
-                        // In a real application, you would redirect to the login page.
-                        // For this demo, we'll just show a message and reload.
-
-                        // Actually, let's just do a redirect to the same page with a hash.
-                        // window.location.href = '#logout-success';
-                        // And then show a message.
-
-                        // The cleanest: just show a message inside the card and disable the buttons.
-                        // But the user might want to try again.
-
-                        // I'll implement a proper redirect simulation: replace the card content
-                        // with a "logged out" message and a "Login Again" button.
-
-                        const cardContent = card.innerHTML;
-                        card.innerHTML = `
-                                <div style="text-align:center; padding: 20px 0;">
-                                    <div style="font-size:3.5rem; color: var(--primary); margin-bottom:16px;">
-                                        <i class="fas fa-check-circle" aria-hidden="true"></i>
-                                    </div>
-                                    <h2 style="font-size:1.4rem; font-weight:700; color:var(--dark-text); margin-bottom:8px;">
-                                        Logged Out Successfully
-                                    </h2>
-                                    <p style="color:var(--gray-text); margin-bottom:24px;">
-                                        You have been signed out of your account. You can log in again at any time.
-                                    </p>
-                                    <button class="btn btn-primary" id="loginAgainBtn" style="width:100%; justify-content:center;">
-                                        <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Go to Login Page
-                                    </button>
-                                </div>
-                            `;
-
-                        // Add event listener to the new button
-                        document.getElementById('loginAgainBtn').addEventListener('click', function() {
-                            // Redirect to login page (simulate)
-                            alert('🔐 Redirecting to Student Login page…');
-                            // In production: window.location.href = '/login';
-                            // For demo, we'll reload the page to show the logout card again
-                            window.location.reload();
-                        });
-
-                        // Also add ripple to the new button
-                        document.getElementById('loginAgainBtn').addEventListener('click', function(e) {
-                            createRipple(e, this);
-                        });
-
-                    }, 800);
-
-                }, 1200); // wait 1.2s to show loading state
-            });
-
-            // ============================================================
-            // CANCEL – Return to Dashboard
-            // ============================================================
-            cancelBtn.addEventListener('click', function(e) {
-                // simulate return to dashboard
-                // In production: window.location.href = '/dashboard';
-                alert('↩️ Returning to Student Dashboard…');
-                // For demo, we'll just reload to show the logout card again
-                // but we want to simulate going back to dashboard.
-                // We'll just show a message and reset.
-                // Actually, we'll just redirect to the dashboard (which we don't have)
-                // So we'll just reload and show a message.
-
-                // For a better demo, we'll change the card content to show a "returning" message.
-                const card = document.querySelector('.logout-card');
-                const originalContent = card.innerHTML;
-
-                // Show a quick returning message
-                const tempMsg = document.createElement('div');
-                tempMsg.style.marginTop = '16px';
-                tempMsg.style.padding = '16px';
-                tempMsg.style.background = 'rgba(37, 99, 235, 0.08)';
-                tempMsg.style.borderRadius = 'var(--radius-sm)';
-                tempMsg.style.border = '1px solid rgba(37, 99, 235, 0.12)';
-                tempMsg.style.color = '#2563EB';
-                tempMsg.style.fontWeight = '500';
-                tempMsg.innerHTML = '<i class="fas fa-arrow-left" aria-hidden="true"></i> Returning to Dashboard…';
-                card.appendChild(tempMsg);
-
-                setTimeout(function() {
-                    // In production: window.location.href = '/dashboard';
-                    // For demo: reload to show the logout card again
-                    window.location.reload();
-                }, 600);
-            });
-
-            // ============================================================
-            // KEYBOARD SUPPORT – Enter on buttons
-            // ============================================================
-            logoutBtn.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    this.click();
-                }
-            });
-
-            cancelBtn.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    this.click();
-                }
-            });
-
-            // ============================================================
-            // PREVENT ACCIDENTAL LOGOUT – double-click protection
-            // ============================================================
-            // Already handled via loading state
-
-            console.log('🔐 IMSU Logout Confirmation page loaded successfully.');
-            console.log('👤 Ready to logout John Doe (IMS-2021-1234).');
-
-        })();
+        console.log("🔐 IMSU Logout Confirmation page loaded successfully.");
+        console.log("👤 Ready to logout John Doe (IMS-2021-1234).");
+      })();
     </script>
-
-</body>
+  </body>
 </html>
