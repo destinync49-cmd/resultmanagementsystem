@@ -845,7 +845,7 @@
         });
 
         // ============================================================
-        // LOGOUT FLOW – with loading state + redirect
+        // LOGOUT FLOW – with loading state + redirect to lecturer-login.html
         // ============================================================
         logoutBtn.addEventListener("click", function (e) {
           // prevent multiple clicks
@@ -859,82 +859,19 @@
           btnText.innerHTML =
             '<i class="fas fa-spinner" aria-hidden="true" style="display:none;"></i> Logging out…';
 
-          // Simulate a brief delay before redirect (for the loading animation)
+          // Wait for loading animation, then redirect directly to lecturer login
           setTimeout(function () {
-            // ---- DEMO: show success and redirect after a moment ----
-            // In production, use: window.location.href = '/lecturer-login';
-
-            // For this demo, we'll replace the card content with a "logged out" message
-            // and a "Login Again" button to simulate a proper redirect experience.
-
-            const card = document.querySelector(".logout-card");
-
-            // Store the original content to restore if needed
-            card.innerHTML = `
-                            <div style="text-align:center; padding: 20px 0;">
-                                <div style="font-size:3.5rem; color: var(--primary); margin-bottom:16px;">
-                                    <i class="fas fa-check-circle" aria-hidden="true"></i>
-                                </div>
-                                <h2 style="font-size:1.4rem; font-weight:700; color:var(--dark-text); margin-bottom:8px;">
-                                    Logged Out Successfully
-                                </h2>
-                                <p style="color:var(--gray-text); margin-bottom:24px;">
-                                    You have been signed out of your lecturer account. You can log in again at any time.
-                                </p>
-                                <button class="btn btn-primary" id="loginAgainBtn" style="width:100%; justify-content:center;">
-                                    <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Go to Lecturer Login
-                                </button>
-                                <div style="margin-top:16px;">
-                                    <button class="btn btn-secondary" id="stayLoggedOutBtn" style="width:100%; justify-content:center;">
-                                        <i class="fas fa-undo" aria-hidden="true"></i> Stay on this page
-                                    </button>
-                                </div>
-                            </div>
-                        `;
-
-            // Add event listener to the "Go to Lecturer Login" button
-            document
-              .getElementById("loginAgainBtn")
-              .addEventListener("click", function (e) {
-                createRipple(e, this);
-                // In production: window.location.href = '/lecturer-login';
-                alert("🔐 Redirecting to Lecturer Login page…");
-                // For demo, reload the page to show the logout card again
-                window.location.reload();
-              });
-
-            // Add event listener to "Stay on this page" button
-            document
-              .getElementById("stayLoggedOutBtn")
-              .addEventListener("click", function (e) {
-                createRipple(e, this);
-                // Just show a message and stay on the logged-out state
-                alert(
-                  'You remain logged out. Click "Go to Lecturer Login" to sign in again.',
-                );
-              });
-
-            // Also add ripple to the new buttons
-            document
-              .querySelectorAll("#loginAgainBtn, #stayLoggedOutBtn")
-              .forEach(function (btn) {
-                btn.addEventListener("click", function (e) {
-                  // Ripple is already handled above, but we need to ensure it's applied
-                  // The createRipple is called inside each handler
-                });
-              });
-          }, 1200); // wait 1.2s to show loading state
+            // Redirect to Lecturer Login page
+            window.location.href = "lecturerlogin.html";
+          }, 1200);
         });
 
         // ============================================================
         // CANCEL – Return to Lecturer Dashboard
         // ============================================================
         cancelBtn.addEventListener("click", function (e) {
-          // simulate return to dashboard
-          // In production: window.location.href = '/lecturer-dashboard';
-          alert("↩️ Returning to Lecturer Dashboard…");
-          // For demo: reload to show the logout card again
-          window.location.reload();
+          // Redirect directly to Lecturer Dashboard
+          window.location.href = "lecturer-dashboard.html";
         });
 
         // ============================================================
