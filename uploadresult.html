@@ -66,6 +66,8 @@
         line-height: 1.6;
         -webkit-font-smoothing: antialiased;
         overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
       }
 
       /* ============================================================
@@ -75,6 +77,10 @@
         display: flex;
         min-height: 100vh;
         animation: fadeIn 0.8s ease forwards;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+        padding-top: var(--nav-height);
       }
 
       /* ============================================================
@@ -238,10 +244,6 @@
       /* ---- sidebar toggle (hamburger) ---- */
       .sidebar-toggle {
         display: none;
-        position: fixed;
-        top: 18px;
-        left: 16px;
-        z-index: 1100;
         background: var(--white);
         border: none;
         border-radius: var(--radius-sm);
@@ -252,6 +254,10 @@
         box-shadow: var(--shadow-sm);
         transition: var(--transition);
         border: 1px solid var(--border-light);
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
       }
       .sidebar-toggle:hover {
         box-shadow: var(--shadow-md);
@@ -284,14 +290,20 @@
         flex-direction: column;
         min-height: 100vh;
         transition: margin-left 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+        padding-top: 0;
       }
 
       /* ============================================================
                TOP NAVIGATION – Fixed
                ============================================================ */
       .top-nav {
-        position: sticky;
+        position: fixed;
         top: 0;
+        left: var(--sidebar-width);
+        right: 0;
         z-index: 500;
         height: var(--nav-height);
         background: rgba(255, 255, 255, 0.78);
@@ -304,18 +316,35 @@
         padding: 0 36px;
         flex-shrink: 0;
         box-shadow: 0 1px 20px rgba(0, 0, 0, 0.02);
+        width: calc(100% - var(--sidebar-width));
+        max-width: 100%;
+        transition:
+          left 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      /* On mobile, the sidebar collapses, so navbar spans full width */
+      @media (max-width: 1023px) {
+        .top-nav {
+          left: 0;
+          width: 100%;
+        }
       }
 
       .top-nav .nav-left {
         display: flex;
         align-items: center;
         gap: 16px;
+        flex-shrink: 1;
+        min-width: 0;
       }
 
       .top-nav .nav-left .nav-logo {
         display: flex;
         align-items: center;
         gap: 10px;
+        flex-shrink: 1;
+        min-width: 0;
       }
       .top-nav .nav-left .nav-logo .logo-icon {
         width: 36px;
@@ -344,6 +373,8 @@
         font-size: 1.05rem;
         color: var(--dark-text);
         letter-spacing: -0.2px;
+        flex-shrink: 1;
+        min-width: 0;
       }
       .top-nav .nav-center .page-title {
         background: var(--primary-light);
@@ -353,12 +384,14 @@
         font-weight: 600;
         color: var(--primary);
         display: inline-block;
+        white-space: nowrap;
       }
 
       .top-nav .nav-right {
         display: flex;
         align-items: center;
         gap: 20px;
+        flex-shrink: 0;
       }
 
       .top-nav .nav-right .notification-btn {
@@ -371,6 +404,10 @@
         padding: 6px;
         border-radius: 50%;
         transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
       }
       .top-nav .nav-right .notification-btn:hover {
         background: rgba(0, 0, 0, 0.04);
@@ -402,6 +439,7 @@
         padding: 4px 12px 4px 4px;
         border-radius: 60px;
         transition: var(--transition);
+        flex-shrink: 0;
       }
       .top-nav .nav-right .profile-wrap:hover {
         background: rgba(0, 0, 0, 0.03);
@@ -513,6 +551,9 @@
         flex: 1;
         padding: 28px 36px 20px 36px;
         animation: slideUp 0.7s ease 0.15s both;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
       }
 
       /* ---- Page Header ---- */
@@ -523,12 +564,19 @@
         flex-wrap: wrap;
         gap: 12px;
         margin-bottom: 28px;
+        width: 100%;
+        max-width: 100%;
+      }
+      .page-header .header-left {
+        flex: 1 1 auto;
+        min-width: 0;
       }
       .page-header .header-left h1 {
         font-size: 1.8rem;
         font-weight: 700;
         color: var(--dark-text);
         letter-spacing: -0.3px;
+        word-wrap: break-word;
       }
       .page-header .header-left h1 i {
         color: var(--primary);
@@ -537,6 +585,10 @@
       .page-header .header-left p {
         color: var(--gray-text);
         font-size: 0.95rem;
+        word-wrap: break-word;
+      }
+      .page-header .header-right {
+        flex-shrink: 0;
       }
       .page-header .header-right .breadcrumb {
         font-size: 0.8rem;
@@ -547,6 +599,7 @@
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         border: 1px solid var(--border-light);
+        white-space: nowrap;
       }
       .page-header .header-right .breadcrumb span {
         color: var(--primary);
@@ -571,6 +624,9 @@
         flex-wrap: wrap;
         gap: 8px;
         position: relative;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
       }
 
       .stepper-step {
@@ -676,6 +732,8 @@
         box-shadow: var(--shadow-sm);
         margin-bottom: 28px;
         transition: var(--transition);
+        width: 100%;
+        max-width: 100%;
       }
       .selection-card:hover {
         box-shadow: var(--shadow-md);
@@ -727,6 +785,7 @@
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: right 14px center;
+        max-width: 100%;
       }
       .selection-grid .filter-group select:focus {
         border-color: var(--primary);
@@ -775,6 +834,8 @@
         margin-bottom: 28px;
         transition: var(--transition);
         display: none;
+        width: 100%;
+        max-width: 100%;
       }
       .course-info-card.visible {
         display: block;
@@ -804,6 +865,7 @@
         font-size: 0.95rem;
         font-weight: 600;
         color: var(--dark-text);
+        word-wrap: break-word;
       }
 
       @media (max-width: 1023px) {
@@ -847,6 +909,8 @@
         overflow: hidden;
         margin-bottom: 28px;
         display: none;
+        width: 100%;
+        max-width: 100%;
       }
       .table-card.visible {
         display: block;
@@ -869,6 +933,7 @@
         display: flex;
         align-items: center;
         gap: 8px;
+        flex-wrap: wrap;
       }
       .table-card .table-header h4 i {
         color: var(--primary);
@@ -880,6 +945,7 @@
         padding: 2px 14px;
         border-radius: 60px;
         font-weight: 500;
+        white-space: nowrap;
       }
 
       .table-responsive {
@@ -887,6 +953,8 @@
         -webkit-overflow-scrolling: touch;
         margin: 0 -4px;
         padding: 0 4px;
+        width: 100%;
+        max-width: 100%;
       }
 
       .table-responsive table {
@@ -912,6 +980,7 @@
         top: 0;
         background: var(--light-bg);
         z-index: 5;
+        white-space: nowrap;
       }
       .table-responsive table tbody td {
         padding: 10px 12px;
@@ -919,6 +988,7 @@
         color: var(--dark-text);
         font-size: 0.85rem;
         vertical-align: middle;
+        word-wrap: break-word;
       }
       .table-responsive table tbody tr:hover {
         background: rgba(0, 107, 63, 0.03);
@@ -938,6 +1008,7 @@
         outline: none;
         transition: var(--transition);
         background: var(--white);
+        max-width: 100%;
       }
       .table-responsive table tbody td input[type="number"]:focus {
         border-color: var(--primary);
@@ -1014,6 +1085,8 @@
         margin-bottom: 28px;
         transition: var(--transition);
         display: none;
+        width: 100%;
+        max-width: 100%;
       }
       .summary-card.visible {
         display: block;
@@ -1048,6 +1121,7 @@
         color: var(--gray-text);
         text-transform: uppercase;
         letter-spacing: 0.3px;
+        word-wrap: break-word;
       }
       .summary-grid .summary-item .sum-number.gold {
         color: var(--gold);
@@ -1085,6 +1159,8 @@
         gap: 16px;
         flex-wrap: wrap;
         margin-bottom: 28px;
+        width: 100%;
+        max-width: 100%;
       }
       .action-buttons .btn-action {
         display: inline-flex;
@@ -1101,6 +1177,7 @@
         text-decoration: none;
         position: relative;
         overflow: hidden;
+        flex: 1 0 auto;
       }
       .action-buttons .btn-action.primary {
         background: var(--primary-gradient);
@@ -1159,6 +1236,9 @@
         box-shadow: var(--shadow-sm);
         transition: var(--transition);
         margin-bottom: 28px;
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
       }
       .notif-card:hover {
         box-shadow: var(--shadow-md);
@@ -1171,6 +1251,7 @@
         align-items: center;
         gap: 8px;
         margin-bottom: 8px;
+        flex-wrap: wrap;
       }
       .notif-card .section-title i {
         color: var(--primary);
@@ -1182,6 +1263,8 @@
         gap: 12px;
         padding: 10px 0;
         border-bottom: 1px solid var(--border-light);
+        width: 100%;
+        max-width: 100%;
       }
       .notif-card .notif-item:last-child {
         border-bottom: none;
@@ -1204,11 +1287,13 @@
       }
       .notif-card .notif-item .notif-content {
         flex: 1;
+        min-width: 0;
       }
       .notif-card .notif-item .notif-content .notif-title {
         font-weight: 600;
         font-size: 0.9rem;
         color: var(--dark-text);
+        word-wrap: break-word;
       }
       .notif-card .notif-item .notif-content .notif-time {
         font-size: 0.75rem;
@@ -1232,6 +1317,8 @@
         text-align: center;
         padding: 40px 20px 32px 20px;
         display: none;
+        width: 100%;
+        max-width: 100%;
       }
       .empty-state i {
         font-size: 4rem;
@@ -1243,11 +1330,13 @@
         font-size: 1.2rem;
         color: var(--dark-text);
         font-weight: 600;
+        word-wrap: break-word;
       }
       .empty-state p {
         color: var(--gray-text);
         max-width: 400px;
         margin: 0 auto;
+        word-wrap: break-word;
       }
 
       /* ============================================================
@@ -1410,6 +1499,8 @@
         text-align: center;
         padding: 40px 20px 30px 20px;
         display: none;
+        width: 100%;
+        max-width: 100%;
       }
       .success-screen.visible {
         display: block;
@@ -1522,6 +1613,8 @@
         color: var(--gray-text);
         margin-top: auto;
         flex-shrink: 0;
+        width: 100%;
+        max-width: 100%;
       }
       .dashboard-footer span:last-child {
         font-weight: 500;
@@ -1536,6 +1629,9 @@
         .top-nav .nav-center .page-title {
           font-size: 0.75rem;
           padding: 2px 12px;
+        }
+        .summary-grid {
+          grid-template-columns: repeat(3, 1fr);
         }
       }
 
@@ -1552,8 +1648,6 @@
         }
         .sidebar-toggle {
           display: flex;
-          align-items: center;
-          justify-content: center;
         }
         .sidebar-overlay.active {
           display: block;
@@ -1562,8 +1656,11 @@
           margin-left: 0;
         }
         .top-nav {
+          left: 0;
+          width: 100%;
+        }
+        .top-nav {
           padding: 0 20px;
-          padding-left: 72px;
         }
         .top-nav .nav-center {
           display: none;
@@ -1580,38 +1677,118 @@
           flex-direction: column;
           align-items: flex-start;
         }
+        .selection-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .course-info-card .info-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .summary-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
       }
 
       @media (max-width: 767px) {
+        /* ---- Mobile Header Alignment Fix ---- */
         .top-nav {
           padding: 0 14px;
-          padding-left: 60px;
           height: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          left: 0;
+          width: 100%;
         }
-        .top-nav .nav-left .nav-logo .logo-text {
-          font-size: 0.8rem;
+
+        .top-nav .nav-left {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex: 1 1 auto;
+          min-width: 0;
+        }
+
+        .sidebar-toggle {
+          display: flex;
+          position: relative;
+          top: auto;
+          left: auto;
+          padding: 8px 10px;
+          font-size: 1.15rem;
+          flex-shrink: 0;
+          height: 40px;
+          width: 40px;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--border-light);
+          background: var(--white);
+          border-radius: var(--radius-sm);
+          color: var(--primary);
+          box-shadow: var(--shadow-sm);
+          line-height: 1;
+          margin: 0;
+        }
+        .sidebar-toggle:hover {
+          box-shadow: var(--shadow-md);
+          transform: none;
+        }
+        .sidebar-toggle:active {
+          transform: scale(0.95);
+        }
+
+        .top-nav .nav-left .nav-logo {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-shrink: 0;
         }
         .top-nav .nav-left .nav-logo .logo-icon {
           width: 30px;
           height: 30px;
           font-size: 13px;
+          border-radius: 8px;
+          flex-shrink: 0;
         }
-        .top-nav .nav-right .profile-wrap .profile-name {
-          display: none;
+        .top-nav .nav-left .nav-logo .logo-text {
+          font-size: 0.8rem;
+          white-space: nowrap;
         }
+
         .top-nav .nav-right {
-          gap: 12px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-shrink: 0;
         }
         .top-nav .nav-right .notification-btn {
           font-size: 1.1rem;
+          padding: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .top-nav .nav-right .notification-btn .badge {
+          width: 16px;
+          height: 16px;
+          font-size: 8px;
+          top: -4px;
+          right: -4px;
+          border-width: 1.5px;
+        }
+        .top-nav .nav-right .profile-wrap {
+          padding: 2px 6px 2px 2px;
+          gap: 6px;
+          display: flex;
+          align-items: center;
         }
         .top-nav .nav-right .profile-wrap .avatar {
           width: 34px;
           height: 34px;
-          font-size: 0.85rem;
+          font-size: 0.8rem;
+          flex-shrink: 0;
         }
-        .top-nav .nav-right .profile-wrap {
-          padding: 2px;
+        .top-nav .nav-right .profile-wrap .profile-name {
+          display: none;
         }
         .top-nav .nav-right .profile-wrap .chevron {
           display: none;
@@ -1636,9 +1813,23 @@
           padding: 18px 16px 16px 16px;
           border-radius: var(--radius-sm);
         }
+        .selection-grid {
+          grid-template-columns: 1fr;
+        }
+        .selection-grid .btn-load {
+          width: 100%;
+          justify-content: center;
+        }
         .course-info-card {
           padding: 16px 16px 14px 16px;
           border-radius: var(--radius-sm);
+        }
+        .course-info-card .info-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px 16px;
+        }
+        .course-info-card .info-grid .info-item .info-value {
+          font-size: 0.85rem;
         }
         .table-card {
           padding: 16px 12px 12px 12px;
@@ -1661,6 +1852,12 @@
         .summary-card {
           padding: 16px 16px 14px 16px;
           border-radius: var(--radius-sm);
+        }
+        .summary-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .summary-grid .summary-item .sum-number {
+          font-size: 1.1rem;
         }
 
         .action-buttons {
@@ -1735,15 +1932,33 @@
 
       @media (max-width: 420px) {
         .top-nav {
-          padding-left: 52px;
+          padding-left: 10px;
+          padding-right: 10px;
           height: 58px;
         }
         .sidebar-toggle {
-          top: 14px;
-          left: 10px;
-          padding: 6px 10px;
-          font-size: 1.1rem;
+          padding: 6px 8px;
+          font-size: 1rem;
+          height: 34px;
+          width: 34px;
         }
+        .top-nav .nav-left .nav-logo .logo-icon {
+          width: 26px;
+          height: 26px;
+          font-size: 11px;
+        }
+        .top-nav .nav-left .nav-logo .logo-text {
+          font-size: 0.7rem;
+        }
+        .top-nav .nav-right .notification-btn {
+          font-size: 0.95rem;
+        }
+        .top-nav .nav-right .profile-wrap .avatar {
+          width: 30px;
+          height: 30px;
+          font-size: 0.7rem;
+        }
+
         .page-header .header-left h1 {
           font-size: 1.2rem;
         }
@@ -1763,6 +1978,23 @@
         }
         .summary-grid .summary-item .sum-label {
           font-size: 0.6rem;
+        }
+        .table-responsive table {
+          min-width: 600px;
+          font-size: 0.7rem;
+        }
+        .table-responsive table thead th,
+        .table-responsive table tbody td {
+          padding: 4px 6px;
+        }
+        .table-responsive table tbody td input[type="number"] {
+          width: 48px;
+          padding: 3px 4px;
+          font-size: 0.7rem;
+        }
+        .btn-action {
+          padding: 10px 16px;
+          font-size: 0.85rem;
         }
       }
 
@@ -1886,16 +2118,17 @@
         <nav class="sidebar-menu">
           <div class="menu-label">Main Menu</div>
 
-          <a href="#" class="menu-item" data-page="dashboard">
+          <!-- All sidebar items now use proper hrefs for navigation -->
+          <a href="dashboard.html" class="menu-item" data-page="dashboard">
             <i class="fas fa-th-large" aria-hidden="true"></i>
             Dashboard
           </a>
-          <a href="#" class="menu-item" data-page="courses">
+          <a href="assignedresult.html" class="menu-item" data-page="courses">
             <i class="fas fa-book" aria-hidden="true"></i>
             Assigned Courses
           </a>
           <a
-            href="#"
+            href="uploadresult.html"
             class="menu-item active"
             data-page="upload"
             aria-current="page"
@@ -1903,27 +2136,36 @@
             <i class="fas fa-upload" aria-hidden="true"></i>
             Upload Results
           </a>
-          <a href="#" class="menu-item" data-page="submitted">
+          <a
+            href="submittedresult.html"
+            class="menu-item"
+            data-page="submitted"
+          >
             <i class="fas fa-check-circle" aria-hidden="true"></i>
             Submitted Results
           </a>
-          <a href="#" class="menu-item" data-page="profile">
+          <a href="lecturer-profile.html" class="menu-item" data-page="profile">
             <i class="fas fa-user-circle" aria-hidden="true"></i>
             Profile
           </a>
-          <a href="#" class="menu-item" data-page="settings">
+          <a
+            href="lecturer-settings.html"
+            class="menu-item"
+            data-page="settings"
+          >
             <i class="fas fa-cog" aria-hidden="true"></i>
             Settings
           </a>
 
-          <button
+          <a
+            href="logout.html"
             class="menu-item logout-item"
             id="sidebarLogout"
             aria-label="Logout"
           >
             <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
             Logout
-          </button>
+          </a>
         </nav>
       </aside>
 
@@ -1994,20 +2236,29 @@
 
             <!-- Profile dropdown -->
             <div class="profile-dropdown" id="profileDropdown" role="menu">
-              <button class="dropdown-item" role="menuitem">
+              <a
+                href="lecturer-profile.html"
+                class="dropdown-item"
+                role="menuitem"
+              >
                 <i class="fas fa-user" aria-hidden="true"></i> My Profile
-              </button>
-              <button class="dropdown-item" role="menuitem">
+              </a>
+              <a
+                href="lecturer-settings.html"
+                class="dropdown-item"
+                role="menuitem"
+              >
                 <i class="fas fa-cog" aria-hidden="true"></i> Settings
-              </button>
+              </a>
               <div class="dropdown-divider"></div>
-              <button
+              <a
+                href="logout.html"
                 class="dropdown-item danger"
                 role="menuitem"
                 id="dropdownLogout"
               >
                 <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout
-              </button>
+              </a>
             </div>
           </div>
         </header>
@@ -2268,14 +2519,22 @@
               </div>
             </div>
             <div class="success-actions">
-              <button class="btn-success primary" id="successDashboardBtn">
+              <a
+                href="dashboard.html"
+                class="btn-success primary"
+                id="successDashboardBtn"
+              >
                 <i class="fas fa-th-large" aria-hidden="true"></i> Back to
                 Dashboard
-              </button>
-              <button class="btn-success secondary" id="successSubmittedBtn">
+              </a>
+              <a
+                href="submittedresult.html"
+                class="btn-success secondary"
+                id="successSubmittedBtn"
+              >
                 <i class="fas fa-check-circle" aria-hidden="true"></i> View
                 Submitted Results
-              </button>
+              </a>
             </div>
           </div>
 
@@ -2498,25 +2757,33 @@
         });
 
         // ---- Notification bell ----
-        notifBtn.addEventListener("click", function () {
-          alert(
-            "📬 Notifications\n\n• Result submission deadline: Jan 30\n• Current Session: 2025/2026\n• Recent: CSC301 results uploaded\n• Departmental meeting notice",
-          );
-          notifBadge.style.display = "none";
-        });
+        // Notification bell is now a link, but we keep the badge dismissal
+        if (notifBtn) {
+          notifBtn.addEventListener("click", function (e) {
+            // Let the link navigation happen, but also dismiss badge for UX
+            if (notifBadge) {
+              notifBadge.style.display = "none";
+            }
+            // Allow the navigation to proceed
+          });
+        }
 
         // ---- Sidebar menu items ----
+        // Sidebar items are now proper <a> tags with hrefs.
+        // We keep the active state management for when users click them.
         const menuItems = document.querySelectorAll(
           ".sidebar-menu .menu-item:not(.logout-item)",
         );
         menuItems.forEach(function (item) {
           item.addEventListener("click", function (e) {
-            e.preventDefault();
+            // Let the link navigation work, but update active state
+            // Remove active from all
             menuItems.forEach(function (mi) {
               mi.classList.remove("active");
             });
             this.classList.add("active");
 
+            // update page title in nav
             const pageName = this.textContent.trim();
             const titleEl = document.querySelector(".top-nav .page-title");
             if (titleEl) {
@@ -2528,6 +2795,7 @@
               titleEl.appendChild(document.createTextNode(" " + pageName));
             }
 
+            // close sidebar on mobile
             if (window.innerWidth < 1024) {
               toggleSidebar(false);
             }
@@ -2535,17 +2803,22 @@
         });
 
         // ---- Logout handlers ----
-        function handleLogout() {
-          if (confirm("Are you sure you want to log out?")) {
-            alert("You have been logged out. Redirecting to login page...");
-          }
+        function handleLogout(e) {
+          // Allow navigation to proceed
+          console.log("Logging out...");
         }
-        sidebarLogout.addEventListener("click", handleLogout);
-        dropdownLogout.addEventListener("click", function (e) {
-          e.stopPropagation();
-          toggleProfile(false);
-          handleLogout();
-        });
+
+        if (sidebarLogout) {
+          sidebarLogout.addEventListener("click", handleLogout);
+        }
+        if (dropdownLogout) {
+          dropdownLogout.addEventListener("click", function (e) {
+            e.stopPropagation();
+            toggleProfile(false);
+            handleLogout(e);
+            // Let the link navigation proceed
+          });
+        }
 
         // ---- Keyboard: Enter/Space on profile toggle ----
         profileToggle.addEventListener("keydown", function (e) {
@@ -2590,6 +2863,21 @@
           toggleBtn.setAttribute("aria-expanded", "false");
           toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
         }
+
+        // ---- Highlight active page based on current URL ----
+        const currentPath =
+          window.location.pathname.split("/").pop() || "uploadresult.html";
+        const sidebarLinks = document.querySelectorAll(
+          ".sidebar-menu .menu-item[href]",
+        );
+        sidebarLinks.forEach(function (link) {
+          const linkPath = link.getAttribute("href").split("/").pop();
+          if (linkPath === currentPath) {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        });
 
         // ============================================================
         // UPLOAD RESULTS PAGE SPECIFIC FUNCTIONALITY
@@ -3139,23 +3427,17 @@
         });
 
         // Success screen buttons
-        successDashboardBtn.addEventListener("click", function (e) {
-          createRipple(e, this);
-          const dashItem = document.querySelector(
-            '.sidebar-menu .menu-item[data-page="dashboard"]',
-          );
-          if (dashItem) dashItem.click();
-          else alert("📊 Returning to Dashboard…");
-        });
-
-        successSubmittedBtn.addEventListener("click", function (e) {
-          createRipple(e, this);
-          const submittedItem = document.querySelector(
-            '.sidebar-menu .menu-item[data-page="submitted"]',
-          );
-          if (submittedItem) submittedItem.click();
-          else alert("✅ View Submitted Results");
-        });
+        // Now handled via hrefs, but we keep ripple
+        if (successDashboardBtn) {
+          successDashboardBtn.addEventListener("click", function (e) {
+            createRipple(e, this);
+          });
+        }
+        if (successSubmittedBtn) {
+          successSubmittedBtn.addEventListener("click", function (e) {
+            createRipple(e, this);
+          });
+        }
 
         // ---- Ripple helper ----
         function createRipple(e, btn) {
