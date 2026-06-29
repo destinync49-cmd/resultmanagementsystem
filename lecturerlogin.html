@@ -1,1453 +1,1520 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IMSU Lecturer Result Management Portal | Login</title>
 
     <!-- Font Awesome 6 (Free) for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
 
     <style>
-        /* ============================================================
+      /* ============================================================
                CSS VARIABLES – IMSU Brand Colors (same as Student Login)
                ============================================================ */
-        :root {
-            --primary: #006B3F;
-            --primary-dark: #004D2E;
-            --primary-light: #E8F5EE;
-            --primary-gradient: linear-gradient(145deg, #006B3F 0%, #004D2E 100%);
-            --gold: #D4AF37;
-            --gold-light: #E8D48B;
-            --gold-glow: rgba(212, 175, 55, 0.25);
-            --white: #FFFFFF;
-            --light-bg: #F5F7F8;
-            --dark-text: #1E293B;
-            --gray-text: #64748B;
-            --border-light: rgba(0, 107, 63, 0.12);
-            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 12px 48px rgba(0, 0, 0, 0.10);
-            --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.14);
-            --radius-sm: 10px;
-            --radius-md: 18px;
-            --radius-lg: 28px;
-            --transition: 0.30s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --font-sans: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-        }
+      :root {
+        --primary: #006b3f;
+        --primary-dark: #004d2e;
+        --primary-light: #e8f5ee;
+        --primary-gradient: linear-gradient(145deg, #006b3f 0%, #004d2e 100%);
+        --gold: #d4af37;
+        --gold-light: #e8d48b;
+        --gold-glow: rgba(212, 175, 55, 0.25);
+        --white: #ffffff;
+        --light-bg: #f5f7f8;
+        --dark-text: #1e293b;
+        --gray-text: #64748b;
+        --border-light: rgba(0, 107, 63, 0.12);
+        --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.06);
+        --shadow-md: 0 12px 48px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.14);
+        --radius-sm: 10px;
+        --radius-md: 18px;
+        --radius-lg: 28px;
+        --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        --font-sans:
+          "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont,
+          "Helvetica Neue", sans-serif;
+      }
 
-        /* ============================================================
+      /* ============================================================
                RESET & BASE
                ============================================================ */
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-        }
+      html {
+        font-size: 16px;
+        scroll-behavior: smooth;
+      }
 
-        body {
-            font-family: var(--font-sans);
-            background: var(--light-bg);
-            color: var(--dark-text);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
+      body {
+        font-family: var(--font-sans);
+        background: var(--light-bg);
+        color: var(--dark-text);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
 
-        /* ============================================================
+      /* ============================================================
                CONTAINER – main wrapper (same as student login)
                ============================================================ */
-        .portal-container {
-            display: flex;
-            max-width: 1360px;
-            width: 100%;
-            min-height: 700px;
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            animation: fadeIn 0.9s ease forwards;
-        }
+      .portal-container {
+        display: flex;
+        max-width: 1360px;
+        width: 100%;
+        min-height: 700px;
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        position: relative;
+        animation: fadeIn 0.9s ease forwards;
+      }
 
-        /* ============================================================
+      /* ============================================================
                LEFT PANEL – Welcome (55–60%)
                ============================================================ */
-        .left-panel {
-            flex: 0 0 58%;
-            background: var(--primary-gradient);
-            padding: 48px 52px 52px 52px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            color: var(--white);
-            min-height: 700px;
-        }
+      .left-panel {
+        flex: 0 0 58%;
+        background: var(--primary-gradient);
+        padding: 48px 52px 52px 52px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        color: var(--white);
+        min-height: 700px;
+      }
 
-        /* ---- floating abstract shapes (background) ---- */
-        .left-panel .bg-shape {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0.15;
-            z-index: 0;
-        }
-        .left-panel .bg-shape--1 {
-            width: 320px;
-            height: 320px;
-            background: var(--gold);
-            top: -80px;
-            right: -60px;
-            animation: floatShape 8s ease-in-out infinite alternate;
-        }
-        .left-panel .bg-shape--2 {
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.08);
-            bottom: 40px;
-            left: -40px;
-            animation: floatShape 10s ease-in-out infinite alternate-reverse;
-        }
-        .left-panel .bg-shape--3 {
-            width: 140px;
-            height: 140px;
-            background: var(--gold-light);
-            bottom: 180px;
-            right: 20px;
-            opacity: 0.10;
-            animation: floatShape 7s ease-in-out infinite alternate;
-        }
-        .left-panel .bg-shape--4 {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.06);
-            top: 200px;
-            left: 20%;
-            animation: floatShape 12s ease-in-out infinite alternate-reverse;
-        }
+      /* ---- floating abstract shapes (background) ---- */
+      .left-panel .bg-shape {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0.15;
+        z-index: 0;
+      }
+      .left-panel .bg-shape--1 {
+        width: 320px;
+        height: 320px;
+        background: var(--gold);
+        top: -80px;
+        right: -60px;
+        animation: floatShape 8s ease-in-out infinite alternate;
+      }
+      .left-panel .bg-shape--2 {
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.08);
+        bottom: 40px;
+        left: -40px;
+        animation: floatShape 10s ease-in-out infinite alternate-reverse;
+      }
+      .left-panel .bg-shape--3 {
+        width: 140px;
+        height: 140px;
+        background: var(--gold-light);
+        bottom: 180px;
+        right: 20px;
+        opacity: 0.1;
+        animation: floatShape 7s ease-in-out infinite alternate;
+      }
+      .left-panel .bg-shape--4 {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.06);
+        top: 200px;
+        left: 20%;
+        animation: floatShape 12s ease-in-out infinite alternate-reverse;
+      }
 
-        /* ---- academic icons (subtle) ---- */
-        .left-panel .academic-icon {
-            position: absolute;
-            opacity: 0.06;
-            pointer-events: none;
-            z-index: 0;
-            font-size: 180px;
-            right: 20px;
-            bottom: 100px;
-            color: var(--white);
-            transform: rotate(-6deg);
-        }
-        .left-panel .academic-icon--books {
-            font-size: 120px;
-            left: 30px;
-            top: 120px;
-            opacity: 0.05;
-            transform: rotate(12deg);
-        }
+      /* ---- academic icons (subtle) ---- */
+      .left-panel .academic-icon {
+        position: absolute;
+        opacity: 0.06;
+        pointer-events: none;
+        z-index: 0;
+        font-size: 180px;
+        right: 20px;
+        bottom: 100px;
+        color: var(--white);
+        transform: rotate(-6deg);
+      }
+      .left-panel .academic-icon--books {
+        font-size: 120px;
+        left: 30px;
+        top: 120px;
+        opacity: 0.05;
+        transform: rotate(12deg);
+      }
 
-        /* ---- glassmorphism overlay on left ---- */
-        .left-panel .glass-overlay {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
-            pointer-events: none;
-        }
+      /* ---- glassmorphism overlay on left ---- */
+      .left-panel .glass-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: radial-gradient(
+          circle at 20% 30%,
+          rgba(255, 255, 255, 0.04) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
 
-        /* ---- left panel content (z-index above shapes) ---- */
-        .left-panel>*:not(.bg-shape):not(.academic-icon):not(.glass-overlay) {
-            position: relative;
-            z-index: 2;
-        }
+      /* ---- left panel content (z-index above shapes) ---- */
+      .left-panel > *:not(.bg-shape):not(.academic-icon):not(.glass-overlay) {
+        position: relative;
+        z-index: 2;
+      }
 
-        /* ---- logo ---- */
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 40px;
-            flex-shrink: 0;
-        }
-        .logo-area .logo-icon {
-            width: 52px;
-            height: 52px;
-            background: rgba(255, 255, 255, 0.10);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--gold);
-            border: 1.5px solid rgba(212, 175, 55, 0.30);
-            backdrop-filter: blur(4px);
-            flex-shrink: 0;
-        }
-        .logo-area .logo-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.2;
-        }
-        .logo-area .logo-text .imsu {
-            font-size: 26px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: var(--white);
-        }
-        .logo-area .logo-text .imsu span {
-            color: var(--gold);
-        }
-        .logo-area .logo-text .sub {
-            font-size: 13px;
-            font-weight: 400;
-            opacity: 0.75;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
+      /* ---- logo ---- */
+      .logo-area {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 40px;
+        flex-shrink: 0;
+      }
+      .logo-area .logo-icon {
+        width: 52px;
+        height: 52px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--gold);
+        border: 1.5px solid rgba(212, 175, 55, 0.3);
+        backdrop-filter: blur(4px);
+        flex-shrink: 0;
+      }
+      .logo-area .logo-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+      }
+      .logo-area .logo-text .imsu {
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: var(--white);
+      }
+      .logo-area .logo-text .imsu span {
+        color: var(--gold);
+      }
+      .logo-area .logo-text .sub {
+        font-size: 13px;
+        font-weight: 400;
+        opacity: 0.75;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
 
-        /* ---- welcome content ---- */
-        .welcome-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            max-width: 540px;
-            animation: slideUp 0.8s ease 0.2s both;
-        }
-        .welcome-content .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(212, 175, 55, 0.18);
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            padding: 6px 18px 6px 14px;
-            border-radius: 60px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--gold-light);
-            letter-spacing: 0.3px;
-            backdrop-filter: blur(4px);
-            width: fit-content;
-            margin-bottom: 28px;
-        }
-        .welcome-content .badge i {
-            font-size: 14px;
-        }
+      /* ---- welcome content ---- */
+      .welcome-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 540px;
+        animation: slideUp 0.8s ease 0.2s both;
+      }
+      .welcome-content .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(212, 175, 55, 0.18);
+        border: 1px solid rgba(212, 175, 55, 0.25);
+        padding: 6px 18px 6px 14px;
+        border-radius: 60px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--gold-light);
+        letter-spacing: 0.3px;
+        backdrop-filter: blur(4px);
+        width: fit-content;
+        margin-bottom: 28px;
+      }
+      .welcome-content .badge i {
+        font-size: 14px;
+      }
 
-        .welcome-content h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            line-height: 1.15;
-            margin-bottom: 18px;
-            letter-spacing: -0.5px;
-        }
-        .welcome-content h1 .highlight {
-            color: var(--gold);
-            position: relative;
-        }
-        .welcome-content h1 .highlight::after {
-            content: '';
-            position: absolute;
-            bottom: 2px;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gold);
-            border-radius: 4px;
-            opacity: 0.35;
-        }
+      .welcome-content h1 {
+        font-size: 2.8rem;
+        font-weight: 700;
+        line-height: 1.15;
+        margin-bottom: 18px;
+        letter-spacing: -0.5px;
+      }
+      .welcome-content h1 .highlight {
+        color: var(--gold);
+        position: relative;
+      }
+      .welcome-content h1 .highlight::after {
+        content: "";
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--gold);
+        border-radius: 4px;
+        opacity: 0.35;
+      }
 
-        .welcome-content p {
-            font-size: 1.06rem;
-            opacity: 0.85;
-            max-width: 480px;
-            margin-bottom: 36px;
-            line-height: 1.7;
-        }
+      .welcome-content p {
+        font-size: 1.06rem;
+        opacity: 0.85;
+        max-width: 480px;
+        margin-bottom: 36px;
+        line-height: 1.7;
+      }
 
-        .welcome-content .btn-learn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--gold);
-            color: var(--primary-dark);
-            border: none;
-            padding: 14px 34px;
-            border-radius: 60px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.30);
-            width: fit-content;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-        }
-        .welcome-content .btn-learn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 32px rgba(212, 175, 55, 0.40);
-            background: #E0C04A;
-        }
-        .welcome-content .btn-learn:active {
-            transform: scale(0.97);
-        }
-        .welcome-content .btn-learn i {
-            transition: transform 0.3s ease;
-        }
-        .welcome-content .btn-learn:hover i {
-            transform: translateX(5px);
-        }
+      .welcome-content .btn-learn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--gold);
+        color: var(--primary-dark);
+        border: none;
+        padding: 14px 34px;
+        border-radius: 60px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        width: fit-content;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+      }
+      .welcome-content .btn-learn:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 12px 32px rgba(212, 175, 55, 0.4);
+        background: #e0c04a;
+      }
+      .welcome-content .btn-learn:active {
+        transform: scale(0.97);
+      }
+      .welcome-content .btn-learn i {
+        transition: transform 0.3s ease;
+      }
+      .welcome-content .btn-learn:hover i {
+        transform: translateX(5px);
+      }
 
-        /* ---- floating stats / trust indicators ---- */
-        .trust-stats {
-            display: flex;
-            gap: 40px;
-            margin-top: 44px;
-            padding-top: 32px;
-            border-top: 1px solid rgba(255, 255, 255, 0.10);
-            flex-shrink: 0;
-        }
-        .trust-stats .stat-item {
-            display: flex;
-            flex-direction: column;
-        }
-        .trust-stats .stat-item .number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gold);
-        }
-        .trust-stats .stat-item .label {
-            font-size: 0.85rem;
-            opacity: 0.65;
-            letter-spacing: 0.3px;
-        }
+      /* ---- floating stats / trust indicators ---- */
+      .trust-stats {
+        display: flex;
+        gap: 40px;
+        margin-top: 44px;
+        padding-top: 32px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        flex-shrink: 0;
+      }
+      .trust-stats .stat-item {
+        display: flex;
+        flex-direction: column;
+      }
+      .trust-stats .stat-item .number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--gold);
+      }
+      .trust-stats .stat-item .label {
+        font-size: 0.85rem;
+        opacity: 0.65;
+        letter-spacing: 0.3px;
+      }
 
-        /* ============================================================
+      /* ============================================================
                RIGHT PANEL – Login Card (40–45%)
                ============================================================ */
-        .right-panel {
-            flex: 1;
-            background: var(--light-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 48px;
-            min-height: 700px;
-            position: relative;
-        }
+      .right-panel {
+        flex: 1;
+        background: var(--light-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 48px;
+        min-height: 700px;
+        position: relative;
+      }
 
-        /* ---- subtle background dots on right ---- */
-        .right-panel::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(circle at 20% 30%, rgba(0, 107, 63, 0.03) 1px, transparent 1px);
-            background-size: 24px 24px;
-            pointer-events: none;
-        }
+      /* ---- subtle background dots on right ---- */
+      .right-panel::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle at 20% 30%,
+          rgba(0, 107, 63, 0.03) 1px,
+          transparent 1px
+        );
+        background-size: 24px 24px;
+        pointer-events: none;
+      }
 
-        /* ---- glassmorphism login card ---- */
-        .login-card {
-            width: 100%;
-            max-width: 430px;
-            background: rgba(255, 255, 255, 0.72);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-radius: var(--radius-md);
-            padding: 44px 40px 40px 40px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.50);
-            position: relative;
-            z-index: 2;
-            animation: cardEntrance 0.8s ease 0.3s both;
-            transition: box-shadow 0.4s ease;
-        }
-        .login-card:hover {
-            box-shadow: 0 16px 56px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.02);
-        }
+      /* ---- glassmorphism login card ---- */
+      .login-card {
+        width: 100%;
+        max-width: 430px;
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border-radius: var(--radius-md);
+        padding: 44px 40px 40px 40px;
+        box-shadow:
+          0 8px 40px rgba(0, 0, 0, 0.06),
+          0 2px 8px rgba(0, 0, 0, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        position: relative;
+        z-index: 2;
+        animation: cardEntrance 0.8s ease 0.3s both;
+        transition: box-shadow 0.4s ease;
+      }
+      .login-card:hover {
+        box-shadow:
+          0 16px 56px rgba(0, 0, 0, 0.08),
+          0 4px 12px rgba(0, 0, 0, 0.02);
+      }
 
-        .login-card .card-header {
-            margin-bottom: 32px;
-        }
-        .login-card .card-header h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--dark-text);
-            letter-spacing: -0.3px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .login-card .card-header h2 i {
-            color: var(--primary);
-            font-size: 1.6rem;
-        }
-        .login-card .card-header p {
-            color: var(--gray-text);
-            font-size: 0.95rem;
-            margin-top: 4px;
-        }
+      .login-card .card-header {
+        margin-bottom: 32px;
+      }
+      .login-card .card-header h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--dark-text);
+        letter-spacing: -0.3px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .login-card .card-header h2 i {
+        color: var(--primary);
+        font-size: 1.6rem;
+      }
+      .login-card .card-header p {
+        color: var(--gray-text);
+        font-size: 0.95rem;
+        margin-top: 4px;
+      }
 
-        /* ---- form ---- */
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-        }
+      /* ---- form ---- */
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
 
-        /* ---- input groups (floating label) ---- */
-        .input-group {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
+      /* ---- input groups (floating label) ---- */
+      .input-group {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
 
-        .input-group .input-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray-text);
-            font-size: 1.1rem;
-            transition: var(--transition);
-            pointer-events: none;
-            z-index: 2;
-        }
+      .input-group .input-icon {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-text);
+        font-size: 1.1rem;
+        transition: var(--transition);
+        pointer-events: none;
+        z-index: 2;
+      }
 
-        .input-group input {
-            width: 100%;
-            padding: 18px 18px 6px 48px;
-            font-size: 1rem;
-            font-family: var(--font-sans);
-            background: var(--white);
-            border: 1.5px solid var(--border-light);
-            border-radius: var(--radius-sm);
-            outline: none;
-            transition: var(--transition);
-            color: var(--dark-text);
-            height: 64px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
-        }
-        .input-group input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(0, 107, 63, 0.08), 0 2px 8px rgba(0, 0, 0, 0.02);
-        }
-        .input-group input:focus+.input-icon,
-        .input-group input:focus~.input-icon {
-            color: var(--primary);
-        }
+      .input-group input {
+        width: 100%;
+        padding: 18px 18px 6px 48px;
+        font-size: 1rem;
+        font-family: var(--font-sans);
+        background: var(--white);
+        border: 1.5px solid var(--border-light);
+        border-radius: var(--radius-sm);
+        outline: none;
+        transition: var(--transition);
+        color: var(--dark-text);
+        height: 64px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+      }
+      .input-group input:focus {
+        border-color: var(--primary);
+        box-shadow:
+          0 0 0 4px rgba(0, 107, 63, 0.08),
+          0 2px 8px rgba(0, 0, 0, 0.02);
+      }
+      .input-group input:focus + .input-icon,
+      .input-group input:focus ~ .input-icon {
+        color: var(--primary);
+      }
 
-        /* floating label */
-        .input-group .floating-label {
-            position: absolute;
-            left: 48px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.95rem;
-            color: var(--gray-text);
-            pointer-events: none;
-            transition: var(--transition);
-            background: transparent;
-            padding: 0 4px;
-            z-index: 1;
-            font-weight: 450;
-        }
-        .input-group input:focus~.floating-label,
-        .input-group input:not(:placeholder-shown)~.floating-label {
-            top: 8px;
-            transform: translateY(0);
-            font-size: 0.72rem;
-            color: var(--primary);
-            font-weight: 500;
-            background: var(--white);
-            padding: 0 6px;
-            border-radius: 4px;
-        }
-        .input-group input:focus~.floating-label {
-            color: var(--primary);
-        }
+      /* floating label */
+      .input-group .floating-label {
+        position: absolute;
+        left: 48px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.95rem;
+        color: var(--gray-text);
+        pointer-events: none;
+        transition: var(--transition);
+        background: transparent;
+        padding: 0 4px;
+        z-index: 1;
+        font-weight: 450;
+      }
+      .input-group input:focus ~ .floating-label,
+      .input-group input:not(:placeholder-shown) ~ .floating-label {
+        top: 8px;
+        transform: translateY(0);
+        font-size: 0.72rem;
+        color: var(--primary);
+        font-weight: 500;
+        background: var(--white);
+        padding: 0 6px;
+        border-radius: 4px;
+      }
+      .input-group input:focus ~ .floating-label {
+        color: var(--primary);
+      }
 
-        /* password toggle */
-        .input-group .toggle-pw {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--gray-text);
-            font-size: 1.1rem;
-            cursor: pointer;
-            padding: 6px;
-            transition: var(--transition);
-            z-index: 2;
-            border-radius: 6px;
-        }
-        .input-group .toggle-pw:hover {
-            color: var(--dark-text);
-            background: rgba(0, 0, 0, 0.04);
-        }
+      /* password toggle */
+      .input-group .toggle-pw {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--gray-text);
+        font-size: 1.1rem;
+        cursor: pointer;
+        padding: 6px;
+        transition: var(--transition);
+        z-index: 2;
+        border-radius: 6px;
+      }
+      .input-group .toggle-pw:hover {
+        color: var(--dark-text);
+        background: rgba(0, 0, 0, 0.04);
+      }
 
-        /* ---- error messages ---- */
-        .input-group .error-msg {
-            font-size: 0.8rem;
-            color: #DC2626;
-            margin-top: 4px;
-            padding-left: 4px;
-            min-height: 22px;
-            opacity: 0;
-            transition: var(--transition);
-            transform: translateY(-4px);
-        }
-        .input-group .error-msg.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .input-group.error input {
-            border-color: #DC2626;
-            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.06);
-        }
-        .input-group.error .input-icon {
-            color: #DC2626;
-        }
+      /* ---- error messages ---- */
+      .input-group .error-msg {
+        font-size: 0.8rem;
+        color: #dc2626;
+        margin-top: 4px;
+        padding-left: 4px;
+        min-height: 22px;
+        opacity: 0;
+        transition: var(--transition);
+        transform: translateY(-4px);
+      }
+      .input-group .error-msg.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .input-group.error input {
+        border-color: #dc2626;
+        box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.06);
+      }
+      .input-group.error .input-icon {
+        color: #dc2626;
+      }
 
-        /* ---- remember & forgot row ---- */
-        .form-options {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: -4px;
-        }
-        .form-options .remember {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-            color: var(--gray-text);
-            cursor: pointer;
-        }
-        .form-options .remember input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--primary);
-            cursor: pointer;
-            border-radius: 4px;
-            flex-shrink: 0;
-        }
-        .form-options .forgot-link {
-            font-size: 0.9rem;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            border-bottom: 1.5px solid transparent;
-        }
-        .form-options .forgot-link:hover {
-            color: var(--primary-dark);
-            border-bottom-color: var(--primary);
-        }
+      /* ---- remember & forgot row ---- */
+      .form-options {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: -4px;
+      }
+      .form-options .remember {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.9rem;
+        color: var(--gray-text);
+        cursor: pointer;
+      }
+      .form-options .remember input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary);
+        cursor: pointer;
+        border-radius: 4px;
+        flex-shrink: 0;
+      }
+      .form-options .forgot-link {
+        font-size: 0.9rem;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        border-bottom: 1.5px solid transparent;
+      }
+      .form-options .forgot-link:hover {
+        color: var(--primary-dark);
+        border-bottom-color: var(--primary);
+      }
 
-        /* ---- login button ---- */
-        .btn-login {
-            width: 100%;
-            padding: 16px;
-            font-size: 1.05rem;
-            font-weight: 600;
-            font-family: var(--font-sans);
-            background: var(--primary-gradient);
-            color: var(--white);
-            border: none;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            height: 58px;
-            box-shadow: 0 4px 16px rgba(0, 107, 63, 0.25);
-            margin-top: 4px;
-        }
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(0, 107, 63, 0.30);
-        }
-        .btn-login:active {
-            transform: scale(0.97);
-        }
-        .btn-login .spinner {
-            display: none;
-            width: 22px;
-            height: 22px;
-            border: 3px solid rgba(255, 255, 255, 0.20);
-            border-top-color: var(--white);
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            flex-shrink: 0;
-        }
-        .btn-login.loading .spinner {
-            display: block;
-        }
-        .btn-login.loading .btn-text {
-            opacity: 0.7;
-        }
-        .btn-login.loading {
-            pointer-events: none;
-        }
+      /* ---- login button ---- */
+      .btn-login {
+        width: 100%;
+        padding: 16px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        font-family: var(--font-sans);
+        background: var(--primary-gradient);
+        color: var(--white);
+        border: none;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        height: 58px;
+        box-shadow: 0 4px 16px rgba(0, 107, 63, 0.25);
+        margin-top: 4px;
+      }
+      .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(0, 107, 63, 0.3);
+      }
+      .btn-login:active {
+        transform: scale(0.97);
+      }
+      .btn-login .spinner {
+        display: none;
+        width: 22px;
+        height: 22px;
+        border: 3px solid rgba(255, 255, 255, 0.2);
+        border-top-color: var(--white);
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        flex-shrink: 0;
+      }
+      .btn-login.loading .spinner {
+        display: block;
+      }
+      .btn-login.loading .btn-text {
+        opacity: 0.7;
+      }
+      .btn-login.loading {
+        pointer-events: none;
+      }
 
-        /* ripple effect */
-        .btn-login .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.30);
-            transform: scale(0);
-            animation: rippleAnim 0.6s ease-out forwards;
-            pointer-events: none;
-        }
+      /* ripple effect */
+      .btn-login .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(0);
+        animation: rippleAnim 0.6s ease-out forwards;
+        pointer-events: none;
+      }
 
-        /* ---- success state ---- */
-        .btn-login.success {
-            background: #16A34A;
-            box-shadow: 0 4px 20px rgba(22, 163, 74, 0.30);
-        }
-        .btn-login.success .btn-text {
-            opacity: 1;
-        }
+      /* ---- success state ---- */
+      .btn-login.success {
+        background: #16a34a;
+        box-shadow: 0 4px 20px rgba(22, 163, 74, 0.3);
+      }
+      .btn-login.success .btn-text {
+        opacity: 1;
+      }
 
-        /* ---- footer links ---- */
-        .login-footer {
-            margin-top: 28px;
-            padding-top: 22px;
-            border-top: 1px solid var(--border-light);
-            display: flex;
-            justify-content: center;
-            gap: 6px;
-            font-size: 0.9rem;
-            color: var(--gray-text);
-        }
-        .login-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            border-bottom: 1.5px solid transparent;
-        }
-        .login-footer a:hover {
-            color: var(--primary-dark);
-            border-bottom-color: var(--primary);
-        }
+      /* ---- footer links ---- */
+      .login-footer {
+        margin-top: 28px;
+        padding-top: 22px;
+        border-top: 1px solid var(--border-light);
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        font-size: 0.9rem;
+        color: var(--gray-text);
+      }
+      .login-footer a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        border-bottom: 1.5px solid transparent;
+      }
+      .login-footer a:hover {
+        color: var(--primary-dark);
+        border-bottom-color: var(--primary);
+      }
 
-        /* ============================================================
+      /* ============================================================
                RESPONSIVENESS
                ============================================================ */
 
-        /* ---- large desktop 1440+ (default) ---- */
+      /* ---- large desktop 1440+ (default) ---- */
 
-        /* ---- laptop / small desktop (1024–1439) ---- */
-        @media (max-width: 1200px) {
-            .left-panel {
-                padding: 36px 36px 40px 36px;
-                flex: 0 0 56%;
-            }
-            .right-panel {
-                padding: 32px 32px;
-            }
-            .login-card {
-                padding: 36px 30px 32px 30px;
-            }
-            .welcome-content h1 {
-                font-size: 2.3rem;
-            }
+      /* ---- laptop / small desktop (1024–1439) ---- */
+      @media (max-width: 1200px) {
+        .left-panel {
+          padding: 36px 36px 40px 36px;
+          flex: 0 0 56%;
         }
-
-        /* ---- tablet (768–1023) ---- */
-        @media (max-width: 1023px) {
-            .portal-container {
-                flex-direction: column;
-                min-height: auto;
-                border-radius: var(--radius-md);
-            }
-            .left-panel {
-                flex: 0 0 auto;
-                min-height: 380px;
-                padding: 32px 36px 36px 36px;
-                border-radius: var(--radius-md) var(--radius-md) 0 0;
-            }
-            .left-panel .bg-shape--1 {
-                width: 200px;
-                height: 200px;
-                top: -40px;
-                right: -30px;
-            }
-            .left-panel .bg-shape--2 {
-                width: 130px;
-                height: 130px;
-                bottom: 10px;
-                left: -20px;
-            }
-            .left-panel .academic-icon {
-                font-size: 120px;
-                right: 10px;
-                bottom: 20px;
-            }
-            .left-panel .academic-icon--books {
-                display: none;
-            }
-            .welcome-content {
-                max-width: 100%;
-                animation: slideUp 0.7s ease 0.15s both;
-            }
-            .welcome-content h1 {
-                font-size: 2rem;
-            }
-            .welcome-content p {
-                max-width: 100%;
-                font-size: 1rem;
-            }
-            .trust-stats {
-                margin-top: 28px;
-                padding-top: 22px;
-                gap: 28px;
-            }
-            .right-panel {
-                min-height: auto;
-                padding: 36px 32px 44px 32px;
-                border-radius: 0 0 var(--radius-md) var(--radius-md);
-            }
-            .login-card {
-                max-width: 480px;
-                margin: 0 auto;
-                padding: 32px 28px 28px 28px;
-            }
-            .logo-area .logo-text .imsu {
-                font-size: 22px;
-            }
+        .right-panel {
+          padding: 32px 32px;
         }
-
-        /* ---- mobile (below 768) ---- */
-        @media (max-width: 767px) {
-            body {
-                padding: 12px;
-            }
-            .portal-container {
-                border-radius: var(--radius-sm);
-            }
-            .left-panel {
-                padding: 24px 20px 28px 20px;
-                min-height: 300px;
-                border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-            }
-            .left-panel .bg-shape--1 {
-                width: 140px;
-                height: 140px;
-                top: -20px;
-                right: -20px;
-            }
-            .left-panel .bg-shape--2 {
-                width: 80px;
-                height: 80px;
-                bottom: 0;
-                left: -10px;
-            }
-            .left-panel .bg-shape--3,
-            .left-panel .bg-shape--4 {
-                display: none;
-            }
-            .left-panel .academic-icon {
-                font-size: 80px;
-                right: 0;
-                bottom: 10px;
-                opacity: 0.04;
-            }
-            .left-panel .academic-icon--books {
-                display: none;
-            }
-            .logo-area {
-                margin-bottom: 20px;
-                gap: 10px;
-            }
-            .logo-area .logo-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 18px;
-                border-radius: 10px;
-            }
-            .logo-area .logo-text .imsu {
-                font-size: 18px;
-            }
-            .logo-area .logo-text .sub {
-                font-size: 10px;
-            }
-            .welcome-content .badge {
-                font-size: 11px;
-                padding: 4px 14px 4px 10px;
-                margin-bottom: 16px;
-            }
-            .welcome-content h1 {
-                font-size: 1.6rem;
-            }
-            .welcome-content p {
-                font-size: 0.92rem;
-                margin-bottom: 22px;
-                opacity: 0.80;
-            }
-            .welcome-content .btn-learn {
-                padding: 12px 26px;
-                font-size: 0.92rem;
-            }
-            .trust-stats {
-                margin-top: 20px;
-                padding-top: 16px;
-                gap: 20px;
-                flex-wrap: wrap;
-            }
-            .trust-stats .stat-item .number {
-                font-size: 1.2rem;
-            }
-            .trust-stats .stat-item .label {
-                font-size: 0.75rem;
-            }
-            .right-panel {
-                padding: 24px 16px 32px 16px;
-                border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-            }
-            .login-card {
-                padding: 24px 18px 22px 18px;
-                border-radius: var(--radius-sm);
-                max-width: 100%;
-            }
-            .login-card .card-header h2 {
-                font-size: 1.35rem;
-            }
-            .login-card .card-header p {
-                font-size: 0.85rem;
-            }
-            .login-card .card-header {
-                margin-bottom: 22px;
-            }
-            .login-form {
-                gap: 16px;
-            }
-            .input-group input {
-                height: 56px;
-                padding: 14px 14px 4px 42px;
-                font-size: 0.95rem;
-            }
-            .input-group .input-icon {
-                left: 12px;
-                font-size: 1rem;
-            }
-            .input-group .floating-label {
-                left: 42px;
-                font-size: 0.9rem;
-            }
-            .input-group input:focus~.floating-label,
-            .input-group input:not(:placeholder-shown)~.floating-label {
-                font-size: 0.65rem;
-                top: 6px;
-                left: 42px;
-            }
-            .input-group .toggle-pw {
-                right: 12px;
-                font-size: 1rem;
-            }
-            .form-options {
-                flex-wrap: wrap;
-                gap: 12px;
-            }
-            .form-options .remember {
-                font-size: 0.85rem;
-            }
-            .form-options .forgot-link {
-                font-size: 0.85rem;
-            }
-            .btn-login {
-                height: 52px;
-                font-size: 0.95rem;
-                padding: 12px;
-                border-radius: var(--radius-sm);
-            }
-            .btn-login .spinner {
-                width: 18px;
-                height: 18px;
-                border-width: 2.5px;
-            }
-            .login-footer {
-                font-size: 0.8rem;
-                flex-wrap: wrap;
-                gap: 4px;
-                margin-top: 20px;
-                padding-top: 16px;
-            }
+        .login-card {
+          padding: 36px 30px 32px 30px;
         }
-
-        /* ---- very small screens (<= 400px) ---- */
-        @media (max-width: 400px) {
-            .left-panel {
-                padding: 18px 14px 20px 14px;
-                min-height: 260px;
-            }
-            .welcome-content h1 {
-                font-size: 1.3rem;
-            }
-            .welcome-content p {
-                font-size: 0.85rem;
-                margin-bottom: 16px;
-            }
-            .welcome-content .btn-learn {
-                padding: 10px 20px;
-                font-size: 0.85rem;
-            }
-            .right-panel {
-                padding: 16px 10px 24px 10px;
-            }
-            .login-card {
-                padding: 18px 12px 18px 12px;
-            }
-            .login-card .card-header h2 {
-                font-size: 1.15rem;
-            }
-            .input-group input {
-                height: 48px;
-                padding: 10px 10px 2px 36px;
-                font-size: 0.9rem;
-            }
-            .input-group .input-icon {
-                left: 10px;
-                font-size: 0.9rem;
-            }
-            .input-group .floating-label {
-                left: 36px;
-                font-size: 0.8rem;
-            }
-            .input-group input:focus~.floating-label,
-            .input-group input:not(:placeholder-shown)~.floating-label {
-                font-size: 0.6rem;
-                top: 4px;
-                left: 36px;
-            }
-            .input-group .toggle-pw {
-                right: 10px;
-                font-size: 0.9rem;
-            }
-            .btn-login {
-                height: 46px;
-                font-size: 0.9rem;
-            }
-            .login-footer {
-                font-size: 0.75rem;
-            }
-            .trust-stats .stat-item .number {
-                font-size: 1rem;
-            }
+        .welcome-content h1 {
+          font-size: 2.3rem;
         }
+      }
 
-        /* ============================================================
+      /* ---- tablet (768–1023) ---- */
+      @media (max-width: 1023px) {
+        .portal-container {
+          flex-direction: column;
+          min-height: auto;
+          border-radius: var(--radius-md);
+        }
+        .left-panel {
+          flex: 0 0 auto;
+          min-height: 380px;
+          padding: 32px 36px 36px 36px;
+          border-radius: var(--radius-md) var(--radius-md) 0 0;
+        }
+        .left-panel .bg-shape--1 {
+          width: 200px;
+          height: 200px;
+          top: -40px;
+          right: -30px;
+        }
+        .left-panel .bg-shape--2 {
+          width: 130px;
+          height: 130px;
+          bottom: 10px;
+          left: -20px;
+        }
+        .left-panel .academic-icon {
+          font-size: 120px;
+          right: 10px;
+          bottom: 20px;
+        }
+        .left-panel .academic-icon--books {
+          display: none;
+        }
+        .welcome-content {
+          max-width: 100%;
+          animation: slideUp 0.7s ease 0.15s both;
+        }
+        .welcome-content h1 {
+          font-size: 2rem;
+        }
+        .welcome-content p {
+          max-width: 100%;
+          font-size: 1rem;
+        }
+        .trust-stats {
+          margin-top: 28px;
+          padding-top: 22px;
+          gap: 28px;
+        }
+        .right-panel {
+          min-height: auto;
+          padding: 36px 32px 44px 32px;
+          border-radius: 0 0 var(--radius-md) var(--radius-md);
+        }
+        .login-card {
+          max-width: 480px;
+          margin: 0 auto;
+          padding: 32px 28px 28px 28px;
+        }
+        .logo-area .logo-text .imsu {
+          font-size: 22px;
+        }
+      }
+
+      /* ---- mobile (below 768) ---- */
+      @media (max-width: 767px) {
+        body {
+          padding: 12px;
+        }
+        .portal-container {
+          border-radius: var(--radius-sm);
+        }
+        .left-panel {
+          padding: 24px 20px 28px 20px;
+          min-height: 300px;
+          border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+        }
+        .left-panel .bg-shape--1 {
+          width: 140px;
+          height: 140px;
+          top: -20px;
+          right: -20px;
+        }
+        .left-panel .bg-shape--2 {
+          width: 80px;
+          height: 80px;
+          bottom: 0;
+          left: -10px;
+        }
+        .left-panel .bg-shape--3,
+        .left-panel .bg-shape--4 {
+          display: none;
+        }
+        .left-panel .academic-icon {
+          font-size: 80px;
+          right: 0;
+          bottom: 10px;
+          opacity: 0.04;
+        }
+        .left-panel .academic-icon--books {
+          display: none;
+        }
+        .logo-area {
+          margin-bottom: 20px;
+          gap: 10px;
+        }
+        .logo-area .logo-icon {
+          width: 40px;
+          height: 40px;
+          font-size: 18px;
+          border-radius: 10px;
+        }
+        .logo-area .logo-text .imsu {
+          font-size: 18px;
+        }
+        .logo-area .logo-text .sub {
+          font-size: 10px;
+        }
+        .welcome-content .badge {
+          font-size: 11px;
+          padding: 4px 14px 4px 10px;
+          margin-bottom: 16px;
+        }
+        .welcome-content h1 {
+          font-size: 1.6rem;
+        }
+        .welcome-content p {
+          font-size: 0.92rem;
+          margin-bottom: 22px;
+          opacity: 0.8;
+        }
+        .welcome-content .btn-learn {
+          padding: 12px 26px;
+          font-size: 0.92rem;
+        }
+        .trust-stats {
+          margin-top: 20px;
+          padding-top: 16px;
+          gap: 20px;
+          flex-wrap: wrap;
+        }
+        .trust-stats .stat-item .number {
+          font-size: 1.2rem;
+        }
+        .trust-stats .stat-item .label {
+          font-size: 0.75rem;
+        }
+        .right-panel {
+          padding: 24px 16px 32px 16px;
+          border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+        }
+        .login-card {
+          padding: 24px 18px 22px 18px;
+          border-radius: var(--radius-sm);
+          max-width: 100%;
+        }
+        .login-card .card-header h2 {
+          font-size: 1.35rem;
+        }
+        .login-card .card-header p {
+          font-size: 0.85rem;
+        }
+        .login-card .card-header {
+          margin-bottom: 22px;
+        }
+        .login-form {
+          gap: 16px;
+        }
+        .input-group input {
+          height: 56px;
+          padding: 14px 14px 4px 42px;
+          font-size: 0.95rem;
+        }
+        .input-group .input-icon {
+          left: 12px;
+          font-size: 1rem;
+        }
+        .input-group .floating-label {
+          left: 42px;
+          font-size: 0.9rem;
+        }
+        .input-group input:focus ~ .floating-label,
+        .input-group input:not(:placeholder-shown) ~ .floating-label {
+          font-size: 0.65rem;
+          top: 6px;
+          left: 42px;
+        }
+        .input-group .toggle-pw {
+          right: 12px;
+          font-size: 1rem;
+        }
+        .form-options {
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+        .form-options .remember {
+          font-size: 0.85rem;
+        }
+        .form-options .forgot-link {
+          font-size: 0.85rem;
+        }
+        .btn-login {
+          height: 52px;
+          font-size: 0.95rem;
+          padding: 12px;
+          border-radius: var(--radius-sm);
+        }
+        .btn-login .spinner {
+          width: 18px;
+          height: 18px;
+          border-width: 2.5px;
+        }
+        .login-footer {
+          font-size: 0.8rem;
+          flex-wrap: wrap;
+          gap: 4px;
+          margin-top: 20px;
+          padding-top: 16px;
+        }
+      }
+
+      /* ---- very small screens (<= 400px) ---- */
+      @media (max-width: 400px) {
+        .left-panel {
+          padding: 18px 14px 20px 14px;
+          min-height: 260px;
+        }
+        .welcome-content h1 {
+          font-size: 1.3rem;
+        }
+        .welcome-content p {
+          font-size: 0.85rem;
+          margin-bottom: 16px;
+        }
+        .welcome-content .btn-learn {
+          padding: 10px 20px;
+          font-size: 0.85rem;
+        }
+        .right-panel {
+          padding: 16px 10px 24px 10px;
+        }
+        .login-card {
+          padding: 18px 12px 18px 12px;
+        }
+        .login-card .card-header h2 {
+          font-size: 1.15rem;
+        }
+        .input-group input {
+          height: 48px;
+          padding: 10px 10px 2px 36px;
+          font-size: 0.9rem;
+        }
+        .input-group .input-icon {
+          left: 10px;
+          font-size: 0.9rem;
+        }
+        .input-group .floating-label {
+          left: 36px;
+          font-size: 0.8rem;
+        }
+        .input-group input:focus ~ .floating-label,
+        .input-group input:not(:placeholder-shown) ~ .floating-label {
+          font-size: 0.6rem;
+          top: 4px;
+          left: 36px;
+        }
+        .input-group .toggle-pw {
+          right: 10px;
+          font-size: 0.9rem;
+        }
+        .btn-login {
+          height: 46px;
+          font-size: 0.9rem;
+        }
+        .login-footer {
+          font-size: 0.75rem;
+        }
+        .trust-stats .stat-item .number {
+          font-size: 1rem;
+        }
+      }
+
+      /* ============================================================
                ANIMATIONS
                ============================================================ */
 
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.98);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.98);
         }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
 
-        @keyframes slideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+      @keyframes slideUp {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
         }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-        @keyframes cardEntrance {
-            0% {
-                opacity: 0;
-                transform: translateY(40px) scale(0.96);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+      @keyframes cardEntrance {
+        0% {
+          opacity: 0;
+          transform: translateY(40px) scale(0.96);
         }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
 
-        @keyframes floatShape {
-            0% {
-                transform: translate(0, 0) scale(1) rotate(0deg);
-            }
-            100% {
-                transform: translate(18px, -18px) scale(1.06) rotate(6deg);
-            }
+      @keyframes floatShape {
+        0% {
+          transform: translate(0, 0) scale(1) rotate(0deg);
         }
+        100% {
+          transform: translate(18px, -18px) scale(1.06) rotate(6deg);
+        }
+      }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
 
-        @keyframes rippleAnim {
-            0% {
-                transform: scale(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(4);
-                opacity: 0;
-            }
+      @keyframes rippleAnim {
+        0% {
+          transform: scale(0);
+          opacity: 1;
         }
+        100% {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
 
-        /* ---- success checkmark pulse ---- */
-        @keyframes successPulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.40);
-            }
-            100% {
-                box-shadow: 0 0 0 16px rgba(22, 163, 74, 0);
-            }
+      /* ---- success checkmark pulse ---- */
+      @keyframes successPulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4);
         }
-        .btn-login.success {
-            animation: successPulse 0.8s ease 2;
+        100% {
+          box-shadow: 0 0 0 16px rgba(22, 163, 74, 0);
         }
+      }
+      .btn-login.success {
+        animation: successPulse 0.8s ease 2;
+      }
 
-        /* ---- input focus glow (green) ---- */
-        .input-group input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(0, 107, 63, 0.08), 0 2px 8px rgba(0, 0, 0, 0.02);
-        }
+      /* ---- input focus glow (green) ---- */
+      .input-group input:focus {
+        border-color: var(--primary);
+        box-shadow:
+          0 0 0 4px rgba(0, 107, 63, 0.08),
+          0 2px 8px rgba(0, 0, 0, 0.02);
+      }
 
-        /* ---- scrollbar polish ---- */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--light-bg);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 6px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
-        }
+      /* ---- scrollbar polish ---- */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--light-bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 6px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+      }
 
-        /* ---- focus-visible for accessibility ---- */
-        a:focus-visible,
-        button:focus-visible,
-        input:focus-visible {
-            outline: 2px solid var(--primary);
-            outline-offset: 2px;
-        }
+      /* ---- focus-visible for accessibility ---- */
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!-- ============================================================
     MAIN CONTAINER
     ============================================================ -->
-    <div class="portal-container" role="main" aria-label="IMSU Lecturer Login Portal">
-
-        <!-- ============================================================
+    <div
+      class="portal-container"
+      role="main"
+      aria-label="IMSU Lecturer Login Portal"
+    >
+      <!-- ============================================================
         LEFT PANEL – Welcome Section
         ============================================================ -->
-        <section class="left-panel" aria-labelledby="welcome-heading">
+      <section class="left-panel" aria-labelledby="welcome-heading">
+        <!-- Floating abstract shapes -->
+        <div class="bg-shape bg-shape--1" aria-hidden="true"></div>
+        <div class="bg-shape bg-shape--2" aria-hidden="true"></div>
+        <div class="bg-shape bg-shape--3" aria-hidden="true"></div>
+        <div class="bg-shape bg-shape--4" aria-hidden="true"></div>
 
-            <!-- Floating abstract shapes -->
-            <div class="bg-shape bg-shape--1" aria-hidden="true"></div>
-            <div class="bg-shape bg-shape--2" aria-hidden="true"></div>
-            <div class="bg-shape bg-shape--3" aria-hidden="true"></div>
-            <div class="bg-shape bg-shape--4" aria-hidden="true"></div>
+        <!-- Academic icons (subtle) -->
+        <div class="academic-icon" aria-hidden="true">
+          <i class="fas fa-chalkboard-teacher"></i>
+        </div>
+        <div class="academic-icon academic-icon--books" aria-hidden="true">
+          <i class="fas fa-book-open"></i>
+        </div>
 
-            <!-- Academic icons (subtle) -->
-            <div class="academic-icon" aria-hidden="true">
-                <i class="fas fa-chalkboard-teacher"></i>
+        <!-- Glass overlay -->
+        <div class="glass-overlay" aria-hidden="true"></div>
+
+        <!-- ---- Logo ---- -->
+        <div class="logo-area">
+          <div class="logo-icon" aria-hidden="true">
+            <i class="fas fa-university"></i>
+          </div>
+          <div class="logo-text">
+            <span class="imsu">IMSU <span>·</span> Portal</span>
+            <span class="sub">Lecturer Access</span>
+          </div>
+        </div>
+
+        <!-- ---- Welcome Content ---- -->
+        <div class="welcome-content">
+          <div class="badge">
+            <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
+            Faculty Portal
+          </div>
+
+          <h1 id="welcome-heading">
+            Welcome to the <br />
+            <span class="highlight">IMSU</span> Lecturer Result<br />
+            Management Portal
+          </h1>
+
+          <p>
+            Securely access your lecturer dashboard to manage assigned courses,
+            upload student results, monitor submissions, and perform academic
+            responsibilities efficiently.
+          </p>
+
+          <button
+            class="btn-learn"
+            aria-label="Learn more about the lecturer result management system"
+          >
+            Learn More
+            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </button>
+
+          <!-- Trust stats -->
+          <div class="trust-stats">
+            <div class="stat-item">
+              <span class="number">150+</span>
+              <span class="label">Faculty Members</span>
             </div>
-            <div class="academic-icon academic-icon--books" aria-hidden="true">
-                <i class="fas fa-book-open"></i>
+            <div class="stat-item">
+              <span class="number">99%</span>
+              <span class="label">System Uptime</span>
             </div>
-
-            <!-- Glass overlay -->
-            <div class="glass-overlay" aria-hidden="true"></div>
-
-            <!-- ---- Logo ---- -->
-            <div class="logo-area">
-                <div class="logo-icon" aria-hidden="true">
-                    <i class="fas fa-university"></i>
-                </div>
-                <div class="logo-text">
-                    <span class="imsu">IMSU <span>·</span> Portal</span>
-                    <span class="sub">Lecturer Access</span>
-                </div>
+            <div class="stat-item">
+              <span class="number">24/7</span>
+              <span class="label">Access</span>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <!-- ---- Welcome Content ---- -->
-            <div class="welcome-content">
-                <div class="badge">
-                    <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
-                    Faculty Portal
-                </div>
-
-                <h1 id="welcome-heading">
-                    Welcome to the <br />
-                    <span class="highlight">IMSU</span> Lecturer Result<br />
-                    Management Portal
-                </h1>
-
-                <p>
-                    Securely access your lecturer dashboard to manage assigned courses,
-                    upload student results, monitor submissions, and perform academic
-                    responsibilities efficiently.
-                </p>
-
-                <button class="btn-learn" aria-label="Learn more about the lecturer result management system">
-                    Learn More
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </button>
-
-                <!-- Trust stats -->
-                <div class="trust-stats">
-                    <div class="stat-item">
-                        <span class="number">150+</span>
-                        <span class="label">Faculty Members</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="number">99%</span>
-                        <span class="label">System Uptime</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="number">24/7</span>
-                        <span class="label">Access</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ============================================================
+      <!-- ============================================================
         RIGHT PANEL – Login Card
         ============================================================ -->
-        <section class="right-panel" aria-labelledby="login-heading">
+      <section class="right-panel" aria-labelledby="login-heading">
+        <div class="login-card" role="form" aria-label="Lecturer login form">
+          <!-- ---- Card Header ---- -->
+          <div class="card-header">
+            <h2 id="login-heading">
+              <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
+              Lecturer Login
+            </h2>
+            <p>Sign in using your Staff ID and Password</p>
+          </div>
 
-            <div class="login-card" role="form" aria-label="Lecturer login form">
+          <!-- ---- Login Form ---- -->
+          <form
+            class="login-form"
+            id="loginForm"
+            novalidate
+            aria-label="Login form"
+          >
+            <!-- Staff ID -->
+            <div class="input-group" id="staffId-group">
+              <i class="fas fa-id-badge input-icon" aria-hidden="true"></i>
+              <input
+                type="text"
+                id="staffId"
+                placeholder=" "
+                autocomplete="username"
+                aria-label="Staff ID"
+                required
+              />
+              <label for="staffId" class="floating-label">Staff ID</label>
+              <button
+                type="button"
+                class="toggle-pw"
+                aria-hidden="true"
+                style="display: none"
+              ></button>
+              <div class="error-msg" id="staffId-error" role="alert"></div>
+            </div>
 
-                <!-- ---- Card Header ---- -->
-                <div class="card-header">
-                    <h2 id="login-heading">
-                        <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
-                        Lecturer Login
-                    </h2>
-                    <p>Sign in using your Staff ID and Password</p>
-                </div>
+            <!-- Password -->
+            <div class="input-group" id="password-group">
+              <i class="fas fa-lock input-icon" aria-hidden="true"></i>
+              <input
+                type="password"
+                id="password"
+                placeholder=" "
+                autocomplete="current-password"
+                aria-label="Password"
+                required
+              />
+              <label for="password" class="floating-label">Password</label>
+              <button
+                type="button"
+                class="toggle-pw"
+                id="togglePw"
+                aria-label="Show or hide password"
+                tabindex="0"
+              >
+                <i class="fas fa-eye" aria-hidden="true"></i>
+              </button>
+              <div class="error-msg" id="password-error" role="alert"></div>
+            </div>
 
-                <!-- ---- Login Form ---- -->
-                <form class="login-form" id="loginForm" novalidate aria-label="Login form">
+            <!-- ---- Options row ---- -->
+            <div class="form-options">
+              <label class="remember">
+                <input type="checkbox" id="rememberMe" />
+                Remember me
+              </label>
+              <a href="#" class="forgot-link" aria-label="Forgot your password?"
+                >Forgot Password?</a
+              >
+            </div>
 
-                    <!-- Staff ID -->
-                    <div class="input-group" id="staffId-group">
-                        <i class="fas fa-id-badge input-icon" aria-hidden="true"></i>
-                        <input
-                        type="text"
-                        id="staffId"
-                        placeholder=" "
-                        autocomplete="username"
-                        aria-label="Staff ID"
-                        required
-                        />
-                        <label for="staffId" class="floating-label">Staff ID</label>
-                        <button type="button" class="toggle-pw" aria-hidden="true" style="display:none;"></button>
-                        <div class="error-msg" id="staffId-error" role="alert"></div>
-                    </div>
+            <!-- ---- Login Button ---- -->
+            <button
+              type="submit"
+              class="btn-login"
+              id="loginBtn"
+              aria-label="Sign in to your lecturer account"
+            >
+              <span class="spinner" aria-hidden="true"></span>
+              <span class="btn-text">Login to Lecturer Portal</span>
+            </button>
 
-                    <!-- Password -->
-                    <div class="input-group" id="password-group">
-                        <i class="fas fa-lock input-icon" aria-hidden="true"></i>
-                        <input
-                        type="password"
-                        id="password"
-                        placeholder=" "
-                        autocomplete="current-password"
-                        aria-label="Password"
-                        required
-                        />
-                        <label for="password" class="floating-label">Password</label>
-                        <button
-                        type="button"
-                        class="toggle-pw"
-                        id="togglePw"
-                        aria-label="Show or hide password"
-                        tabindex="0"
-                        >
-                        <i class="fas fa-eye" aria-hidden="true"></i>
-                    </button>
-                    <div class="error-msg" id="password-error" role="alert"></div>
-                </div>
-
-                <!-- ---- Options row ---- -->
-                <div class="form-options">
-                    <label class="remember">
-                        <input type="checkbox" id="rememberMe" />
-                        Remember me
-                    </label>
-                    <a href="#" class="forgot-link" aria-label="Forgot your password?">Forgot Password?</a>
-                </div>
-
-                <!-- ---- Login Button ---- -->
-                <button type="submit" class="btn-login" id="loginBtn" aria-label="Sign in to your lecturer account">
-                    <span class="spinner" aria-hidden="true"></span>
-                    <span class="btn-text">Login to Lecturer Portal</span>
-                </button>
-
-                <!-- ---- Footer ---- -->
-                <div class="login-footer">
-                    <span>Need assistance?</span>
-                    <a href="#" aria-label="Contact ICT Directorate">Contact the ICT Directorate</a>
-                </div>
-
-            </form>
+            <!-- ---- Footer ---- -->
+            <div class="login-footer">
+              <span>Need assistance?</span>
+              <a href="#" aria-label="Contact ICT Directorate"
+                >Contact the ICT Directorate</a
+              >
+            </div>
+          </form>
         </div>
-    </section>
-</div>
+      </section>
+    </div>
 
-<!-- ============================================================
+    <!-- ============================================================
 JAVASCRIPT – Validation, Toggle, Loading, Ripple
 ============================================================ -->
-<script>
-    (function() {
-        'use strict';
+    <script>
+      (function () {
+        "use strict";
 
         // ---- DOM refs ----
-        const form = document.getElementById('loginForm');
-        const staffIdInput = document.getElementById('staffId');
-        const passwordInput = document.getElementById('password');
-        const staffIdGroup = document.getElementById('staffId-group');
-        const passwordGroup = document.getElementById('password-group');
-        const staffIdError = document.getElementById('staffId-error');
-        const passwordError = document.getElementById('password-error');
-        const loginBtn = document.getElementById('loginBtn');
-        const togglePw = document.getElementById('togglePw');
+        const form = document.getElementById("loginForm");
+        const staffIdInput = document.getElementById("staffId");
+        const passwordInput = document.getElementById("password");
+        const staffIdGroup = document.getElementById("staffId-group");
+        const passwordGroup = document.getElementById("password-group");
+        const staffIdError = document.getElementById("staffId-error");
+        const passwordError = document.getElementById("password-error");
+        const loginBtn = document.getElementById("loginBtn");
+        const togglePw = document.getElementById("togglePw");
 
         // ---- helper: set error ----
         function setError(group, errorEl, message) {
-            if (message) {
-                group.classList.add('error');
-                errorEl.textContent = message;
-                errorEl.classList.add('visible');
-                errorEl.setAttribute('aria-live', 'polite');
-            } else {
-                group.classList.remove('error');
-                errorEl.textContent = '';
-                errorEl.classList.remove('visible');
-                errorEl.removeAttribute('aria-live');
-            }
+          if (message) {
+            group.classList.add("error");
+            errorEl.textContent = message;
+            errorEl.classList.add("visible");
+            errorEl.setAttribute("aria-live", "polite");
+          } else {
+            group.classList.remove("error");
+            errorEl.textContent = "";
+            errorEl.classList.remove("visible");
+            errorEl.removeAttribute("aria-live");
+          }
         }
 
         // ---- validate single field ----
         function validateStaffId() {
-            const val = staffIdInput.value.trim();
-            if (!val) {
-                setError(staffIdGroup, staffIdError, 'Staff ID is required.');
-                return false;
-            }
-            // simple format: at least 4 characters, alphanumeric + hyphen allowed
-            if (!/^[A-Za-z0-9\-]{4,}$/.test(val)) {
-                setError(staffIdGroup, staffIdError, 'Enter a valid Staff ID (e.g. IMSU-2023-001).');
-                return false;
-            }
-            setError(staffIdGroup, staffIdError, '');
-            return true;
+          const val = staffIdInput.value.trim();
+          if (!val) {
+            setError(staffIdGroup, staffIdError, "Staff ID is required.");
+            return false;
+          }
+          // simple format: at least 4 characters, alphanumeric + hyphen allowed
+          if (!/^[A-Za-z0-9\-]{4,}$/.test(val)) {
+            setError(
+              staffIdGroup,
+              staffIdError,
+              "Enter a valid Staff ID (e.g. IMSU-2023-001).",
+            );
+            return false;
+          }
+          setError(staffIdGroup, staffIdError, "");
+          return true;
         }
 
         function validatePassword() {
-            const val = passwordInput.value;
-            if (!val) {
-                setError(passwordGroup, passwordError, 'Password is required.');
-                return false;
-            }
-            if (val.length < 6) {
-                setError(passwordGroup, passwordError, 'Password must be at least 6 characters.');
-                return false;
-            }
-            setError(passwordGroup, passwordError, '');
-            return true;
+          const val = passwordInput.value;
+          if (!val) {
+            setError(passwordGroup, passwordError, "Password is required.");
+            return false;
+          }
+          if (val.length < 6) {
+            setError(
+              passwordGroup,
+              passwordError,
+              "Password must be at least 6 characters.",
+            );
+            return false;
+          }
+          setError(passwordGroup, passwordError, "");
+          return true;
         }
 
         // ---- real-time validation on blur ----
-        staffIdInput.addEventListener('blur', validateStaffId);
-        passwordInput.addEventListener('blur', validatePassword);
+        staffIdInput.addEventListener("blur", validateStaffId);
+        passwordInput.addEventListener("blur", validatePassword);
 
         // ---- clear error on focus ----
-        staffIdInput.addEventListener('focus', function() {
-            setError(staffIdGroup, staffIdError, '');
+        staffIdInput.addEventListener("focus", function () {
+          setError(staffIdGroup, staffIdError, "");
         });
-        passwordInput.addEventListener('focus', function() {
-            setError(passwordGroup, passwordError, '');
+        passwordInput.addEventListener("focus", function () {
+          setError(passwordGroup, passwordError, "");
         });
 
         // ---- Password toggle ----
         let pwVisible = false;
-        togglePw.addEventListener('click', function() {
-            pwVisible = !pwVisible;
-            passwordInput.type = pwVisible ? 'text' : 'password';
-            const icon = this.querySelector('i');
-            icon.className = pwVisible ? 'fas fa-eye-slash' : 'fas fa-eye';
-            this.setAttribute('aria-label', pwVisible ? 'Hide password' : 'Show password');
+        togglePw.addEventListener("click", function () {
+          pwVisible = !pwVisible;
+          passwordInput.type = pwVisible ? "text" : "password";
+          const icon = this.querySelector("i");
+          icon.className = pwVisible ? "fas fa-eye-slash" : "fas fa-eye";
+          this.setAttribute(
+            "aria-label",
+            pwVisible ? "Hide password" : "Show password",
+          );
         });
 
         // ---- Ripple effect on button ----
         function createRipple(e, btn) {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const ripple = document.createElement('span');
-            ripple.className = 'ripple';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            btn.appendChild(ripple);
-            setTimeout(() => { ripple.remove(); }, 700);
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const ripple = document.createElement("span");
+          ripple.className = "ripple";
+          ripple.style.left = x + "px";
+          ripple.style.top = y + "px";
+          btn.appendChild(ripple);
+          setTimeout(() => {
+            ripple.remove();
+          }, 700);
         }
 
-        loginBtn.addEventListener('click', function(e) {
-            if (!this.classList.contains('loading') && !this.classList.contains('success')) {
-                createRipple(e, this);
-            }
+        loginBtn.addEventListener("click", function (e) {
+          if (
+            !this.classList.contains("loading") &&
+            !this.classList.contains("success")
+          ) {
+            createRipple(e, this);
+          }
         });
 
         // ---- Form submission ----
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
 
-            // validate all
-            const isStaffIdValid = validateStaffId();
-            const isPwValid = validatePassword();
+          // validate all
+          const isStaffIdValid = validateStaffId();
+          const isPwValid = validatePassword();
 
-            if (!isStaffIdValid || !isPwValid) {
-                // focus first invalid
-                if (!isStaffIdValid) staffIdInput.focus();
-                else if (!isPwValid) passwordInput.focus();
-                return;
-            }
+          if (!isStaffIdValid || !isPwValid) {
+            // focus first invalid
+            if (!isStaffIdValid) staffIdInput.focus();
+            else if (!isPwValid) passwordInput.focus();
+            return;
+          }
 
-            // ---- start loading ----
-            loginBtn.classList.add('loading');
-            loginBtn.disabled = true;
-            loginBtn.querySelector('.btn-text').textContent = 'Signing in…';
+          // ---- start loading ----
+          loginBtn.classList.add("loading");
+          loginBtn.disabled = true;
+          loginBtn.querySelector(".btn-text").textContent = "Signing in…";
 
-            // ---- simulate async login ----
-            setTimeout(function() {
-                // success
-                loginBtn.classList.remove('loading');
-                loginBtn.classList.add('success');
-                loginBtn.querySelector('.btn-text').textContent = '✓ Logged In';
-                loginBtn.disabled = false;
+          // ---- simulate async login ----
+          setTimeout(function () {
+            // success
+            loginBtn.classList.remove("loading");
+            loginBtn.classList.add("success");
+            loginBtn.querySelector(".btn-text").textContent = "✓ Logged In";
+            loginBtn.disabled = false;
 
-                // reset after 2.5s (demo only)
-                setTimeout(function() {
-                    loginBtn.classList.remove('success');
-                    loginBtn.querySelector('.btn-text').textContent = 'Login to Lecturer Portal';
-                }, 2500);
+            // Redirect to dashboard after successful login
+            window.location.href = "dashboard.html";
 
-                // (In production, you would redirect or handle token here)
-                console.log('Lecturer login successful for:', staffIdInput.value.trim());
-
-            }, 1800);
+            // (In production, you would redirect or handle token here)
+            console.log(
+              "Lecturer login successful for:",
+              staffIdInput.value.trim(),
+            );
+          }, 1800);
         });
 
         // ---- Keyboard: Enter on toggle should not submit ----
-        togglePw.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                this.click();
-            }
+        togglePw.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            this.click();
+          }
         });
 
         // ---- accessible: auto-focus first field on load ----
-        window.addEventListener('load', function() {
-            setTimeout(() => { staffIdInput.focus(); }, 500);
+        window.addEventListener("load", function () {
+          setTimeout(() => {
+            staffIdInput.focus();
+          }, 500);
         });
 
         // ---- handle "Remember Me" with localStorage (demo) ----
-        const rememberCheck = document.getElementById('rememberMe');
+        const rememberCheck = document.getElementById("rememberMe");
         // restore if previously checked
-        if (localStorage.getItem('imsu_lecturer_remember') === 'true') {
-            rememberCheck.checked = true;
-            const savedStaffId = localStorage.getItem('imsu_lecturer_staffId') || '';
-            if (savedStaffId) staffIdInput.value = savedStaffId;
+        if (localStorage.getItem("imsu_lecturer_remember") === "true") {
+          rememberCheck.checked = true;
+          const savedStaffId =
+            localStorage.getItem("imsu_lecturer_staffId") || "";
+          if (savedStaffId) staffIdInput.value = savedStaffId;
         }
-        rememberCheck.addEventListener('change', function() {
-            if (this.checked) {
-                localStorage.setItem('imsu_lecturer_remember', 'true');
-                localStorage.setItem('imsu_lecturer_staffId', staffIdInput.value.trim());
-            } else {
-                localStorage.removeItem('imsu_lecturer_remember');
-                localStorage.removeItem('imsu_lecturer_staffId');
-            }
+        rememberCheck.addEventListener("change", function () {
+          if (this.checked) {
+            localStorage.setItem("imsu_lecturer_remember", "true");
+            localStorage.setItem(
+              "imsu_lecturer_staffId",
+              staffIdInput.value.trim(),
+            );
+          } else {
+            localStorage.removeItem("imsu_lecturer_remember");
+            localStorage.removeItem("imsu_lecturer_staffId");
+          }
         });
 
         // ---- save staffId on blur if remember is checked ----
-        staffIdInput.addEventListener('blur', function() {
-            if (rememberCheck.checked) {
-                localStorage.setItem('imsu_lecturer_staffId', this.value.trim());
-            }
+        staffIdInput.addEventListener("blur", function () {
+          if (rememberCheck.checked) {
+            localStorage.setItem("imsu_lecturer_staffId", this.value.trim());
+          }
         });
 
         // ---- Forgot Password link (demo) ----
-        document.querySelector('.forgot-link').addEventListener('click', function(e) {
+        document
+          .querySelector(".forgot-link")
+          .addEventListener("click", function (e) {
             e.preventDefault();
-            alert('A password reset link will be sent to your registered email.\n(Feature coming soon)');
-        });
+            alert(
+              "A password reset link will be sent to your registered email.\n(Feature coming soon)",
+            );
+          });
 
         // ---- Learn More button ----
-        document.querySelector('.btn-learn').addEventListener('click', function() {
+        document
+          .querySelector(".btn-learn")
+          .addEventListener("click", function () {
             alert(
-                '📘 IMSU Lecturer Result Management Portal\n\n' +
-                '• Manage assigned courses\n' +
-                '• Upload and moderate student results\n' +
-                '• Monitor submission deadlines\n' +
-                '• Access academic performance analytics\n' +
-                '• Secure and efficient\n\n' +
-                'Built for Imo State University faculty members.'
+              "📘 IMSU Lecturer Result Management Portal\n\n" +
+                "• Manage assigned courses\n" +
+                "• Upload and moderate student results\n" +
+                "• Monitor submission deadlines\n" +
+                "• Access academic performance analytics\n" +
+                "• Secure and efficient\n\n" +
+                "Built for Imo State University faculty members.",
             );
-        });
+          });
 
         // ---- Contact ICT ----
-        document.querySelector('.login-footer a[href="#"]').addEventListener('click', function(e) {
+        document
+          .querySelector('.login-footer a[href="#"]')
+          .addEventListener("click", function (e) {
             e.preventDefault();
             alert(
-                '📞 ICT Directorate – Imo State University\n\n' +
-                'Email: ict@imsu.edu.ng\n' +
-                'Phone: +234 800 IMSU ICT\n' +
-                'Hours: Mon–Fri, 8:00 AM – 5:00 PM'
+              "📞 ICT Directorate – Imo State University\n\n" +
+                "Email: ict@imsu.edu.ng\n" +
+                "Phone: +234 800 IMSU ICT\n" +
+                "Hours: Mon–Fri, 8:00 AM – 5:00 PM",
             );
-        });
-
-    })();
-</script>
-
-</body>
+          });
+      })();
+    </script>
+  </body>
 </html>
