@@ -1,0 +1,3717 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMSU Admin | Student Management</title>
+
+    <!-- Font Awesome 6 (Free) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <style>
+      /* ============================================================
+               CSS VARIABLES – IMSU Brand & Dashboard Theme
+               ============================================================ */
+      :root {
+        --primary: #006b3f;
+        --primary-dark: #004d2e;
+        --primary-light: #e8f5ee;
+        --primary-gradient: linear-gradient(145deg, #006b3f 0%, #004d2e 100%);
+        --gold: #d4af37;
+        --gold-light: #e8d48b;
+        --gold-glow: rgba(212, 175, 55, 0.25);
+        --white: #ffffff;
+        --light-bg: #f5f7f8;
+        --dark-text: #1e293b;
+        --gray-text: #64748b;
+        --border-light: rgba(0, 107, 63, 0.12);
+        --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.06);
+        --shadow-md: 0 12px 48px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.14);
+        --radius-sm: 10px;
+        --radius-md: 18px;
+        --radius-lg: 28px;
+        --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        --font-sans:
+          "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont,
+          "Helvetica Neue", sans-serif;
+        --sidebar-width: 280px;
+        --sidebar-collapsed: 72px;
+        --nav-height: 72px;
+      }
+
+      /* ============================================================
+               RESET & BASE
+               ============================================================ */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 16px;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background: var(--light-bg);
+        color: var(--dark-text);
+        min-height: 100vh;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+      }
+
+      /* ============================================================
+               APP WRAPPER
+               ============================================================ */
+      .app-wrapper {
+        display: flex;
+        min-height: 100vh;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      /* ============================================================
+               SIDEBAR – Fixed
+               ============================================================ */
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: var(--sidebar-width);
+        height: 100vh;
+        background: var(--primary-gradient);
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        z-index: 1100;
+        transition:
+          width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          box-shadow 0.35s ease;
+        box-shadow: 4px 0 32px rgba(0, 0, 0, 0.08);
+        overflow-y: auto;
+        overflow-x: hidden;
+        flex-shrink: 0;
+      }
+
+      .sidebar::-webkit-scrollbar {
+        width: 3px;
+      }
+      .sidebar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sidebar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 6px;
+      }
+
+      .sidebar .sidebar-inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 20px 16px 16px 16px;
+      }
+
+      /* Sidebar brand */
+      .sidebar-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 8px 24px 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        flex-shrink: 0;
+      }
+      .sidebar-brand .brand-icon {
+        width: 44px;
+        height: 44px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: var(--gold);
+        border: 1.5px solid rgba(212, 175, 55, 0.25);
+        flex-shrink: 0;
+      }
+      .sidebar-brand .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .sidebar-brand .brand-text .imsu {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--white);
+        letter-spacing: 0.5px;
+      }
+      .sidebar-brand .brand-text .imsu span {
+        color: var(--gold);
+      }
+      .sidebar-brand .brand-text .sub {
+        font-size: 10px;
+        font-weight: 400;
+        opacity: 0.65;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+        color: var(--white);
+      }
+
+      /* Profile in sidebar */
+      .sidebar-profile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 8px 20px 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        flex-shrink: 0;
+      }
+      .sidebar-profile .sp-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--white);
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        flex-shrink: 0;
+        position: relative;
+      }
+      .sidebar-profile .sp-avatar .online-dot {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #22c55e;
+        border: 2px solid var(--primary-dark);
+      }
+      .sidebar-profile .sp-info {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+      }
+      .sidebar-profile .sp-info .sp-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--white);
+        white-space: nowrap;
+      }
+      .sidebar-profile .sp-info .sp-role {
+        font-size: 0.7rem;
+        opacity: 0.65;
+        color: var(--white);
+        white-space: nowrap;
+      }
+
+      /* Navigation */
+      .sidebar-nav {
+        flex: 1;
+        padding: 16px 0 8px 0;
+        overflow-y: auto;
+      }
+      .sidebar-nav .nav-label {
+        font-size: 0.6rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: rgba(255, 255, 255, 0.25);
+        padding: 12px 8px 6px 8px;
+      }
+      .sidebar-nav .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 10px 12px;
+        border-radius: var(--radius-sm);
+        color: rgba(255, 255, 255, 0.65);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.85rem;
+        transition: var(--transition);
+        cursor: pointer;
+        position: relative;
+        border: none;
+        background: transparent;
+        width: 100%;
+        text-align: left;
+        font-family: var(--font-sans);
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .sidebar-nav .nav-item i {
+        width: 20px;
+        font-size: 1rem;
+        text-align: center;
+        flex-shrink: 0;
+        color: rgba(255, 255, 255, 0.4);
+        transition: var(--transition);
+      }
+      .sidebar-nav .nav-item:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--white);
+      }
+      .sidebar-nav .nav-item:hover i {
+        color: var(--white);
+      }
+      .sidebar-nav .nav-item.active {
+        background: rgba(255, 255, 255, 0.12);
+        color: var(--white);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      }
+      .sidebar-nav .nav-item.active i {
+        color: var(--gold);
+      }
+      .sidebar-nav .nav-item.active::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 6px;
+        bottom: 6px;
+        width: 3px;
+        background: var(--gold);
+        border-radius: 0 4px 4px 0;
+      }
+      .sidebar-nav .nav-item .nav-badge {
+        margin-left: auto;
+        background: rgba(212, 175, 55, 0.2);
+        color: var(--gold-light);
+        font-size: 0.6rem;
+        font-weight: 700;
+        padding: 2px 10px;
+        border-radius: 60px;
+        flex-shrink: 0;
+      }
+      .sidebar-nav .nav-item.logout-item {
+        margin-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        padding-top: 16px;
+        color: rgba(255, 255, 255, 0.45);
+      }
+      .sidebar-nav .nav-item.logout-item:hover {
+        color: #ff6b6b;
+        background: rgba(255, 107, 107, 0.08);
+      }
+      .sidebar-nav .nav-item.logout-item:hover i {
+        color: #ff6b6b;
+      }
+
+      /* Sidebar collapsed state */
+      .sidebar.collapsed {
+        width: var(--sidebar-collapsed);
+      }
+      .sidebar.collapsed .sidebar-brand .brand-text,
+      .sidebar.collapsed .sidebar-profile .sp-info,
+      .sidebar.collapsed .sidebar-nav .nav-item span:not(.nav-badge),
+      .sidebar.collapsed .sidebar-nav .nav-label,
+      .sidebar.collapsed .sidebar-nav .nav-item .nav-badge {
+        display: none;
+      }
+      .sidebar.collapsed .sidebar-nav .nav-item {
+        justify-content: center;
+        padding: 10px;
+      }
+      .sidebar.collapsed .sidebar-nav .nav-item i {
+        font-size: 1.2rem;
+        margin: 0;
+      }
+      .sidebar.collapsed .sidebar-profile {
+        justify-content: center;
+      }
+      .sidebar.collapsed .sidebar-brand {
+        justify-content: center;
+      }
+      .sidebar.collapsed .sidebar-brand .brand-icon {
+        margin: 0;
+      }
+      .sidebar.collapsed .sidebar-inner {
+        padding: 16px 8px;
+      }
+
+      /* ---- sidebar toggle (hamburger) ---- */
+      .sidebar-toggle {
+        display: none;
+        background: var(--white);
+        border: none;
+        border-radius: var(--radius-sm);
+        padding: 8px 10px;
+        font-size: 1.1rem;
+        color: var(--primary);
+        cursor: pointer;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        border: 1px solid var(--border-light);
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        height: 38px;
+        width: 38px;
+      }
+      .sidebar-toggle:hover {
+        box-shadow: var(--shadow-md);
+        transform: scale(1.02);
+      }
+      .sidebar-toggle:active {
+        transform: scale(0.95);
+      }
+
+      /* ---- sidebar overlay (mobile) ---- */
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 1050;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        transition: opacity 0.35s ease;
+        opacity: 0;
+      }
+      .sidebar-overlay.active {
+        opacity: 1;
+      }
+
+      /* ============================================================
+               MAIN CONTENT
+               ============================================================ */
+      .main-content {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        transition: margin-left 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+        padding-top: var(--nav-height);
+      }
+
+      .main-content.sidebar-collapsed {
+        margin-left: var(--sidebar-collapsed);
+      }
+
+      /* ============================================================
+               TOP NAVIGATION – Fixed
+               ============================================================ */
+      .top-nav {
+        position: fixed;
+        top: 0;
+        left: var(--sidebar-width);
+        right: 0;
+        z-index: 500;
+        height: var(--nav-height);
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 28px;
+        flex-shrink: 0;
+        box-shadow: 0 1px 20px rgba(0, 0, 0, 0.02);
+        width: calc(100% - var(--sidebar-width));
+        max-width: 100%;
+        transition:
+          left 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+          width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .top-nav .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-shrink: 1;
+        min-width: 0;
+      }
+
+      .top-nav .nav-left .page-title {
+        font-weight: 600;
+        font-size: 1.05rem;
+        color: var(--dark-text);
+        white-space: nowrap;
+      }
+      .top-nav .nav-left .page-title span {
+        color: var(--gray-text);
+        font-weight: 400;
+        font-size: 0.85rem;
+      }
+
+      .top-nav .nav-center {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 480px;
+        margin: 0 16px;
+      }
+      .top-nav .nav-center .search-wrap {
+        position: relative;
+        width: 100%;
+      }
+      .top-nav .nav-center .search-wrap i {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-text);
+        font-size: 0.9rem;
+      }
+      .top-nav .nav-center .search-wrap input {
+        width: 100%;
+        padding: 8px 14px 8px 40px;
+        border-radius: 60px;
+        border: 1.5px solid var(--border-light);
+        background: var(--white);
+        font-family: var(--font-sans);
+        font-size: 0.9rem;
+        color: var(--dark-text);
+        outline: none;
+        transition: var(--transition);
+        height: 40px;
+      }
+      .top-nav .nav-center .search-wrap input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(0, 107, 63, 0.06);
+      }
+      .top-nav .nav-center .search-wrap input::placeholder {
+        color: var(--gray-text);
+        opacity: 0.6;
+      }
+
+      .top-nav .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-shrink: 0;
+      }
+
+      .top-nav .nav-right .nav-btn {
+        position: relative;
+        background: none;
+        border: none;
+        font-size: 1.15rem;
+        color: var(--gray-text);
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 50%;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        text-decoration: none;
+      }
+      .top-nav .nav-right .nav-btn:hover {
+        background: rgba(0, 0, 0, 0.04);
+        color: var(--dark-text);
+      }
+      .top-nav .nav-right .nav-btn .badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 18px;
+        height: 18px;
+        background: #dc2626;
+        color: #fff;
+        border-radius: 50%;
+        font-size: 9px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--white);
+      }
+      .top-nav .nav-right .nav-btn .badge.gold {
+        background: var(--gold);
+      }
+
+      .top-nav .nav-right .nav-divider {
+        width: 1px;
+        height: 28px;
+        background: var(--border-light);
+      }
+
+      .top-nav .nav-right .profile-trigger {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        padding: 4px 12px 4px 4px;
+        border-radius: 60px;
+        transition: var(--transition);
+        border: 1px solid transparent;
+        text-decoration: none;
+        color: inherit;
+      }
+      .top-nav .nav-right .profile-trigger:hover {
+        background: rgba(0, 0, 0, 0.02);
+        border-color: var(--border-light);
+      }
+      .top-nav .nav-right .profile-trigger .pt-avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--primary-gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        font-weight: 700;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+      }
+      .top-nav .nav-right .profile-trigger .pt-name {
+        font-weight: 500;
+        font-size: 0.85rem;
+        color: var(--dark-text);
+        white-space: nowrap;
+      }
+      .top-nav .nav-right .profile-trigger .pt-chevron {
+        color: var(--gray-text);
+        font-size: 0.7rem;
+      }
+
+      .top-nav .nav-right .datetime {
+        font-size: 0.75rem;
+        color: var(--gray-text);
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      /* Mobile sidebar adjustment for top-nav */
+      @media (max-width: 1023px) {
+        .top-nav {
+          left: 0;
+          width: 100%;
+        }
+        .main-content {
+          padding-top: var(--nav-height);
+        }
+      }
+
+      /* ============================================================
+               PAGE CONTENT
+               ============================================================ */
+      .page-content {
+        flex: 1;
+        padding: 28px 32px 20px 32px;
+        animation: fadeIn 0.7s ease 0.1s both;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      /* ---- Page Header ---- */
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .page-header .ph-left h1 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--dark-text);
+        letter-spacing: -0.3px;
+      }
+      .page-header .ph-left h1 i {
+        color: var(--primary);
+        margin-right: 10px;
+      }
+      .page-header .ph-left p {
+        color: var(--gray-text);
+        font-size: 0.9rem;
+      }
+      .page-header .ph-right {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .page-header .ph-right .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 24px;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.9rem;
+        font-family: var(--font-sans);
+        border: none;
+        cursor: pointer;
+        transition: var(--transition);
+        background: var(--primary-gradient);
+        color: var(--white);
+        box-shadow: 0 4px 12px rgba(0, 107, 63, 0.15);
+        text-decoration: none;
+      }
+      .page-header .ph-right .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 107, 63, 0.25);
+      }
+      .page-header .ph-right .btn-primary i {
+        font-size: 0.9rem;
+      }
+
+      /* ---- Summary Cards ---- */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 16px;
+        margin-bottom: 28px;
+      }
+
+      .stat-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: var(--radius-sm);
+        padding: 16px 18px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-decoration: none;
+        color: inherit;
+      }
+      .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--primary);
+      }
+      .stat-card .sc-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+        background: var(--primary-light);
+        color: var(--primary);
+      }
+      .stat-card .sc-icon.gold {
+        background: rgba(212, 175, 55, 0.14);
+        color: var(--gold);
+      }
+      .stat-card .sc-icon.blue {
+        background: rgba(37, 99, 235, 0.1);
+        color: #2563eb;
+      }
+      .stat-card .sc-icon.purple {
+        background: rgba(139, 92, 246, 0.1);
+        color: #8b5cf6;
+      }
+      .stat-card .sc-icon.red {
+        background: rgba(220, 38, 38, 0.1);
+        color: #dc2626;
+      }
+      .stat-card .sc-icon.teal {
+        background: rgba(20, 184, 166, 0.1);
+        color: #14b8a6;
+      }
+
+      .stat-card .sc-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .stat-card .sc-info .sc-number {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--dark-text);
+        line-height: 1.2;
+      }
+      .stat-card .sc-info .sc-label {
+        font-size: 0.7rem;
+        color: var(--gray-text);
+        font-weight: 500;
+      }
+      .stat-card .sc-trend {
+        font-size: 0.6rem;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 60px;
+        background: #dcfce7;
+        color: #16a34a;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        flex-shrink: 0;
+      }
+      .stat-card .sc-trend.down {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+
+      /* ---- Toolbar ---- */
+      .toolbar {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: var(--radius-sm);
+        padding: 16px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px 16px;
+        transition: var(--transition);
+      }
+      .toolbar:hover {
+        box-shadow: var(--shadow-md);
+      }
+
+      .toolbar .tb-search {
+        flex: 1 1 200px;
+        min-width: 140px;
+        position: relative;
+      }
+      .toolbar .tb-search i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-text);
+        font-size: 0.85rem;
+      }
+      .toolbar .tb-search input {
+        width: 100%;
+        padding: 8px 12px 8px 36px;
+        border-radius: var(--radius-sm);
+        border: 1.5px solid var(--border-light);
+        background: var(--white);
+        font-family: var(--font-sans);
+        font-size: 0.85rem;
+        color: var(--dark-text);
+        outline: none;
+        transition: var(--transition);
+        height: 38px;
+      }
+      .toolbar .tb-search input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(0, 107, 63, 0.06);
+      }
+
+      .toolbar .tb-filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+      .toolbar .tb-filter select {
+        padding: 6px 28px 6px 12px;
+        border-radius: var(--radius-sm);
+        border: 1.5px solid var(--border-light);
+        background: var(--white);
+        font-family: var(--font-sans);
+        font-size: 0.8rem;
+        color: var(--dark-text);
+        outline: none;
+        transition: var(--transition);
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        height: 38px;
+        cursor: pointer;
+      }
+      .toolbar .tb-filter select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(0, 107, 63, 0.06);
+      }
+
+      .toolbar .tb-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-left: auto;
+      }
+      .toolbar .tb-actions .btn-tool {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: var(--radius-sm);
+        font-weight: 500;
+        font-size: 0.78rem;
+        font-family: var(--font-sans);
+        border: 1px solid var(--border-light);
+        cursor: pointer;
+        transition: var(--transition);
+        background: var(--white);
+        color: var(--dark-text);
+        text-decoration: none;
+      }
+      .toolbar .tb-actions .btn-tool:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-sm);
+        border-color: var(--primary);
+      }
+      .toolbar .tb-actions .btn-tool.primary {
+        background: var(--primary-gradient);
+        color: var(--white);
+        border-color: transparent;
+        box-shadow: 0 4px 12px rgba(0, 107, 63, 0.12);
+      }
+      .toolbar .tb-actions .btn-tool.primary:hover {
+        box-shadow: 0 8px 20px rgba(0, 107, 63, 0.2);
+      }
+      .toolbar .tb-actions .btn-tool i {
+        font-size: 0.8rem;
+      }
+
+      /* ---- Glass Card (Table Container) ---- */
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: var(--radius-sm);
+        padding: 20px 20px 16px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        margin-bottom: 28px;
+        overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+      }
+      .glass-card:hover {
+        box-shadow: var(--shadow-md);
+      }
+
+      .glass-card .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .glass-card .card-header h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--dark-text);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .glass-card .card-header h3 i {
+        color: var(--primary);
+      }
+      .glass-card .card-header .card-count {
+        font-size: 0.75rem;
+        color: var(--gray-text);
+        background: var(--light-bg);
+        padding: 2px 14px;
+        border-radius: 60px;
+        font-weight: 500;
+      }
+
+      /* ---- Table ---- */
+      .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 0 -4px;
+        padding: 0 4px;
+        width: 100%;
+        max-width: 100%;
+      }
+      .table-responsive table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.82rem;
+        min-width: 800px;
+      }
+      .table-responsive table thead {
+        background: var(--light-bg);
+        border-radius: var(--radius-sm);
+      }
+      .table-responsive table thead th {
+        padding: 10px 12px;
+        text-align: left;
+        font-weight: 600;
+        color: var(--gray-text);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        border-bottom: 2px solid var(--border-light);
+        white-space: nowrap;
+      }
+      .table-responsive table tbody td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border-light);
+        color: var(--dark-text);
+        font-size: 0.82rem;
+        vertical-align: middle;
+        word-wrap: break-word;
+      }
+      .table-responsive table tbody tr:hover {
+        background: rgba(0, 107, 63, 0.02);
+      }
+      .table-responsive table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .table-responsive table .avatar-sm {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--primary-gradient);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        font-weight: 700;
+        font-size: 0.65rem;
+        flex-shrink: 0;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 2px 12px;
+        border-radius: 60px;
+        font-weight: 600;
+        font-size: 0.6rem;
+      }
+      .status-pill.active {
+        background: #dcfce7;
+        color: #16a34a;
+      }
+      .status-pill.inactive {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+      .status-pill.pending {
+        background: #fef3c7;
+        color: #d97706;
+      }
+      .status-pill.graduated {
+        background: #dbeafe;
+        color: #2563eb;
+      }
+      .status-pill.suspended {
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+
+      .action-dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      .action-dropdown .drop-btn {
+        background: none;
+        border: none;
+        color: var(--gray-text);
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: var(--radius-sm);
+        transition: var(--transition);
+        font-size: 0.9rem;
+      }
+      .action-dropdown .drop-btn:hover {
+        background: rgba(0, 0, 0, 0.05);
+        color: var(--dark-text);
+      }
+      .action-dropdown .drop-menu {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 4px);
+        background: var(--white);
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-light);
+        min-width: 180px;
+        padding: 4px 0;
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+        pointer-events: none;
+        transition: var(--transition);
+        z-index: 100;
+      }
+      .action-dropdown .drop-menu.open {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: all;
+      }
+      .action-dropdown .drop-menu a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 16px;
+        color: var(--dark-text);
+        text-decoration: none;
+        font-size: 0.8rem;
+        transition: var(--transition);
+      }
+      .action-dropdown .drop-menu a:hover {
+        background: rgba(0, 0, 0, 0.04);
+        color: var(--primary);
+      }
+      .action-dropdown .drop-menu a i {
+        width: 16px;
+        font-size: 0.8rem;
+        color: var(--gray-text);
+      }
+      .action-dropdown .drop-menu a.danger {
+        color: #dc2626;
+      }
+      .action-dropdown .drop-menu a.danger i {
+        color: #dc2626;
+      }
+      .action-dropdown .drop-menu a.danger:hover {
+        background: rgba(220, 38, 38, 0.06);
+      }
+
+      /* ============================================================
+               MODAL – Add Student
+               ============================================================ */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        z-index: 2000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        animation: fadeIn 0.3s ease;
+        overflow-y: auto;
+      }
+      .modal-overlay.active {
+        display: flex;
+      }
+
+      .modal-box {
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: var(--radius-md);
+        padding: 36px 40px 32px 40px;
+        max-width: 900px;
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: var(--shadow-lg);
+        animation: modalSlide 0.4s ease forwards;
+        transform: translateY(20px) scale(0.96);
+        opacity: 0;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .modal-box.show {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+
+      @keyframes modalSlide {
+        0% {
+          transform: translateY(20px) scale(0.96);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+      }
+
+      .modal-box .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .modal-box .modal-header h2 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--dark-text);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .modal-box .modal-header h2 i {
+        color: var(--primary);
+      }
+      .modal-box .modal-header .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.4rem;
+        color: var(--gray-text);
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: var(--radius-sm);
+        transition: var(--transition);
+      }
+      .modal-box .modal-header .modal-close:hover {
+        background: var(--light-bg);
+        color: var(--dark-text);
+      }
+
+      .modal-box .modal-section {
+        margin-bottom: 24px;
+      }
+      .modal-box .modal-section .section-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--dark-text);
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--border-light);
+      }
+      .modal-box .modal-section .section-title i {
+        color: var(--primary);
+      }
+
+      .modal-box .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 24px;
+      }
+      .modal-box .form-grid .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .modal-box .form-grid .form-group.full-width {
+        grid-column: 1 / -1;
+      }
+      .modal-box .form-grid .form-group label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--gray-text);
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+      .modal-box .form-grid .form-group input,
+      .modal-box .form-grid .form-group select,
+      .modal-box .form-grid .form-group textarea {
+        padding: 8px 12px;
+        border-radius: var(--radius-sm);
+        border: 1.5px solid var(--border-light);
+        background: var(--white);
+        font-family: var(--font-sans);
+        font-size: 0.85rem;
+        color: var(--dark-text);
+        outline: none;
+        transition: var(--transition);
+        width: 100%;
+      }
+      .modal-box .form-grid .form-group input:focus,
+      .modal-box .form-grid .form-group select:focus,
+      .modal-box .form-grid .form-group textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(0, 107, 63, 0.06);
+      }
+      .modal-box .form-grid .form-group textarea {
+        resize: vertical;
+        min-height: 60px;
+      }
+      .modal-box .form-grid .form-group .file-upload {
+        border: 2px dashed var(--border-light);
+        border-radius: var(--radius-sm);
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: var(--transition);
+        background: var(--light-bg);
+      }
+      .modal-box .form-grid .form-group .file-upload:hover {
+        border-color: var(--primary);
+        background: var(--primary-light);
+      }
+      .modal-box .form-grid .form-group .file-upload i {
+        font-size: 1.6rem;
+        color: var(--gray-text);
+        margin-bottom: 4px;
+        display: block;
+      }
+      .modal-box .form-grid .form-group .file-upload span {
+        font-size: 0.75rem;
+        color: var(--gray-text);
+      }
+      .modal-box .form-grid .form-group .file-upload input[type="file"] {
+        display: none;
+      }
+
+      .modal-box .form-grid .form-group .checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding-top: 4px;
+      }
+      .modal-box .form-grid .form-group .checkbox-group label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--dark-text);
+        text-transform: none;
+        cursor: pointer;
+      }
+      .modal-box .form-grid .form-group .checkbox-group input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--primary);
+        cursor: pointer;
+      }
+
+      /* ---- Course Registration Table inside Modal ---- */
+      .course-table-wrap {
+        overflow-x: auto;
+        margin: 10px 0 12px 0;
+      }
+      .course-table-wrap table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.8rem;
+        min-width: 500px;
+      }
+      .course-table-wrap table thead {
+        background: var(--light-bg);
+      }
+      .course-table-wrap table thead th {
+        padding: 6px 10px;
+        text-align: left;
+        font-weight: 600;
+        color: var(--gray-text);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .course-table-wrap table tbody td {
+        padding: 6px 10px;
+        border-bottom: 1px solid var(--border-light);
+        color: var(--dark-text);
+        font-size: 0.8rem;
+        vertical-align: middle;
+      }
+      .course-table-wrap table tbody tr:hover {
+        background: rgba(0, 107, 63, 0.02);
+      }
+      .course-table-wrap .course-selector {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin: 8px 0 4px 0;
+      }
+      .course-table-wrap .course-selector select {
+        padding: 6px 12px;
+        border-radius: var(--radius-sm);
+        border: 1.5px solid var(--border-light);
+        background: var(--white);
+        font-family: var(--font-sans);
+        font-size: 0.8rem;
+        color: var(--dark-text);
+        outline: none;
+        transition: var(--transition);
+        flex: 1;
+        min-width: 140px;
+      }
+      .course-table-wrap .course-selector select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(0, 107, 63, 0.06);
+      }
+      .course-table-wrap .course-selector .btn-sm {
+        padding: 6px 16px;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.75rem;
+        font-family: var(--font-sans);
+        border: none;
+        cursor: pointer;
+        transition: var(--transition);
+        background: var(--primary-gradient);
+        color: var(--white);
+      }
+      .course-table-wrap .course-selector .btn-sm:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 107, 63, 0.2);
+      }
+      .course-table-wrap .course-selector .btn-sm.danger {
+        background: rgba(220, 38, 38, 0.08);
+        color: #dc2626;
+        border: 1px solid rgba(220, 38, 38, 0.12);
+      }
+      .course-table-wrap .course-selector .btn-sm.danger:hover {
+        background: rgba(220, 38, 38, 0.14);
+      }
+
+      .modal-box .modal-footer {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-light);
+        margin-top: 8px;
+        flex-wrap: wrap;
+      }
+      .modal-box .modal-footer .btn-modal {
+        padding: 10px 28px;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-family: var(--font-sans);
+        font-size: 0.85rem;
+        border: none;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .modal-box .modal-footer .btn-modal.primary {
+        background: var(--primary-gradient);
+        color: var(--white);
+        box-shadow: 0 4px 12px rgba(0, 107, 63, 0.15);
+      }
+      .modal-box .modal-footer .btn-modal.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 107, 63, 0.25);
+      }
+      .modal-box .modal-footer .btn-modal.secondary {
+        background: var(--white);
+        color: var(--dark-text);
+        border: 1.5px solid var(--border-light);
+      }
+      .modal-box .modal-footer .btn-modal.secondary:hover {
+        border-color: var(--primary);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* ---- Student Profile Preview (Modal Side) ---- */
+      .profile-preview {
+        background: var(--primary-gradient);
+        border-radius: var(--radius-sm);
+        padding: 20px 20px 16px 20px;
+        color: var(--white);
+        text-align: center;
+        margin-bottom: 16px;
+      }
+      .profile-preview .pp-avatar {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--white);
+        border: 3px solid rgba(255, 255, 255, 0.2);
+        margin: 0 auto 10px auto;
+      }
+      .profile-preview .pp-name {
+        font-size: 1.05rem;
+        font-weight: 700;
+      }
+      .profile-preview .pp-detail {
+        font-size: 0.75rem;
+        opacity: 0.75;
+        margin: 2px 0;
+      }
+      .profile-preview .pp-status {
+        display: inline-block;
+        margin-top: 6px;
+        padding: 2px 16px;
+        border-radius: 60px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        background: rgba(22, 163, 74, 0.2);
+        color: #dcfce7;
+        border: 1px solid rgba(22, 163, 74, 0.15);
+      }
+
+      /* ---- Responsiveness ---- */
+      @media (max-width: 1400px) {
+        .stats-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 1200px) {
+        .stats-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (max-width: 1023px) {
+        .sidebar {
+          transform: translateX(-100%);
+          box-shadow: none;
+          border-radius: 0 12px 12px 0;
+          width: var(--sidebar-width);
+        }
+        .sidebar.open {
+          transform: translateX(0);
+          box-shadow: 8px 0 48px rgba(0, 0, 0, 0.12);
+          border-radius: 0;
+        }
+        .sidebar-toggle {
+          display: flex;
+        }
+        .sidebar-overlay.active {
+          display: block;
+        }
+        .main-content {
+          margin-left: 0;
+          padding-top: var(--nav-height);
+        }
+        .main-content.sidebar-collapsed {
+          margin-left: 0;
+        }
+        .top-nav {
+          left: 0;
+          width: 100%;
+          padding: 0 16px;
+        }
+        .top-nav .nav-center {
+          display: none;
+        }
+        .top-nav .nav-right .datetime {
+          display: none;
+        }
+        .page-content {
+          padding: 20px 16px 16px 16px;
+        }
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .modal-box {
+          padding: 24px 20px 20px 20px;
+          max-width: 100%;
+          margin: 12px;
+        }
+        .modal-box .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .modal-box .form-grid .form-group.full-width {
+          grid-column: 1;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .top-nav {
+          padding: 0 12px;
+          height: 60px;
+        }
+        .top-nav .nav-left .page-title {
+          font-size: 0.9rem;
+        }
+        .top-nav .nav-left .page-title span {
+          display: none;
+        }
+        .top-nav .nav-right .profile-trigger .pt-name {
+          display: none;
+        }
+        .top-nav .nav-right .profile-trigger {
+          padding: 4px;
+        }
+        .top-nav .nav-right .nav-btn {
+          width: 34px;
+          height: 34px;
+          font-size: 1rem;
+        }
+        .top-nav .nav-right .nav-divider {
+          display: none;
+        }
+
+        .page-content {
+          padding: 16px 12px 12px 12px;
+        }
+
+        .page-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .page-header .ph-left h1 {
+          font-size: 1.3rem;
+        }
+        .page-header .ph-left p {
+          font-size: 0.85rem;
+        }
+        .page-header .ph-right {
+          width: 100%;
+        }
+        .page-header .ph-right .btn-primary {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+        .stat-card {
+          padding: 12px 14px;
+        }
+        .stat-card .sc-icon {
+          width: 36px;
+          height: 36px;
+          font-size: 0.95rem;
+        }
+        .stat-card .sc-info .sc-number {
+          font-size: 1.1rem;
+        }
+        .stat-card .sc-info .sc-label {
+          font-size: 0.65rem;
+        }
+
+        .toolbar {
+          flex-direction: column;
+          align-items: stretch;
+          padding: 14px 16px;
+        }
+        .toolbar .tb-search {
+          flex: 1 1 auto;
+        }
+        .toolbar .tb-filter {
+          flex-wrap: wrap;
+        }
+        .toolbar .tb-filter select {
+          flex: 1 1 auto;
+          min-width: 100px;
+        }
+        .toolbar .tb-actions {
+          margin-left: 0;
+          justify-content: stretch;
+        }
+        .toolbar .tb-actions .btn-tool {
+          flex: 1;
+          justify-content: center;
+        }
+
+        .glass-card {
+          padding: 14px 12px 12px 12px;
+          border-radius: var(--radius-sm);
+        }
+        .glass-card .card-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .table-responsive table {
+          font-size: 0.75rem;
+          min-width: 500px;
+        }
+        .table-responsive table thead th,
+        .table-responsive table tbody td {
+          padding: 6px 8px;
+        }
+        .action-dropdown .drop-menu {
+          right: auto;
+          left: 0;
+          min-width: 160px;
+        }
+
+        .modal-box {
+          padding: 18px 14px 16px 14px;
+          max-height: 95vh;
+        }
+        .modal-box .modal-header h2 {
+          font-size: 1.1rem;
+        }
+        .modal-box .form-grid {
+          gap: 10px;
+        }
+        .modal-box .form-grid .form-group input,
+        .modal-box .form-grid .form-group select,
+        .modal-box .form-grid .form-group textarea {
+          font-size: 0.8rem;
+          padding: 6px 10px;
+        }
+        .modal-box .modal-footer {
+          flex-direction: column;
+        }
+        .modal-box .modal-footer .btn-modal {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .course-table-wrap table {
+          font-size: 0.7rem;
+          min-width: 400px;
+        }
+        .course-table-wrap .course-selector {
+          flex-direction: column;
+        }
+        .course-table-wrap .course-selector select {
+          min-width: 0;
+        }
+
+        .profile-preview .pp-avatar {
+          width: 60px;
+          height: 60px;
+          font-size: 1.5rem;
+        }
+        .profile-preview .pp-name {
+          font-size: 0.9rem;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .stats-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 6px;
+        }
+        .stat-card {
+          padding: 8px 10px;
+          gap: 8px;
+        }
+        .stat-card .sc-icon {
+          width: 30px;
+          height: 30px;
+          font-size: 0.8rem;
+          border-radius: 6px;
+        }
+        .stat-card .sc-info .sc-number {
+          font-size: 0.95rem;
+        }
+        .stat-card .sc-info .sc-label {
+          font-size: 0.55rem;
+        }
+        .stat-card .sc-trend {
+          font-size: 0.5rem;
+          padding: 1px 6px;
+        }
+
+        .toolbar .tb-filter select {
+          font-size: 0.7rem;
+          padding: 4px 24px 4px 8px;
+          height: 32px;
+        }
+        .toolbar .tb-actions .btn-tool {
+          font-size: 0.65rem;
+          padding: 4px 10px;
+        }
+
+        .table-responsive table {
+          font-size: 0.65rem;
+          min-width: 400px;
+        }
+        .table-responsive table thead th,
+        .table-responsive table tbody td {
+          padding: 4px 6px;
+        }
+
+        .modal-box {
+          padding: 12px 10px 12px 10px;
+        }
+        .modal-box .form-grid {
+          gap: 6px;
+        }
+        .modal-box .form-grid .form-group label {
+          font-size: 0.6rem;
+        }
+        .modal-box .form-grid .form-group input,
+        .modal-box .form-grid .form-group select,
+        .modal-box .form-grid .form-group textarea {
+          font-size: 0.75rem;
+          padding: 4px 8px;
+        }
+        .modal-box .modal-header h2 {
+          font-size: 0.95rem;
+        }
+      }
+
+      /* ============================================================
+               ANIMATIONS
+               ============================================================ */
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        0% {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulseDot {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1.6);
+          opacity: 0;
+        }
+      }
+
+      /* ---- scrollbar ---- */
+      ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--light-bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 6px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-dark);
+      }
+
+      /* ---- focus-visible ---- */
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      select:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      /* ---- utilities ---- */
+      .text-gold {
+        color: var(--gold);
+      }
+      .text-primary {
+        color: var(--primary);
+      }
+      .fw-600 {
+        font-weight: 600;
+      }
+      .notif-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: #dc2626;
+        border-radius: 50%;
+        margin-left: 6px;
+        animation: pulseDot 1.8s ease-in-out infinite;
+      }
+      .mb-4 {
+        margin-bottom: 28px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ============================================================
+    APP WRAPPER
+    ============================================================ -->
+    <div class="app-wrapper">
+      <!-- ============================================================
+        SIDEBAR – Fixed, collapsible
+        ============================================================ -->
+      <aside
+        class="sidebar"
+        id="sidebar"
+        role="navigation"
+        aria-label="Main navigation"
+      >
+        <div class="sidebar-inner">
+          <!-- Brand -->
+          <div class="sidebar-brand">
+            <div class="brand-icon" aria-hidden="true">
+              <i class="fas fa-university"></i>
+            </div>
+            <div class="brand-text">
+              <span class="imsu">IMSU <span>·</span> Admin</span>
+              <span class="sub">Result Management System</span>
+            </div>
+          </div>
+
+          <!-- Profile -->
+          <div class="sidebar-profile">
+            <div class="sp-avatar">
+              SA
+              <span class="online-dot"></span>
+            </div>
+            <div class="sp-info">
+              <div class="sp-name">Super Admin</div>
+              <div class="sp-role">System Administrator</div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <nav class="sidebar-nav">
+            <div class="nav-label">Main</div>
+
+            <a
+              href="./admin-dashboard.html"
+              class="nav-item"
+              data-page="dashboard"
+            >
+              <i class="fas fa-th-large"></i>
+              <span>Dashboard</span>
+            </a>
+
+            <div class="nav-label">Management</div>
+
+            <a
+              href="./admin-student-management.html"
+              class="nav-item active"
+              data-page="students"
+            >
+              <i class="fas fa-user-graduate"></i>
+              <span>Student Management</span>
+              <span class="nav-badge">12K</span>
+            </a>
+            <a
+              href="./admin-lecturer-management.html"
+              class="nav-item"
+              data-page="lecturers"
+            >
+              <i class="fas fa-chalkboard-user"></i>
+              <span>Lecturer Management</span>
+              <span class="nav-badge">150</span>
+            </a>
+            <a href="./admin-department-management.html" class="nav-item" data-page="departments">
+              <i class="fas fa-building"></i>
+              <span>Department Management</span>
+            </a>
+            <a href="./admin-faculty-management.html" class="nav-item" data-page="faculties">
+              <i class="fas fa-university"></i>
+              <span>Faculty Management</span>
+            </a>
+            <a href="./admin-course-management.html" class="nav-item" data-page="courses">
+              <i class="fas fa-book"></i>
+              <span>Course Management</span>
+              <span class="nav-badge">48</span>
+            </a>
+            <a
+              href="./admin-semester.html"
+              class="nav-item"
+              data-page="sessions"
+            >
+              <i class="fas fa-calendar-alt"></i>
+              <span>Session & Semester</span>
+            </a>
+
+            <div class="nav-label">Results</div>
+
+            <a
+              href="./admin-upload-result.html"
+              class="nav-item"
+              data-page="upload-results"
+            >
+              <i class="fas fa-upload"></i>
+              <span>Upload Results</span>
+            </a>
+            <a
+              href="./admin-approve-result.html"
+              class="nav-item"
+              data-page="approve-results"
+            >
+              <i class="fas fa-check-double"></i>
+              <span>Approve Results</span>
+              <span class="nav-badge">8</span>
+            </a>
+           
+
+            <div class="nav-label">System</div>
+
+            <a href="./admin-user-management.html" class="nav-item" data-page="users">
+              <i class="fas fa-users-cog"></i>
+              <span>User Management</span>
+            </a>
+            <a href="./admin-report.html" class="nav-item" data-page="reports">
+              <i class="fas fa-chart-bar"></i>
+              <span>Reports & Analytics</span>
+            </a>
+            <a
+              href="./admin-notification.html"
+              class="nav-item"
+              data-page="notifications"
+            >
+              <i class="fas fa-bell"></i>
+              <span>Notifications</span>
+              <span class="nav-badge">6</span>
+            </a>
+            <a href="admin-settings.html" class="nav-item" data-page="settings">
+              <i class="fas fa-cog"></i>
+              <span>Settings</span>
+            </a>
+
+            <a
+              href="admin-logout.html"
+              class="nav-item logout-item"
+              id="sidebarLogout"
+            >
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- ---- sidebar overlay (mobile) ---- -->
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- ============================================================
+        MAIN CONTENT
+        ============================================================ -->
+      <main class="main-content" id="mainContent">
+        <!-- ============================================================
+            TOP NAVIGATION – Fixed
+            ============================================================ -->
+        <header class="top-nav" role="banner">
+          <div class="nav-left">
+            <!-- hamburger (mobile) -->
+            <button
+              class="sidebar-toggle"
+              id="sidebarToggle"
+              aria-label="Toggle sidebar"
+              aria-expanded="false"
+            >
+              <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+
+            <div class="page-title">
+              Student Management <span>| Admin Portal</span>
+            </div>
+          </div>
+
+          <div class="nav-center">
+            <div class="search-wrap">
+              <i class="fas fa-search" aria-hidden="true"></i>
+              <input
+                type="text"
+                placeholder="Search students..."
+                aria-label="Search"
+              />
+            </div>
+          </div>
+
+          <div class="nav-right">
+            <span class="datetime" id="datetimeDisplay"></span>
+
+            <div class="nav-divider"></div>
+
+            <a
+              href="#"
+              class="nav-btn"
+              aria-label="Notifications"
+              data-tooltip="Notifications"
+            >
+              <i class="fas fa-bell"></i>
+              <span class="badge">6</span>
+            </a>
+
+            <a
+              href="./admin-notification.html"
+              class="nav-btn"
+              aria-label="Messages"
+              data-tooltip="Messages"
+            >
+              <i class="fas fa-envelope"></i>
+              <span class="badge gold">3</span>
+            </a>
+
+            <a
+              href="#"
+              class="nav-btn"
+              aria-label="Quick actions"
+              data-tooltip="Quick Actions"
+            >
+              <i class="fas fa-plus-circle"></i>
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <a
+              href="#"
+              class="profile-trigger"
+              id="profileTrigger"
+              aria-label="Profile menu"
+            >
+              <div class="pt-avatar">SA</div>
+              <span class="pt-name">Super Admin</span>
+              <!-- <i class="fas fa-chevron-down pt-chevron"></i> -->
+            </a>
+          </div>
+        </header>
+
+        <!-- ============================================================
+            PAGE CONTENT – Student Management
+            ============================================================ -->
+        <div class="page-content">
+          <!-- ---- Page Header ---- -->
+          <div class="page-header">
+            <div class="ph-left">
+              <h1><i class="fas fa-user-graduate"></i> Student Management</h1>
+              <p>Manage all students across the university</p>
+            </div>
+            <div class="ph-right">
+              <button class="btn-primary" id="addStudentBtn">
+                <i class="fas fa-plus"></i> Add New Student
+              </button>
+            </div>
+          </div>
+
+          <!-- ---- Summary Cards ---- -->
+          <div class="stats-grid" id="statsGrid">
+            <a href="#" class="stat-card">
+              <div class="sc-icon"><i class="fas fa-users"></i></div>
+              <div class="sc-info">
+                <div class="sc-number" data-count="12480">12,480</div>
+                <div class="sc-label">Total Students</div>
+              </div>
+              <span class="sc-trend"><i class="fas fa-arrow-up"></i> 8%</span>
+            </a>
+            <a href="#" class="stat-card">
+              <div class="sc-icon gold"><i class="fas fa-user-check"></i></div>
+              <div class="sc-info">
+                <div class="sc-number" data-count="9820">9,820</div>
+                <div class="sc-label">Active Students</div>
+              </div>
+              <span class="sc-trend"><i class="fas fa-arrow-up"></i> 5%</span>
+            </a>
+            <a href="#" class="stat-card">
+              <div class="sc-icon blue">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              <div class="sc-info">
+                <div class="sc-number" data-count="2100">2,100</div>
+                <div class="sc-label">Graduated</div>
+              </div>
+              <span class="sc-trend"><i class="fas fa-arrow-up"></i> 12%</span>
+            </a>
+            <a href="#" class="stat-card">
+              <div class="sc-icon red"><i class="fas fa-user-slash"></i></div>
+              <div class="sc-info">
+                <div class="sc-number" data-count="320">320</div>
+                <div class="sc-label">Suspended</div>
+              </div>
+              <span class="sc-trend down"
+                ><i class="fas fa-arrow-down"></i> 2%</span
+              >
+            </a>
+            <a href="#" class="stat-card">
+              <div class="sc-icon purple"><i class="fas fa-clock"></i></div>
+              <div class="sc-info">
+                <div class="sc-number" data-count="240">240</div>
+                <div class="sc-label">Pending Registrations</div>
+              </div>
+              <span class="sc-trend"><i class="fas fa-arrow-up"></i> 15%</span>
+            </a>
+            <a href="#" class="stat-card">
+              <div class="sc-icon teal">
+                <i class="fas fa-calendar-day"></i>
+              </div>
+              <div class="sc-info">
+                <div class="sc-number" data-count="18">18</div>
+                <div class="sc-label">Added Today</div>
+              </div>
+              <span class="sc-trend"><i class="fas fa-arrow-up"></i> 3%</span>
+            </a>
+          </div>
+
+          <!-- ---- Toolbar ---- -->
+          <div class="toolbar">
+            <div class="tb-search">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                placeholder="Search by name, matric, email..."
+                id="studentSearch"
+              />
+            </div>
+            <div class="tb-filter">
+              <select id="filterFaculty">
+                <option value="">All Faculties</option>
+                <option value="Physical Sciences">Physical Sciences</option>
+                <option value="Life Sciences">Life Sciences</option>
+                <option value="Arts">Arts</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Medicine">Medicine</option>
+                <option value="Law">Law</option>
+                <option value="Management">Management</option>
+              </select>
+              <select id="filterDepartment">
+                <option value="">All Departments</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Physics">Physics</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Biology">Biology</option>
+                <option value="Economics">Economics</option>
+                <option value="Law">Law</option>
+              </select>
+              <select id="filterLevel">
+                <option value="">All Levels</option>
+                <option value="100">100 Level</option>
+                <option value="200">200 Level</option>
+                <option value="300">300 Level</option>
+                <option value="400">400 Level</option>
+                <option value="500">500 Level</option>
+              </select>
+              <select id="filterStatus">
+                <option value="">All Status</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Suspended">Suspended</option>
+                <option value="Graduated">Graduated</option>
+                <option value="Pending">Pending</option>
+              </select>
+            </div>
+            <div class="tb-actions">
+              <a href="#" class="btn-tool"><i class="fas fa-sort"></i> Sort</a>
+              <a href="#" class="btn-tool"
+                ><i class="fas fa-file-export"></i> Export</a
+              >
+              <a href="#" class="btn-tool"
+                ><i class="fas fa-file-import"></i> Import</a
+              >
+              <a href="#" class="btn-tool"
+                ><i class="fas fa-sync"></i> Refresh</a
+              >
+              <button class="btn-tool primary" id="addStudentBtn2">
+                <i class="fas fa-plus"></i> Add
+              </button>
+            </div>
+          </div>
+
+          <!-- ---- Student Table ---- -->
+          <div class="glass-card">
+            <div class="card-header">
+              <h3><i class="fas fa-table"></i> Student Records</h3>
+              <span class="card-count">Showing 1-10 of 12,480 students</span>
+            </div>
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 40px">#</th>
+                    <th style="width: 44px">Photo</th>
+                    <th>Name</th>
+                    <th>Matric No.</th>
+                    <th>Faculty</th>
+                    <th>Department</th>
+                    <th>Programme</th>
+                    <th>Level</th>
+                    <th>Semester</th>
+                    <th>Session</th>
+                    <th>CGPA</th>
+                    <th>Status</th>
+                    <th style="text-align: center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="studentTableBody">
+                  <!-- Rows rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 14px;
+                flex-wrap: wrap;
+                gap: 8px;
+              "
+            >
+              <span style="font-size: 0.75rem; color: var(--gray-text)"
+                >Showing 10 of 12,480 students</span
+              >
+              <div style="display: flex; gap: 6px">
+                <a
+                  href="#"
+                  class="btn-sm"
+                  style="
+                    padding: 4px 12px;
+                    font-size: 0.7rem;
+                    background: var(--white);
+                    border: 1px solid var(--border-light);
+                    border-radius: 60px;
+                    text-decoration: none;
+                    color: var(--dark-text);
+                  "
+                  >Previous</a
+                >
+                <a
+                  href="#"
+                  class="btn-sm primary"
+                  style="
+                    padding: 4px 14px;
+                    font-size: 0.7rem;
+                    background: var(--primary-gradient);
+                    color: var(--white);
+                    border-radius: 60px;
+                    text-decoration: none;
+                    border: none;
+                  "
+                  >1</a
+                >
+                <a
+                  href="#"
+                  class="btn-sm"
+                  style="
+                    padding: 4px 12px;
+                    font-size: 0.7rem;
+                    background: var(--white);
+                    border: 1px solid var(--border-light);
+                    border-radius: 60px;
+                    text-decoration: none;
+                    color: var(--dark-text);
+                  "
+                  >2</a
+                >
+                <a
+                  href="#"
+                  class="btn-sm"
+                  style="
+                    padding: 4px 12px;
+                    font-size: 0.7rem;
+                    background: var(--white);
+                    border: 1px solid var(--border-light);
+                    border-radius: 60px;
+                    text-decoration: none;
+                    color: var(--dark-text);
+                  "
+                  >3</a
+                >
+                <a
+                  href="#"
+                  class="btn-sm"
+                  style="
+                    padding: 4px 12px;
+                    font-size: 0.7rem;
+                    background: var(--white);
+                    border: 1px solid var(--border-light);
+                    border-radius: 60px;
+                    text-decoration: none;
+                    color: var(--dark-text);
+                  "
+                  >Next</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end page-content -->
+
+        <!-- ============================================================
+            FOOTER
+            ============================================================ -->
+        <footer class="dashboard-footer" role="contentinfo">
+          <span
+            >&copy; 2026 IMSU Student Result Management System
+            <span class="footer-version">v2.4.0</span></span
+          >
+          <span>Powered by ICT Directorate</span>
+        </footer>
+      </main>
+      <!-- end main-content -->
+    </div>
+    <!-- end app-wrapper -->
+
+    <!-- ============================================================
+    MODAL – Add Student
+    ============================================================ -->
+    <div class="modal-overlay" id="addStudentModal">
+      <div class="modal-box" id="modalBox">
+        <div class="modal-header">
+          <h2><i class="fas fa-user-plus"></i> Add New Student</h2>
+          <button
+            class="modal-close"
+            id="modalCloseBtn"
+            aria-label="Close modal"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="modal-section">
+          <div class="section-title">
+            <i class="fas fa-address-card"></i> Personal Information
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Passport Photo</label>
+              <div class="file-upload" id="passportUpload">
+                <i class="fas fa-camera"></i>
+                <span>Upload Passport</span>
+                <input type="file" accept="image/*" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="surname">Surname</label>
+              <input type="text" id="surname" placeholder="Enter surname" />
+            </div>
+            <div class="form-group">
+              <label for="firstname">First Name</label>
+              <input
+                type="text"
+                id="firstname"
+                placeholder="Enter first name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="middlename">Middle Name</label>
+              <input
+                type="text"
+                id="middlename"
+                placeholder="Enter middle name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="gender">Gender</label>
+              <select id="gender">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="dob">Date of Birth</label>
+              <input type="date" id="dob" />
+            </div>
+            <div class="form-group">
+              <label for="state">State of Origin</label>
+              <input
+                type="text"
+                id="state"
+                placeholder="Enter state of origin"
+              />
+            </div>
+            <div class="form-group">
+              <label for="lga">Local Government</label>
+              <input type="text" id="lga" placeholder="Enter LGA" />
+            </div>
+            <div class="form-group">
+              <label for="nationality">Nationality</label>
+              <input
+                type="text"
+                id="nationality"
+                placeholder="Enter nationality"
+                value="Nigerian"
+              />
+            </div>
+            <div class="form-group">
+              <label for="religion">Religion</label>
+              <select id="religion">
+                <option value="">Select Religion</option>
+                <option value="Christianity">Christianity</option>
+                <option value="Islam">Islam</option>
+                <option value="Traditional">Traditional</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="marital">Marital Status</label>
+              <select id="marital">
+                <option value="">Select Status</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Divorced">Divorced</option>
+                <option value="Widowed">Widowed</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="blood">Blood Group</label>
+              <select id="blood">
+                <option value="">Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="Enter phone number" />
+            </div>
+            <div class="form-group">
+              <label for="altPhone">Alternative Phone</label>
+              <input
+                type="tel"
+                id="altPhone"
+                placeholder="Enter alternative phone"
+              />
+            </div>
+            <div class="form-group full-width">
+              <label for="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter email address"
+              />
+            </div>
+            <div class="form-group full-width">
+              <label for="resAddress">Residential Address</label>
+              <textarea
+                id="resAddress"
+                placeholder="Enter residential address"
+              ></textarea>
+            </div>
+            <div class="form-group full-width">
+              <label for="permAddress">Permanent Address</label>
+              <textarea
+                id="permAddress"
+                placeholder="Enter permanent address"
+              ></textarea>
+            </div>
+            <!-- Guardian -->
+            <div class="form-group">
+              <label for="guardianName">Guardian Name</label>
+              <input
+                type="text"
+                id="guardianName"
+                placeholder="Enter guardian name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="guardianPhone">Guardian Phone</label>
+              <input
+                type="tel"
+                id="guardianPhone"
+                placeholder="Enter guardian phone"
+              />
+            </div>
+            <div class="form-group">
+              <label for="guardianEmail">Guardian Email</label>
+              <input
+                type="email"
+                id="guardianEmail"
+                placeholder="Enter guardian email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="guardianRelation">Relationship</label>
+              <select id="guardianRelation">
+                <option value="">Select Relationship</option>
+                <option value="Father">Father</option>
+                <option value="Mother">Mother</option>
+                <option value="Guardian">Guardian</option>
+                <option value="Sibling">Sibling</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Academic Information -->
+        <div class="modal-section">
+          <div class="section-title">
+            <i class="fas fa-graduation-cap"></i> Academic Information
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="matricNumber">Matric Number</label>
+              <input
+                type="text"
+                id="matricNumber"
+                placeholder="Enter matric number"
+              />
+            </div>
+            <div class="form-group">
+              <label for="jambReg">JAMB Registration</label>
+              <input
+                type="text"
+                id="jambReg"
+                placeholder="Enter JAMB reg number"
+              />
+            </div>
+            <div class="form-group">
+              <label for="academicFaculty">Faculty</label>
+              <select id="academicFaculty">
+                <option value="">Select Faculty</option>
+                <option value="Physical Sciences">Physical Sciences</option>
+                <option value="Life Sciences">Life Sciences</option>
+                <option value="Arts">Arts</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Medicine">Medicine</option>
+                <option value="Law">Law</option>
+                <option value="Management">Management</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="academicDepartment">Department</label>
+              <select id="academicDepartment">
+                <option value="">Select Department</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Physics">Physics</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Biology">Biology</option>
+                <option value="Economics">Economics</option>
+                <option value="Law">Law</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="programme">Programme</label>
+              <input
+                type="text"
+                id="programme"
+                placeholder="e.g. B.Sc. Computer Science"
+              />
+            </div>
+            <div class="form-group">
+              <label for="degree">Degree</label>
+              <select id="degree">
+                <option value="">Select Degree</option>
+                <option value="B.Sc.">B.Sc.</option>
+                <option value="B.A.">B.A.</option>
+                <option value="B.Eng.">B.Eng.</option>
+                <option value="MBBS">MBBS</option>
+                <option value="LL.B">LL.B</option>
+                <option value="B.Ed.">B.Ed.</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="courseOfStudy">Course of Study</label>
+              <input
+                type="text"
+                id="courseOfStudy"
+                placeholder="Enter course of study"
+              />
+            </div>
+            <div class="form-group">
+              <label for="entryMode">Entry Mode</label>
+              <select id="entryMode">
+                <option value="">Select Entry Mode</option>
+                <option value="UTME">UTME</option>
+                <option value="Direct Entry">Direct Entry</option>
+                <option value="Transfer">Transfer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="admissionYear">Admission Year</label>
+              <input type="text" id="admissionYear" placeholder="e.g. 2021" />
+            </div>
+            <div class="form-group">
+              <label for="graduationYear">Graduation Year</label>
+              <input type="text" id="graduationYear" placeholder="e.g. 2026" />
+            </div>
+            <div class="form-group">
+              <label for="academicSession">Academic Session</label>
+              <select id="academicSession">
+                <option value="2025/2026">2025/2026</option>
+                <option value="2024/2025">2024/2025</option>
+                <option value="2023/2024">2023/2024</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="academicSemester">Semester</label>
+              <select id="academicSemester">
+                <option value="First">First Semester</option>
+                <option value="Second">Second Semester</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="currentLevel">Current Level</label>
+              <select id="currentLevel">
+                <option value="100">100 Level</option>
+                <option value="200">200 Level</option>
+                <option value="300">300 Level</option>
+                <option value="400">400 Level</option>
+                <option value="500">500 Level</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="studentStatus">Student Status</label>
+              <select id="studentStatus">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Suspended">Suspended</option>
+                <option value="Graduated">Graduated</option>
+                <option value="Pending">Pending</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="admissionNumber">Admission Number</label>
+              <input
+                type="text"
+                id="admissionNumber"
+                placeholder="Enter admission number"
+              />
+            </div>
+            <div class="form-group">
+              <label for="registrationNumber">Registration Number</label>
+              <input
+                type="text"
+                id="registrationNumber"
+                placeholder="Enter registration number"
+              />
+            </div>
+            <div class="form-group">
+              <label for="studentType">Student Type</label>
+              <select id="studentType">
+                <option value="Full-Time">Full-Time</option>
+                <option value="Part-Time">Part-Time</option>
+                <option value="Distance Learning">Distance Learning</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Courses Registration -->
+        <div class="modal-section">
+          <div class="section-title">
+            <i class="fas fa-book"></i> Course Registration
+          </div>
+          <div class="course-table-wrap">
+            <div class="course-selector">
+              <select id="courseSelector">
+                <option value="">— Select Course —</option>
+                <option value="CSC101">CSC101 – Intro to Computing</option>
+                <option value="CSC102">CSC102 – Programming I</option>
+                <option value="CSC201">CSC201 – Data Structures</option>
+                <option value="CSC202">CSC202 – Database Systems</option>
+                <option value="CSC301">CSC301 – Software Engineering</option>
+                <option value="CSC302">CSC302 – Computer Networks</option>
+                <option value="CSC401">CSC401 – AI & Machine Learning</option>
+                <option value="GST101">GST101 – Communication Skills</option>
+                <option value="GST102">
+                  GST102 – Nigerian People & Culture
+                </option>
+                <option value="MTH101">MTH101 – General Mathematics</option>
+                <option value="MTH102">MTH102 – Calculus</option>
+                <option value="PHY101">PHY101 – General Physics</option>
+                <option value="CHM101">CHM101 – General Chemistry</option>
+                <option value="ENG101">ENG101 – English Language</option>
+              </select>
+              <button class="btn-sm" id="addCourseBtn">
+                <i class="fas fa-plus"></i> Add Course
+              </button>
+              <button class="btn-sm danger" id="removeSelectedBtn">
+                <i class="fas fa-trash"></i> Remove Selected
+              </button>
+              <button class="btn-sm" id="selectAllCoursesBtn">
+                <i class="fas fa-check-double"></i> Select All
+              </button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 30px">
+                    <input type="checkbox" id="courseSelectAll" />
+                  </th>
+                  <th>Course Code</th>
+                  <th>Course Title</th>
+                  <th>Credit Unit</th>
+                  <th>Semester</th>
+                  <th>Level</th>
+                  <th>Lecturer</th>
+                  <th style="width: 50px">Action</th>
+                </tr>
+              </thead>
+              <tbody id="courseTableBody">
+                <tr>
+                  <td><input type="checkbox" class="course-check" /></td>
+                  <td><strong>CSC301</strong></td>
+                  <td>Software Engineering</td>
+                  <td>3</td>
+                  <td>First</td>
+                  <td>400</td>
+                  <td>Dr. John Okafor</td>
+                  <td>
+                    <button
+                      class="btn-sm danger"
+                      style="padding: 2px 8px; font-size: 0.65rem"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="course-check" /></td>
+                  <td><strong>CSC303</strong></td>
+                  <td>Database Systems</td>
+                  <td>3</td>
+                  <td>First</td>
+                  <td>400</td>
+                  <td>Dr. Adaobi Nwosu</td>
+                  <td>
+                    <button
+                      class="btn-sm danger"
+                      style="padding: 2px 8px; font-size: 0.65rem"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="course-check" /></td>
+                  <td><strong>CSC405</strong></td>
+                  <td>Computer Networks</td>
+                  <td>2</td>
+                  <td>First</td>
+                  <td>400</td>
+                  <td>Dr. Samuel Daramola</td>
+                  <td>
+                    <button
+                      class="btn-sm danger"
+                      style="padding: 2px 8px; font-size: 0.65rem"
+                    >
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div
+              style="
+                margin-top: 8px;
+                font-size: 0.8rem;
+                color: var(--gray-text);
+              "
+            >
+              <span id="courseCount">3</span> courses registered • Total Credit
+              Units: <span id="totalCredits">8</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Documents -->
+        <div class="modal-section">
+          <div class="section-title">
+            <i class="fas fa-file-upload"></i> Student Documents
+          </div>
+          <div class="form-grid" style="grid-template-columns: repeat(4, 1fr)">
+            <div class="form-group">
+              <div class="file-upload" style="padding: 12px">
+                <i class="fas fa-birthday-cake" style="font-size: 1.2rem"></i>
+                <span style="font-size: 0.65rem">Birth Certificate</span>
+                <input type="file" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="file-upload" style="padding: 12px">
+                <i class="fas fa-envelope" style="font-size: 1.2rem"></i>
+                <span style="font-size: 0.65rem">Admission Letter</span>
+                <input type="file" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="file-upload" style="padding: 12px">
+                <i class="fas fa-file-alt" style="font-size: 1.2rem"></i>
+                <span style="font-size: 0.65rem">WAEC/NECO</span>
+                <input type="file" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="file-upload" style="padding: 12px">
+                <i class="fas fa-file-signature" style="font-size: 1.2rem"></i>
+                <span style="font-size: 0.65rem">JAMB Slip</span>
+                <input type="file" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="file-upload" style="padding: 12px">
+                <i class="fas fa-notes-medical" style="font-size: 1.2rem"></i>
+                <span style="font-size: 0.65rem">Medical Report</span>
+                <input type="file" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="file-upload" style="padding: 12px">
+                <i class="fas fa-camera" style="font-size: 1.2rem"></i>
+                <span style="font-size: 0.65rem">Passport Photograph</span>
+                <input type="file" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="file-upload" style="padding: 12px">
+                <i class="fas fa-file-pdf" style="font-size: 1.2rem"></i>
+                <span style="font-size: 0.65rem">Acceptance Letter</span>
+                <input type="file" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="file-upload" style="padding: 12px">
+                <i class="fas fa-check-double" style="font-size: 1.2rem"></i>
+                <span style="font-size: 0.65rem">Clearance Form</span>
+                <input type="file" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Information -->
+        <div class="modal-section">
+          <div class="section-title">
+            <i class="fas fa-user-lock"></i> Account Information
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" id="username" placeholder="Enter username" />
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+              />
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm password"
+              />
+            </div>
+            <div
+              class="form-group"
+              style="
+                display: flex;
+                flex-direction: row;
+                gap: 8px;
+                align-items: flex-end;
+              "
+            >
+              <button
+                class="btn-sm"
+                style="background: var(--light-bg); padding: 6px 14px"
+                id="generatePwBtn"
+              >
+                <i class="fas fa-sync"></i> Generate
+              </button>
+              <button
+                class="btn-sm"
+                style="background: var(--light-bg); padding: 6px 14px"
+                id="resetPwBtn"
+              >
+                <i class="fas fa-undo"></i> Reset
+              </button>
+            </div>
+            <div class="form-group">
+              <label>Portal Access</label>
+              <div class="checkbox-group">
+                <label><input type="checkbox" checked /> Can Login</label>
+                <label
+                  ><input type="checkbox" checked /> Can Register Courses</label
+                >
+                <label
+                  ><input type="checkbox" checked /> Can View Results</label
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Permissions</label>
+              <div class="checkbox-group">
+                <label
+                  ><input type="checkbox" checked /> Can Print Results</label
+                >
+                <label><input type="checkbox" checked /> Can Pay Fees</label>
+                <label
+                  ><input type="checkbox" checked /> Can Edit Profile</label
+                >
+                <label
+                  ><input type="checkbox" checked /> Receive
+                  Notifications</label
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="portalStatus">Portal Status</label>
+              <select id="portalStatus">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Suspended">Suspended</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="emailVerification">Email Verification</label>
+              <select id="emailVerification">
+                <option value="Verified">Verified</option>
+                <option value="Pending">Pending</option>
+                <option value="Not Verified">Not Verified</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button class="btn-modal secondary" id="modalCancelBtn">
+            Cancel
+          </button>
+          <button class="btn-modal primary" id="modalSaveBtn">
+            <i class="fas fa-save"></i> Save Student
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+    <script>
+      (function () {
+        "use strict";
+
+        // ============================================================
+        // SIDEBAR TOGGLE (Mobile + Collapse)
+        // ============================================================
+
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("sidebarOverlay");
+        const toggleBtn = document.getElementById("sidebarToggle");
+        const mainContent = document.getElementById("mainContent");
+
+        let isCollapsed = false;
+
+        function toggleSidebar(open) {
+          const isOpen = sidebar.classList.contains("open");
+          const shouldOpen = open !== undefined ? open : !isOpen;
+
+          if (shouldOpen) {
+            sidebar.classList.add("open");
+            overlay.classList.add("active");
+            toggleBtn.setAttribute("aria-expanded", "true");
+            toggleBtn.innerHTML = '<i class="fas fa-times"></i>';
+          } else {
+            sidebar.classList.remove("open");
+            overlay.classList.remove("active");
+            toggleBtn.setAttribute("aria-expanded", "false");
+            toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          }
+        }
+
+        toggleBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          toggleSidebar();
+        });
+
+        overlay.addEventListener("click", function () {
+          toggleSidebar(false);
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && sidebar.classList.contains("open")) {
+            toggleSidebar(false);
+          }
+        });
+
+        const brand = document.querySelector(".sidebar-brand");
+        brand.addEventListener("dblclick", function () {
+          isCollapsed = !isCollapsed;
+          sidebar.classList.toggle("collapsed", isCollapsed);
+          mainContent.classList.toggle("sidebar-collapsed", isCollapsed);
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if ((e.ctrlKey || e.metaKey) && e.key === "b") {
+            e.preventDefault();
+            isCollapsed = !isCollapsed;
+            sidebar.classList.toggle("collapsed", isCollapsed);
+            mainContent.classList.toggle("sidebar-collapsed", isCollapsed);
+          }
+        });
+
+        let resizeTimer;
+        window.addEventListener("resize", function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () {
+            if (window.innerWidth >= 1024) {
+              if (sidebar.classList.contains("open")) {
+                toggleSidebar(false);
+              }
+            }
+          }, 200);
+        });
+
+        if (window.innerWidth < 1024) {
+          sidebar.classList.remove("open");
+          overlay.classList.remove("active");
+          toggleBtn.setAttribute("aria-expanded", "false");
+          toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+
+        // ============================================================
+        // DATE/TIME DISPLAY
+        // ============================================================
+
+        function updateDateTime() {
+          const now = new Date();
+          const options = {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          };
+          document.getElementById("datetimeDisplay").textContent =
+            now.toLocaleDateString("en-US", options);
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 30000);
+
+        // ============================================================
+        // STATISTICS COUNTER ANIMATION
+        // ============================================================
+
+        function animateCounters() {
+          document
+            .querySelectorAll(".stat-card .sc-number[data-count]")
+            .forEach(function (el) {
+              const target = parseInt(
+                el.getAttribute("data-count").replace(/,/g, ""),
+              );
+              if (isNaN(target)) return;
+              const duration = 1200;
+              const startTime = performance.now();
+
+              function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(eased * target);
+                el.textContent = current.toLocaleString();
+                if (progress < 1) requestAnimationFrame(update);
+                else el.textContent = target.toLocaleString();
+              }
+              requestAnimationFrame(update);
+            });
+        }
+
+        window.addEventListener("load", function () {
+          setTimeout(animateCounters, 400);
+        });
+
+        // ============================================================
+        // STUDENT DATA (Demo)
+        // ============================================================
+
+        const students = [
+          {
+            id: 1,
+            name: "Adeyemi, Oluwaseun",
+            matric: "IMS-2021-001",
+            faculty: "Physical Sciences",
+            department: "Computer Science",
+            programme: "B.Sc. Computer Science",
+            level: "400",
+            semester: "First",
+            session: "2025/2026",
+            cgpa: 3.82,
+            status: "Active",
+          },
+          {
+            id: 2,
+            name: "Balogun, Temitope",
+            matric: "IMS-2021-002",
+            faculty: "Physical Sciences",
+            department: "Computer Science",
+            programme: "B.Sc. Computer Science",
+            level: "400",
+            semester: "First",
+            session: "2025/2026",
+            cgpa: 3.65,
+            status: "Active",
+          },
+          {
+            id: 3,
+            name: "Chukwu, Ngozi",
+            matric: "IMS-2021-003",
+            faculty: "Physical Sciences",
+            department: "Mathematics",
+            programme: "B.Sc. Mathematics",
+            level: "300",
+            semester: "First",
+            session: "2025/2026",
+            cgpa: 2.95,
+            status: "Active",
+          },
+          {
+            id: 4,
+            name: "Daramola, Samuel",
+            matric: "IMS-2021-004",
+            faculty: "Physical Sciences",
+            department: "Physics",
+            programme: "B.Sc. Physics",
+            level: "400",
+            semester: "First",
+            session: "2025/2026",
+            cgpa: 3.45,
+            status: "Active",
+          },
+          {
+            id: 5,
+            name: "Eze, Chioma",
+            matric: "IMS-2021-005",
+            faculty: "Physical Sciences",
+            department: "Computer Science",
+            programme: "B.Sc. Computer Science",
+            level: "200",
+            semester: "First",
+            session: "2025/2026",
+            cgpa: 3.91,
+            status: "Active",
+          },
+          {
+            id: 6,
+            name: "Fatima, Ibrahim",
+            matric: "IMS-2021-006",
+            faculty: "Life Sciences",
+            department: "Biology",
+            programme: "B.Sc. Biology",
+            level: "300",
+            semester: "First",
+            session: "2025/2026",
+            cgpa: 2.78,
+            status: "Suspended",
+          },
+          {
+            id: 7,
+            name: "Garba, Yusuf",
+            matric: "IMS-2021-007",
+            faculty: "Arts",
+            department: "Economics",
+            programme: "B.Sc. Economics",
+            level: "400",
+            semester: "Second",
+            session: "2024/2025",
+            cgpa: 3.22,
+            status: "Graduated",
+          },
+          {
+            id: 8,
+            name: "Hassan, Aisha",
+            matric: "IMS-2021-008",
+            faculty: "Physical Sciences",
+            department: "Chemistry",
+            programme: "B.Sc. Chemistry",
+            level: "300",
+            semester: "First",
+            session: "2025/2026",
+            cgpa: 3.1,
+            status: "Inactive",
+          },
+          {
+            id: 9,
+            name: "Ikenna, Okafor",
+            matric: "IMS-2021-009",
+            faculty: "Engineering",
+            department: "Computer Science",
+            programme: "B.Sc. Computer Science",
+            level: "400",
+            semester: "First",
+            session: "2025/2026",
+            cgpa: 3.58,
+            status: "Active",
+          },
+          {
+            id: 10,
+            name: "Jolaoso, Funke",
+            matric: "IMS-2021-010",
+            faculty: "Physical Sciences",
+            department: "Computer Science",
+            programme: "B.Sc. Computer Science",
+            level: "300",
+            semester: "First",
+            session: "2025/2026",
+            cgpa: 3.76,
+            status: "Pending",
+          },
+        ];
+
+        // ============================================================
+        // RENDER STUDENT TABLE
+        // ============================================================
+
+        const tableBody = document.getElementById("studentTableBody");
+
+        function renderStudents(data) {
+          let html = "";
+          const statusMap = {
+            Active: "active",
+            Inactive: "inactive",
+            Suspended: "suspended",
+            Graduated: "graduated",
+            Pending: "pending",
+          };
+
+          data.forEach(function (s, index) {
+            const initials = s.name
+              .split(",")
+              .map((p) => p.trim().charAt(0))
+              .join("");
+            const statusClass = statusMap[s.status] || "active";
+            html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td><span class="avatar-sm">${initials}</span></td>
+                                <td><strong>${s.name}</strong></td>
+                                <td>${s.matric}</td>
+                                <td>${s.faculty}</td>
+                                <td>${s.department}</td>
+                                <td>${s.programme}</td>
+                                <td>${s.level}</td>
+                                <td>${s.semester}</td>
+                                <td>${s.session}</td>
+                                <td>${s.cgpa.toFixed(2)}</td>
+                                <td><span class="status-pill ${statusClass}">${s.status}</span></td>
+                                <td style="text-align:center;">
+                                    <div class="action-dropdown">
+                                        <button class="drop-btn" data-id="${s.id}"><i class="fas fa-ellipsis-v"></i></button>
+                                        <div class="drop-menu" data-id="${s.id}">
+                                            <a href="view-student.html?id=${s.id}"><i class="fas fa-eye"></i> View</a>
+                                            <a href="edit-student.html?id=${s.id}"><i class="fas fa-edit"></i> Edit</a>
+                                            <a href="assign-courses.html?id=${s.id}"><i class="fas fa-book"></i> Assign Courses</a>
+                                            <a href="registered-courses.html?id=${s.id}"><i class="fas fa-list"></i> View Registered Courses</a>
+                                            <a href="student-results.html?id=${s.id}"><i class="fas fa-file-alt"></i> View Results</a>
+                                            <a href="promote-student.html?id=${s.id}"><i class="fas fa-arrow-up"></i> Promote</a>
+                                            <a href="reset-password.html?id=${s.id}"><i class="fas fa-key"></i> Reset Password</a>
+                                            <a href="suspend-student.html?id=${s.id}" class="danger"><i class="fas fa-ban"></i> Suspend</a>
+                                            <a href="deactivate-student.html?id=${s.id}" class="danger"><i class="fas fa-user-slash"></i> Deactivate</a>
+                                            <a href="delete-student.html?id=${s.id}" class="danger"><i class="fas fa-trash"></i> Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+          });
+
+          tableBody.innerHTML = html;
+
+          // ---- Dropdown toggle ----
+          document.querySelectorAll(".drop-btn").forEach(function (btn) {
+            btn.addEventListener("click", function (e) {
+              e.stopPropagation();
+              const menu = this.nextElementSibling;
+              // Close all other menus
+              document
+                .querySelectorAll(".drop-menu.open")
+                .forEach(function (m) {
+                  if (m !== menu) m.classList.remove("open");
+                });
+              menu.classList.toggle("open");
+            });
+          });
+
+          // Close dropdowns on outside click
+          document.addEventListener("click", function () {
+            document.querySelectorAll(".drop-menu.open").forEach(function (m) {
+              m.classList.remove("open");
+            });
+          });
+        }
+
+        renderStudents(students);
+
+        // ============================================================
+        // ADD STUDENT MODAL
+        // ============================================================
+
+        const modal = document.getElementById("addStudentModal");
+        const modalBox = document.getElementById("modalBox");
+        const closeModalBtn = document.getElementById("modalCloseBtn");
+        const cancelModalBtn = document.getElementById("modalCancelBtn");
+        const addBtns = document.querySelectorAll(
+          "#addStudentBtn, #addStudentBtn2",
+        );
+
+        function openModal() {
+          modal.classList.add("active");
+          setTimeout(function () {
+            modalBox.classList.add("show");
+          }, 50);
+        }
+
+        function closeModal() {
+          modalBox.classList.remove("show");
+          setTimeout(function () {
+            modal.classList.remove("active");
+          }, 300);
+        }
+
+        addBtns.forEach(function (btn) {
+          btn.addEventListener("click", openModal);
+        });
+
+        closeModalBtn.addEventListener("click", closeModal);
+        cancelModalBtn.addEventListener("click", closeModal);
+
+        modal.addEventListener("click", function (e) {
+          if (e.target === this) closeModal();
+        });
+
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && modal.classList.contains("active"))
+            closeModal();
+        });
+
+        // ---- File upload trigger ----
+        document.querySelectorAll(".file-upload").forEach(function (el) {
+          const input = el.querySelector('input[type="file"]');
+          if (input) {
+            el.addEventListener("click", function () {
+              input.click();
+            });
+            input.addEventListener("change", function () {
+              if (this.files && this.files[0]) {
+                const span = el.querySelector("span");
+                if (span) span.textContent = this.files[0].name;
+              }
+            });
+          }
+        });
+
+        // ---- Course registration ----
+        const courseTableBody = document.getElementById("courseTableBody");
+        const courseSelector = document.getElementById("courseSelector");
+        const addCourseBtn = document.getElementById("addCourseBtn");
+        const courseSelectAll = document.getElementById("courseSelectAll");
+        const courseCount = document.getElementById("courseCount");
+        const totalCreditsEl = document.getElementById("totalCredits");
+
+        const courseData = {
+          CSC101: {
+            title: "Intro to Computing",
+            unit: 2,
+            semester: "First",
+            level: "100",
+            lecturer: "Dr. Ade",
+          },
+          CSC102: {
+            title: "Programming I",
+            unit: 3,
+            semester: "First",
+            level: "100",
+            lecturer: "Dr. Bello",
+          },
+          CSC201: {
+            title: "Data Structures",
+            unit: 3,
+            semester: "First",
+            level: "200",
+            lecturer: "Dr. Chidi",
+          },
+          CSC202: {
+            title: "Database Systems",
+            unit: 3,
+            semester: "First",
+            level: "200",
+            lecturer: "Dr. Nwosu",
+          },
+          CSC301: {
+            title: "Software Engineering",
+            unit: 3,
+            semester: "First",
+            level: "300",
+            lecturer: "Dr. Okafor",
+          },
+          CSC302: {
+            title: "Computer Networks",
+            unit: 2,
+            semester: "First",
+            level: "300",
+            lecturer: "Dr. Daramola",
+          },
+          CSC401: {
+            title: "AI & Machine Learning",
+            unit: 3,
+            semester: "First",
+            level: "400",
+            lecturer: "Prof. Eze",
+          },
+          GST101: {
+            title: "Communication Skills",
+            unit: 2,
+            semester: "First",
+            level: "100",
+            lecturer: "Dr. Fadipe",
+          },
+          GST102: {
+            title: "Nigerian People & Culture",
+            unit: 2,
+            semester: "First",
+            level: "100",
+            lecturer: "Dr. Garba",
+          },
+          MTH101: {
+            title: "General Mathematics",
+            unit: 3,
+            semester: "First",
+            level: "100",
+            lecturer: "Dr. Hassan",
+          },
+          MTH102: {
+            title: "Calculus",
+            unit: 3,
+            semester: "First",
+            level: "100",
+            lecturer: "Dr. Idris",
+          },
+          PHY101: {
+            title: "General Physics",
+            unit: 3,
+            semester: "First",
+            level: "100",
+            lecturer: "Dr. Jolaoso",
+          },
+          CHM101: {
+            title: "General Chemistry",
+            unit: 3,
+            semester: "First",
+            level: "100",
+            lecturer: "Dr. Kola",
+          },
+          ENG101: {
+            title: "English Language",
+            unit: 2,
+            semester: "First",
+            level: "100",
+            lecturer: "Dr. Lawal",
+          },
+        };
+
+        function updateCourseStats() {
+          const rows = courseTableBody.querySelectorAll("tr");
+          let total = 0;
+          rows.forEach(function (row) {
+            const unitCell = row.querySelector("td:nth-child(4)");
+            if (unitCell) total += parseInt(unitCell.textContent) || 0;
+          });
+          courseCount.textContent = rows.length;
+          totalCreditsEl.textContent = total;
+        }
+
+        function addCourseRow(code) {
+          const info = courseData[code];
+          if (!info) return;
+          // Check if already added
+          const existing = courseTableBody.querySelector(
+            `tr[data-code="${code}"]`,
+          );
+          if (existing) return;
+
+          const row = document.createElement("tr");
+          row.setAttribute("data-code", code);
+          row.innerHTML = `
+                        <td><input type="checkbox" class="course-check" /></td>
+                        <td><strong>${code}</strong></td>
+                        <td>${info.title}</td>
+                        <td>${info.unit}</td>
+                        <td>${info.semester}</td>
+                        <td>${info.level}</td>
+                        <td>${info.lecturer}</td>
+                        <td><button class="btn-sm danger" style="padding:2px 8px; font-size:0.65rem;"><i class="fas fa-times"></i></button></td>
+                    `;
+          // Remove button
+          row
+            .querySelector(".btn-sm.danger")
+            .addEventListener("click", function () {
+              row.remove();
+              updateCourseStats();
+            });
+          courseTableBody.appendChild(row);
+          updateCourseStats();
+        }
+
+        // Pre-populate with some courses (already in HTML)
+        // Re-bind remove buttons for initial rows
+        document
+          .querySelectorAll("#courseTableBody .btn-sm.danger")
+          .forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              const row = this.closest("tr");
+              if (row) row.remove();
+              updateCourseStats();
+            });
+          });
+
+        addCourseBtn.addEventListener("click", function () {
+          const code = courseSelector.value;
+          if (code) {
+            addCourseRow(code);
+            courseSelector.value = "";
+          }
+        });
+
+        courseSelector.addEventListener("keydown", function (e) {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            addCourseBtn.click();
+          }
+        });
+
+        courseSelectAll.addEventListener("change", function () {
+          document.querySelectorAll(".course-check").forEach(function (cb) {
+            cb.checked = courseSelectAll.checked;
+          });
+        });
+
+        document
+          .getElementById("removeSelectedBtn")
+          .addEventListener("click", function () {
+            document
+              .querySelectorAll(".course-check:checked")
+              .forEach(function (cb) {
+                const row = cb.closest("tr");
+                if (row) row.remove();
+              });
+            updateCourseStats();
+            courseSelectAll.checked = false;
+          });
+
+        document
+          .getElementById("selectAllCoursesBtn")
+          .addEventListener("click", function () {
+            courseSelectAll.checked = true;
+            document.querySelectorAll(".course-check").forEach(function (cb) {
+              cb.checked = true;
+            });
+          });
+
+        // ---- Generate Password ----
+        document
+          .getElementById("generatePwBtn")
+          .addEventListener("click", function () {
+            const chars =
+              "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+            let pw = "";
+            for (let i = 0; i < 12; i++) {
+              pw += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById("password").value = pw;
+            document.getElementById("confirmPassword").value = pw;
+          });
+
+        document
+          .getElementById("resetPwBtn")
+          .addEventListener("click", function () {
+            document.getElementById("password").value = "";
+            document.getElementById("confirmPassword").value = "";
+          });
+
+        // ---- Save Student (demo) ----
+        document
+          .getElementById("modalSaveBtn")
+          .addEventListener("click", function () {
+            // Simple validation demo
+            const surname = document.getElementById("surname").value.trim();
+            const firstname = document.getElementById("firstname").value.trim();
+            const matric = document.getElementById("matricNumber").value.trim();
+            if (!surname || !firstname || !matric) {
+              alert(
+                "Please fill in at least Surname, First Name, and Matric Number.",
+              );
+              return;
+            }
+            alert(
+              "✅ Student saved successfully!\n\n" +
+                "Name: " +
+                surname +
+                ", " +
+                firstname +
+                "\n" +
+                "Matric: " +
+                matric +
+                "\n\n" +
+                "This student record will appear in the Student Dashboard, Profile, and Results pages once the database is connected.",
+            );
+            closeModal();
+          });
+
+        // ---- Search ----
+        const searchInput = document.getElementById("studentSearch");
+        const filterFaculty = document.getElementById("filterFaculty");
+        const filterDepartment = document.getElementById("filterDepartment");
+        const filterLevel = document.getElementById("filterLevel");
+        const filterStatus = document.getElementById("filterStatus");
+
+        function filterStudents() {
+          const search = searchInput.value.toLowerCase().trim();
+          const faculty = filterFaculty.value;
+          const dept = filterDepartment.value;
+          const level = filterLevel.value;
+          const status = filterStatus.value;
+
+          const filtered = students.filter(function (s) {
+            let match = true;
+            if (search) {
+              const nameMatch = s.name.toLowerCase().includes(search);
+              const matricMatch = s.matric.toLowerCase().includes(search);
+              if (!nameMatch && !matricMatch) match = false;
+            }
+            if (faculty && s.faculty !== faculty) match = false;
+            if (dept && s.department !== dept) match = false;
+            if (level && s.level !== level) match = false;
+            if (status && s.status !== status) match = false;
+            return match;
+          });
+          renderStudents(filtered);
+        }
+
+        searchInput.addEventListener("keyup", filterStudents);
+        filterFaculty.addEventListener("change", filterStudents);
+        filterDepartment.addEventListener("change", filterStudents);
+        filterLevel.addEventListener("change", filterStudents);
+        filterStatus.addEventListener("change", filterStudents);
+
+        // ---- Top nav search ----
+        document
+          .querySelector(".search-wrap input")
+          .addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+              const query = this.value.trim();
+              if (query) {
+                searchInput.value = query;
+                filterStudents();
+              }
+            }
+          });
+
+        console.log("👨‍🎓 IMSU Student Management page loaded successfully.");
+        console.log("📚 " + students.length + " student records loaded.");
+      })();
+    </script>
+  </body>
+</html>
